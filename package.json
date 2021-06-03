@@ -1,0 +1,19 @@
+{
+  "name": "frontendcapstone",
+  "version": "1.0.0",
+  "description": "project catwalk",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hr-lax44-frontendcapstone/frontendCapstone"
+  },
+  "author": "Raelyn, Scott, Austin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/austinchadoyeon/frontendCapstone/issues"
+  },
+  "homepage": "https://github.com/austinchadoyeon/frontendCapstone#readme"
+}
