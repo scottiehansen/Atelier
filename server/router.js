@@ -3,6 +3,7 @@ const controllers = require('./controllers.js');
 
 router
   .route('/products')
+    .get(controllers.getProducts)
 
 
 module.exports = router;
