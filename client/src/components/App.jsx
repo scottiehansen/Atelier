@@ -17,20 +17,11 @@ class App extends React.Component {
 
 
   getProducts () {
-    let options = {
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/${window.CAMPUS}/products`,
-      headers: {
-        'User-Agent': 'request',
-        'Authorization': `token ${keys.API_KEY}`
-      }
-    }
-
-    axios.get(options)
+    axios.get('/products')
     .then(response => {
-      this.setState({
-        products: response.data
-      })
+      console.log(response.data)
     })
+    .catch(err => console.log(err))
   }
 
 
