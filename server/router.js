@@ -6,5 +6,9 @@ router
   .route('/products')
     .get(controllers.getProducts)
 
+router
+  .route('/reviews')
+    .get(controllers.getReviews)
+
 
 module.exports = router;
