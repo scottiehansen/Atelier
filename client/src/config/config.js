@@ -1,4 +1,4 @@
-var API_KEY = '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';
+var API_KEY = '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';
 
 var CAMPUS = 'hr-lax'
 
