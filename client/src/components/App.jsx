@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import QAMain from './Q&A/QAMain.jsx'
 const keys = require('../config/config.js')
 
 class App extends React.Component {
@@ -28,7 +29,7 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        hello
+        <QAMain/>
       </div>
     )
   }
