@@ -5,7 +5,10 @@ function Question(props) {
 
   const [answersLimit, setAnswersLimit] = useState(2);
 
-  const answersArr = Object.values(props.question.answers)
+  //sorts by helpfullness.. need to also maintain if seller answered
+  const answersArr = Object.values(props.question.answers).sort(function(a, b) {
+    return  b.helpfulness - a.helpfulness;
+  });
 
   // renders desired number of answers on page with buttons to adjust the numbers
   var moreAnswers;
@@ -27,9 +30,7 @@ function Question(props) {
       </div>
       <div className="answers">
         <ul>
-          {/* {Object.keys(props.question.answers).map(objKey => (
-            <Answer key={objKey} answer={props.question.answers[objKey]}/>
-          ))} */}
+          <p>A: </p>
           {answersArr.slice(0, answersLimit).map(answer => (
             <Answer
               key={answer.id}
