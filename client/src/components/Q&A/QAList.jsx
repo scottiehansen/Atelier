@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import Question from './Question.jsx'
 
 function QAList(props) {
-  const [ questionsLimit, setQuestionsLimit ] = useState(4);
+  const [ questionsLimit, setQuestionsLimit ] = useState(2);
+
+  var moreQuestions = (questionsLimit >= props.questions.length) ? null : <button onClick={()=>(setQuestionsLimit(questionsLimit + 2))}>MORE ANSWERED QUESTIONS</button>
 
   return (
     <div id="QAList">
@@ -15,7 +17,7 @@ function QAList(props) {
           />
         ))}
       </ul>
-      <button onClick={()=>(setQuestionsLimit(props.questions.length))}>MORE ANSWERED QUESTIONS</button>
+      {moreQuestions}
       <button>ADD A QUESTION +</button>
     </div>
 
