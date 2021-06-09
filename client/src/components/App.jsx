@@ -37,12 +37,11 @@ class App extends React.Component {
     }
     return (
       <div>
-        <MainProduct item={this.state.products[0]} />
-        {this.state.products.map((item, index) => <StarRender item={item} key={index} />)}
+        <MainProduct item={this.state.products[1]} />
+        <StarRender item={this.state.products[1]} />
       </div>
     )
   }
-
 }
 
 export default App;

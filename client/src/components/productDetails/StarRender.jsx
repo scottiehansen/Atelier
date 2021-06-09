@@ -9,10 +9,8 @@ function StarRender (props) {
   const [length, setLength] = useState(0);
 
   useEffect(() => {
-    console.log(props.item.id)
     axios.get(`/api/reviews/${props.item.id}`)
       .then (response => {
-        console.log('response.data.results:', response.data.results)
         let ratingSum = 0;
         let reviewArray = response.data.results;
         for (var i = 0; i < reviewArray.length; i++) {
