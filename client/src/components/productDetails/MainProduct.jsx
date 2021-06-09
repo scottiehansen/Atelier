@@ -8,6 +8,12 @@ function MainProduct (props) {
   })
 
   return (
-    <div>{props.item.name}</div>
+    <div>
+      <h1>{item.name}</h1>
+      <h3>$ {item.default_price}</h3>
+      <h4>category: {item.category}</h4>
+    </div>
   )
 }
+
+export default MainProduct;

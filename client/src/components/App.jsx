@@ -21,7 +21,6 @@ class App extends React.Component {
   getProducts () {
     axios.get('/api/products')
     .then(response => {
-      console.log(response.data)
       this.setState({
         products: response.data
       })
@@ -31,9 +30,14 @@ class App extends React.Component {
 
 
   render () {
+    if (this.state.products.length === 0) {
+      return (
+        <div>loading</div>
+      )
+    }
     return (
       <div>
-
+        <MainProduct item={this.state.products[0]} />
         {this.state.products.map((item, index) => <StarRender item={item} key={index} />)}
       </div>
     )
