@@ -25,8 +25,12 @@ function Question(props) {
     <li className="QA">
       <div className="question">
         <p>Q: {props.question.question_body}</p>
-        <button className="link-button">Yes</button>
-        <button className="link-button">Add Answer</button>
+        <span>
+          Helpful?
+          <button className="link-button">Yes</button>
+          ({props.question.question_helpfulness}) |
+          <button className="link-button">Add Answer</button>
+        </span>
       </div>
       <div className="answers">
         <ul>
