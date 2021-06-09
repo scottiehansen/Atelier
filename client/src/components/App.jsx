@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Ratings from './Ratings'
+import Reviews from './Reviews'
 
 class App extends React.Component {
   constructor(props) {
@@ -11,8 +11,8 @@ class App extends React.Component {
 
   render () {
     return (
-      <div>
-        <Ratings />
+      <div className='reviews'>
+        <Reviews />
       </div>
     )
   }

@@ -1,5 +1,10 @@
-import React from 'React';
+import React from 'react';
 import StarRatings from '../../../node_modules/react-star-ratings';
+import {useState, useEffect} from 'react';
+import moment from 'moment';
+// import Container from 'react-bootstrap/Container';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
 
 var ReviewTiles = (reviews) => {
   return (
@@ -16,7 +21,7 @@ var ReviewTiles = (reviews) => {
         {reviews.review.reviewer_name}
       </div>
       <div className='review_date'>
-        {reviews.review.date}
+        {moment(reviews.review.date).format('MMMM DD, YYYY')}
       </div>
       <div className='review_summary'>
         <h3>{reviews.review.summary}</h3>
@@ -29,15 +34,11 @@ var ReviewTiles = (reviews) => {
         '**CHECKMARK** I reccomend this product' :
         ''}
       </div>
-      <div className='review_response' >
-        {reviews.review.response ?
-        `Response from Seller : ${reviews.review.response}` :
-        null}
-      </div>
       <div className='review_response'>
         {reviews.review.response ?
-        `Response from Seller : ${reviews.review.response}` :
-        ''}
+          <div className='review_response'> Response from Seller : {reviews.review.response} </div> :
+          null
+        }
       </div>
       <div className='review_helpfulness'>
         Was this helpful? Yes ({reviews.review.helpfulness})

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReviewTiles from "./ReviewTiles.jsx";
 
-var Ratings = () => {
+var Reviews = () => {
 
   // PRODUCT ID IS HARDCODED IN. USE A AXIOS CALL TO GET THEM OR GET THEM FROM THE MAIN STORE IF USING REDUX
-  let [productID, makeProductID] = useState(16056)
+  let [productID, makeProductID] = useState(16057)
   let [reviews, makeReviews] = useState([]);
+  let [numberOfReviews, makeNumberOfReviews] = useState(2);
 
 
   // This useEffect is fetching the reviews from a specific product ID. It is then changing the state of the reviews var to include all of the review data.
@@ -21,20 +22,32 @@ var Ratings = () => {
       });
   }, [])
 
-  // Right now, this function is mapping over the entire review array. We need to limit it to an array of 2 (think over the process)
   return (
-    <div>
-      {reviews.map((review, index) => (
-        <ReviewTiles review={review} key={index} />
-      ))}
+    <div className='reviewTiles'>
+      {filterReviewsByLength(reviews, numberOfReviews).map((review, index) => (
+         <ReviewTiles review={review} key={index} />
+       ))}
+      <button onClick={() => makeNumberOfReviews(numberOfReviews + 2)}>Click for more reviews</button>
     </div>
+
   )
 
 }
 
-export default Ratings;
+const filterReviewsByLength = (reviews, length) => {
+  return reviews.filter((review, index) => (
+    index < length
+  ))
+}
 
-// CLASS VERSION (no hooks) :
+export default Reviews;
+
+
+
+
+// ----------------------------
+// CLASS SKELETON (no hooks)
+// ----------------------------
 // class Ratings extends React.Component {
 //   constructor(props) {
 //     super(props);
