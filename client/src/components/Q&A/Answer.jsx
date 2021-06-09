@@ -13,7 +13,7 @@ function Answer(props) {
     <li>
       <p>A: {props.answer.body}</p>
       <span>
-        by {props.answer.answerer_name}, {props.answer.date} | Helpful? <button className="link-button">Helpful?</button> | <button className="link-button">Report</button>
+        by {props.answer.answerer_name}, {props.answer.date} | Helpful? <button className="link-button">Yes</button> | <button className="link-button">Report</button>
       </span>
     </li>
   )
