@@ -3,6 +3,8 @@ import Answer from './Answer.jsx'
 
 function Question(props) {
 
+  const answersArr = Object.values(props.question.answers)
+
   return (
     <li className="QA">
       <div className="question">
@@ -12,14 +14,15 @@ function Question(props) {
       </div>
       <div className="answers">
         <ul>
-          {/* {props.question.answers.map(answer => (
-            <Answer
-              key={props.question.answers.id}
-              id={props.question.answers.id}
-              answers={props.question.answers}/>
-          ))} */}
-          {Object.keys(props.question.answers).map(objKey => (
+          {/* {Object.keys(props.question.answers).map(objKey => (
             <Answer key={objKey} answer={props.question.answers[objKey]}/>
+          ))} */}
+          {answersArr.map(answer => (
+            <Answer
+              key={answer.id}
+              id={answer.id}
+              answer={answer}
+            />
           ))}
         </ul>
       </div>
