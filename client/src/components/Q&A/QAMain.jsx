@@ -19,8 +19,11 @@ function QAMain (){
     //edit product id later on based on default item/clicked item
     axios.get(`${url}/qa/questions?count=100&product_id=16056`, auth)
       .then((response) => {
-        console.log('r data', response.data.results);
-        setQuestions(response.data.results)
+        // sort questions by helpfullness
+        var sortedQuestions = response.data.results.sort(function(a, b) {
+          return  b.question_helpfulness - a.question_helpfulness;
+        });
+        setQuestions(sortedQuestions)
       })
       .catch((err) => {
         console.log(err);
@@ -32,7 +35,6 @@ function QAMain (){
       <h1>Questions & Answers</h1>
       <SearchBar />
       <QAList questions={questions}/>
-      <h2>Added Functionality</h2>
     </div>
   )
 }
