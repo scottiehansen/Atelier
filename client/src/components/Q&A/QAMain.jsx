@@ -11,21 +11,25 @@ const auth = {
   }
 };
 
-function QAMain (){
+function QAMain() {
 
-  const [questions, setQuestions ] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+  const currentQuestions = (searchResults.length === 0 || searchTerm.length < 3) ? questions : searchResults;
 
   useEffect(() => {
-   getQuestions();
+    getQuestions();
   }, [])
 
-  function getQuestions(){
+  function getQuestions() {
     //edit product id later on based on default item/clicked item
     axios.get(`${url}/qa/questions?count=100&product_id=16057`, auth)
       .then((response) => {
         // sort questions by helpfullness
-        var sortedQuestions = response.data.results.sort(function(a, b) {
-          return  b.question_helpfulness - a.question_helpfulness;
+        var sortedQuestions = response.data.results.sort(function (a, b) {
+          return b.question_helpfulness - a.question_helpfulness;
         });
         setQuestions(sortedQuestions)
       })
@@ -34,11 +38,24 @@ function QAMain (){
       })
   }
 
+    //currently only searching by singular term... idea to search by unordered phrase: have a string, split it by space, iterate through the the array, if the question includes each word, return the question
+  function searchHandler(searchTerm) {
+    setSearchTerm(searchTerm);
+    if (searchTerm.length >= 3) {
+      const filteredQuestions = questions.filter(question => {
+        if (question.question_body.toLowerCase().includes(searchTerm.toLowerCase())) {
+          return question;
+        }
+      })
+      setSearchResults(filteredQuestions)
+    }
+  }
+
   return (
     <div id="QAContainer">
       <h1>Questions & Answers</h1>
-      <SearchBar questions={questions} setQuestions={setQuestions}/>
-      <QAList questions={questions} getQuestions={getQuestions}/>
+      <SearchBar searchTerm={searchTerm} searchHandler={searchHandler} />
+      <QAList questions={currentQuestions} getQuestions={getQuestions} />
     </div>
   )
 }

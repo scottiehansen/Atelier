@@ -1,34 +1,19 @@
 import React, { useState, useEffect } from 'react'
 
 function SearchBar(props){
-  const [searchPhrase, setSearchPhrase] = useState('');
 
-  //filter questions based on the search phrase
-  // if searchPhrase is greater than or equal to 3
-    // filter questions
-      //if question include the current search phrase
-  function searchQuestions(){
-    if (searchPhrase.length >= 3){
-      props.setQuestions(
-        props.questions.filter(question => {
-          if (question.question_body.toLowerCase().includes(searchPhrase.toLowerCase())){
-            return question;
-          }
-        })
-      )
-    }
+  function getSearchTerm(event){
+    props.searchHandler(event.target.value)
   }
-
-  //have a string, split it by space, iterate through the the array, if the question includes each word, return the question
 
   return(
     <div className="SearchBar">
       <input
         type='text'
         placeholder='HAVE A QUESTION? SEARCH FOR ANSWERS...'
-        onChange={event => {setSearchPhrase(event.target.value)}}
+        value={props.searchTerm}
+        onChange={getSearchTerm}
         ></input>
-        {searchQuestions()}
     </div>
   )
 }
