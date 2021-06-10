@@ -17,7 +17,7 @@ function QAMain (){
 
   useEffect(() => {
     //edit product id later on based on default item/clicked item
-    axios.get(`${url}/qa/questions?count=100&product_id=16056`, auth)
+    axios.get(`${url}/qa/questions?count=100&product_id=16057`, auth)
       .then((response) => {
         // sort questions by helpfullness
         var sortedQuestions = response.data.results.sort(function(a, b) {

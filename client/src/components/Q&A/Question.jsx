@@ -5,9 +5,17 @@ function Question(props) {
 
   const [answersLimit, setAnswersLimit] = useState(2);
 
-  //sorts by helpfullness.. need to also maintain if seller answered
+  //sorts by seller's answers and then by helpfulness
   const answersArr = Object.values(props.question.answers).sort(function(a, b) {
-    return  b.helpfulness - a.helpfulness;
+    if(a.answerer_name === "Seller" && b.answerer_name === "Seller") {
+      return  b.helpfulness - a.helpfulness;
+    } else if(a.answerer_name === "Seller"){
+      return -1;
+    } else if (b.answerer_name === "Seller") {
+      return 1;
+    } else {
+      return  b.helpfulness - a.helpfulness;
+    }
   });
 
   // renders desired number of answers on page with buttons to adjust the numbers
