@@ -16,6 +16,10 @@ function QAMain (){
   const [questions, setQuestions ] = useState([]);
 
   useEffect(() => {
+   getQuestions();
+  }, [])
+
+  function getQuestions(){
     //edit product id later on based on default item/clicked item
     axios.get(`${url}/qa/questions?count=100&product_id=16057`, auth)
       .then((response) => {
@@ -28,13 +32,13 @@ function QAMain (){
       .catch((err) => {
         console.log(err);
       })
-  }, [])
+  }
 
   return (
     <div id="QAContainer">
       <h1>Questions & Answers</h1>
       <SearchBar />
-      <QAList questions={questions}/>
+      <QAList questions={questions} getQuestions={getQuestions}/>
     </div>
   )
 }

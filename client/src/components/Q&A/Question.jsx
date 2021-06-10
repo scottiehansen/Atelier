@@ -49,11 +49,7 @@ function Question(props) {
       axios.put(`${url}/qa/questions/${id}/helpful`, newHelpfulness, auth)
         .then((response) => {
           setMarkedHelpful(!markedHelpful);
-          console.log('then block', markedHelpful)
-          // re-render
-        })
-        .then((response) =>{
-          console.log('extra then', markedHelpful)
+          props.getQuestions();
         })
         .catch((err) => {
           console.log(err);
