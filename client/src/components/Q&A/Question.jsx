@@ -42,6 +42,7 @@ function Question(props) {
   //udpate Q's helpfulness rating if the Q has not yet been marked helpful
   function updateHelpfulness(id, currentHelpfulness){
     console.log('before', markedHelpful)
+    console.log('id', id, 'currentHelpfulness', currentHelpfulness)
     if(!markedHelpful){
       var newHelpfulness = {
         helpfulness: currentHelpfulness + 1
@@ -80,6 +81,7 @@ function Question(props) {
               key={answer.id}
               id={answer.id}
               answer={answer}
+              getQuestions={props.getQuestions}
             />
           ))}
           {moreAnswers}
