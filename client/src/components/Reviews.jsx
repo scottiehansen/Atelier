@@ -32,12 +32,12 @@ var Reviews = () => {
     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/reviews?product_id=${productID}`, config)
       .then(response => {
         // do initial review sorting here
+        makeReviewsSortedByHelpfulness(sortReviewsByHelpfulness(response.data.results));
+        makeReviewsSortedByDate(sortReviewsByDate(response.data.results));
         let sortedReviewsHelpfulness = sortReviewsByHelpfulness(response.data.results);
         let sortedReviewsDate = sortReviewsByDate(response.data.results)
-        makeReviewsSortedByHelpfulness(sortedReviewsHelpfulness);
-        makeReviewsSortedByDate(sortedReviewsDate);
-        //let sortedReviewsRelevance = relevantReviewSorter(sortedReviewsHelpfulness, sortedReviewsDate)
-        makeReviews(response.data.results);
+        let sortedReviewsRelevance = relevantReviewSorter(sortedReviewsHelpfulness, sortedReviewsDate)
+        makeReviews(sortedReviewsRelevance);
         makeIsPageLoading(false);
       })
       .catch(error => {
@@ -112,9 +112,9 @@ const sortReviewsByDate = (reviews) => {
   const compareDate = (a, b) => {
     // Use toUpperCase() to ignore character casing
     let comparison = 0;
-    if (a.date > b.date) {
+    if (a.date < b.date) {
       comparison = 1;
-    } else if (a.date < b.date) {
+    } else if (a.date > b.date) {
       comparison = -1;
     }
     return comparison;
@@ -152,7 +152,6 @@ const sortReviewsByHelpfulness = (reviews) => {
 const relevantReviewSorter = (helpfulness, date) => {
   let relevantIds = [];
   const compareIds = (a, b) => {
-    // Use toUpperCase() to ignore character casing
     let comparison = 0;
     if (a.review_id > b.review_id) {
       comparison = 1;
@@ -162,7 +161,6 @@ const relevantReviewSorter = (helpfulness, date) => {
     return comparison;
   }
   const compareRelevance = (a, b) => {
-    // Use toUpperCase() to ignore character casing
     let comparison = 0;
     if (a.relevanceRating > b.relevanceRating) {
       comparison = 1;
@@ -173,14 +171,14 @@ const relevantReviewSorter = (helpfulness, date) => {
   }
   helpfulness.sort(compareIds);
   date.sort(compareIds);
+  console.log(helpfulness);
 
   helpfulness.forEach((element, index) => {
     let newRating = element.helpfulnessRanking + date[index].dateRanking
     element.relevanceRating = newRating
   })
-  console.log('helpfulness', helpfulness);
 
-  helpfulness.sort(compareRelevance);
+  return(helpfulness.sort(compareRelevance));
 }
 
 // NOTE:
