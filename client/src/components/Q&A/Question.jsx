@@ -39,23 +39,18 @@ function Question(props) {
     moreAnswers = <button onClick={() => (setAnswersLimit(answersArr.length))}>See more answers</button>
   }
 
-  //udpate Q's helpfulness rating if the Q has not yet been marked helpful
-  function updateHelpfulness(id, currentHelpfulness){
-    console.log('before', markedHelpful)
-    console.log('id', id, 'currentHelpfulness', currentHelpfulness)
-    if(!markedHelpful){
+  // update helpfulness score on question or answer
+  function updateHelpfulness(event, id, currentHelpfulness){
       var newHelpfulness = {
         helpfulness: currentHelpfulness + 1
       };
-      axios.put(`${url}/qa/questions/${id}/helpful`, newHelpfulness, auth)
+      axios.put(`${url}/qa/${event.target.name}/${id}/helpful`, newHelpfulness, auth)
         .then((response) => {
-          setMarkedHelpful(!markedHelpful);
           props.getQuestions();
         })
         .catch((err) => {
           console.log(err);
         })
-    }
   }
 
 
@@ -67,7 +62,9 @@ function Question(props) {
           Helpful?
           <button
             className="link-button"
-            onClick={()=>{updateHelpfulness(props.id, props.question.question_helpfulness)}}
+            name="questions"
+            onClick={!markedHelpful ? ()=>{updateHelpfulness(event, props.id, props.question.question_helpfulness);          setMarkedHelpful(true)
+            } : null}
           >Yes</button>
           ({props.question.question_helpfulness}) |
           <button className="link-button">Add Answer</button>
@@ -81,7 +78,8 @@ function Question(props) {
               key={answer.id}
               id={answer.id}
               answer={answer}
-              getQuestions={props.getQuestions}
+              updateHelpfulness={updateHelpfulness}
+              // getQuestions={props.getQuestions}
             />
           ))}
           {moreAnswers}
