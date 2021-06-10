@@ -37,7 +37,7 @@ function QAMain (){
   return (
     <div id="QAContainer">
       <h1>Questions & Answers</h1>
-      <SearchBar />
+      <SearchBar questions={questions} setQuestions={setQuestions}/>
       <QAList questions={questions} getQuestions={getQuestions}/>
     </div>
   )
