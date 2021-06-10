@@ -23,7 +23,8 @@ function Answer(props) {
           className="link-button"
           name="answers"
           onClick={!markedHelpful ? ()=>{props.updateHelpfulness(event, props.id, props.answer.helpfulness); setMarkedHelpful(true)} : null}
-        >Yes</button> ({props.answer.helpfulness})
+        >Yes</button>
+        ({(!markedHelpful) ? props.answer.helpfulness : props.answer.helpfulness + 1})
         |
         <button className="link-button">Report</button>
       </span>

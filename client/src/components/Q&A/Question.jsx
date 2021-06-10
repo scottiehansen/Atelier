@@ -46,7 +46,8 @@ function Question(props) {
       };
       axios.put(`${url}/qa/${event.target.name}/${id}/helpful`, newHelpfulness, auth)
         .then((response) => {
-          props.getQuestions();
+          //re-render list based on filtered or unfiltered - scratching this and doing a surface level showing of the number
+          console.log(`updated helpfulness on ${event.target.name} w/ id: ${id}`)
         })
         .catch((err) => {
           console.log(err);
@@ -66,7 +67,7 @@ function Question(props) {
             onClick={!markedHelpful ? ()=>{updateHelpfulness(event, props.id, props.question.question_helpfulness);          setMarkedHelpful(true)
             } : null}
           >Yes</button>
-          ({props.question.question_helpfulness}) |
+          ({(!markedHelpful) ? props.question.question_helpfulness : props.question.question_helpfulness + 1}) |
           <button className="link-button">Add Answer</button>
         </span>
       </div>
@@ -79,7 +80,6 @@ function Question(props) {
               id={answer.id}
               answer={answer}
               updateHelpfulness={updateHelpfulness}
-              // getQuestions={props.getQuestions}
             />
           ))}
           {moreAnswers}

@@ -15,9 +15,6 @@ function QAMain() {
 
   const [questions, setQuestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-
-  const currentQuestions = (searchResults.length === 0 || searchTerm.length < 3) ? questions : searchResults;
 
   useEffect(() => {
     getQuestions();
@@ -47,7 +44,10 @@ function QAMain() {
           return question;
         }
       })
-      setSearchResults(filteredQuestions)
+      setQuestions(filteredQuestions)
+    }
+    else {
+      getQuestions();
     }
   }
 
@@ -55,7 +55,7 @@ function QAMain() {
     <div id="QAContainer">
       <h1>Questions & Answers</h1>
       <SearchBar searchTerm={searchTerm} searchHandler={searchHandler} />
-      <QAList questions={currentQuestions} getQuestions={getQuestions} />
+      <QAList questions={questions} />
     </div>
   )
 }
