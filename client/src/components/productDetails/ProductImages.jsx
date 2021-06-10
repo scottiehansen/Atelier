@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 function ProductImages (props) {
-
   return (
-    <div>
-      <img src={props.image.thumbnail_url}/>
-    </div>
+      <img onClick={() => props.onClick(props.index)} index={props.index} src={props.image.thumbnail_url}/>
   )
 }
 

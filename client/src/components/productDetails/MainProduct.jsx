@@ -19,7 +19,7 @@ function MainProduct (props) {
   const [styleSKU, setStyleSKU] = useState({});
 
 
-  useEffect(async () => {
+  useEffect(async (index = 0) => {
     setItem(props.item);
     const config = {
       headers: {Authorization: `${key.API_KEY}`}
@@ -30,11 +30,11 @@ function MainProduct (props) {
     ]);
     setFeatures(featureResponse.data.features);
     console.log(imageStyleResponse.data);
-    setMainImage(imageStyleResponse.data.results[0].photos[0].url);
-    setSubImages(imageStyleResponse.data.results[0].photos);
+    setMainImage(imageStyleResponse.data.results[index].photos[index].url);
+    setSubImages(imageStyleResponse.data.results[index].photos);
     setAvailableStyles(imageStyleResponse.data.results);
-    setStyleSKU(imageStyleResponse.data.results[0].skus);
-    if (imageStyleResponse.data.results[0].sale_price === null) {
+    setStyleSKU(imageStyleResponse.data.results[index].skus);
+    if (imageStyleResponse.data.results[index].sale_price === null) {
       setOriginalPrice(imageStyleResponse.data.results[0].original_price);
     } else {
       setOriginalPrice(imageStyleResponse.data.results[0].original_price);
@@ -42,12 +42,20 @@ function MainProduct (props) {
     }
   }, [])
 
-
+  const handleImageClick = (index) => {
+    const config = {
+      headers: {Authorization: `${key.API_KEY}`}
+    };
+    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/products/${props.item.id}/styles`, config)
+      .then (response => {
+        setMainImage(response.data.results[0].photos[index].url);
+      })
+  }
 
   return (
     <div>
       <img src={mainImage} />
-      {subImages.map((image, index) => <ProductImages image={image} key={index} />)}
+      {subImages.map((image, index) => <ProductImages image={image} key={index} index={index} onClick={handleImageClick}/>)}
       <h1>{item.name}</h1>
       <h3>$ {originalPrice} {salePrice}</h3>
       <SizeAndQuantity styleSKU={styleSKU} />
