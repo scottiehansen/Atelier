@@ -37,8 +37,8 @@ class App extends React.Component {
     }
     return (
       <div>
-        <MainProduct item={this.state.products[3]} />
-        <StarRender item={this.state.products[3]} />
+        <MainProduct item={this.state.products[2]} />
+        <StarRender item={this.state.products[2]} />
       </div>
     )
   }

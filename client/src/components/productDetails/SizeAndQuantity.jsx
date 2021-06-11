@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 function SizeAndQuantity (props) {
-  const [sizes, setSizes] = useState([]);
-  const [quantities, setQuantities] = useState([]);
 
-
-
+  console.log(props.sizes);
   return (
-    <div></div>
+    <select>
+
+    </select>
   )
 }
 
