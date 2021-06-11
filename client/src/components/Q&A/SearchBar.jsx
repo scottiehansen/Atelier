@@ -19,8 +19,3 @@ function SearchBar(props){
 }
 
 export default SearchBar;
-
-//if search term length is greater than 3.. begin to filter through questions
-  // if the Question's Body .toLowerCase().includes(searchPhrase.toLowerCase())
-// this will create a data set of filtered questions
-  // map this new data set to render the filtered questions
