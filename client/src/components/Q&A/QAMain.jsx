@@ -14,7 +14,8 @@ const auth = {
 function QAMain() {
 
   const [questions, setQuestions] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  // const [searchTerm, setSearchTerm] = useState('');
+  const [searchPhrase, setSearchPhrase] = useState('');
 
   useEffect(() => {
     getQuestions();
@@ -35,15 +36,39 @@ function QAMain() {
       })
   }
 
-    //currently only searching by singular term... idea to search by unordered phrase: have a string, split it by space, iterate through the the array, if the question includes each word, return the question
-  function searchHandler(searchTerm) {
-    setSearchTerm(searchTerm);
-    if (searchTerm.length >= 3) {
+  // function searchHandler(searchTerm) {
+  //   setSearchTerm(searchTerm);
+  //   if (searchTerm.length >= 3) {
+  //     const filteredQuestions = questions.filter(question => {
+  //       if (question.question_body.toLowerCase().includes(searchTerm.toLowerCase())) {
+  //         return question;
+  //       }
+  //     })
+  //     setQuestions(filteredQuestions)
+  //   }
+  //   else {
+  //     getQuestions();
+  //   }
+  // }
+
+  function searchHandler(searchPhrase) {
+    setSearchPhrase(searchPhrase);
+    if (searchPhrase.length >= 3) {
+      // split search phrase into individual words
+      const splitSearchPhrase = searchPhrase.split(" ")
       const filteredQuestions = questions.filter(question => {
-        if (question.question_body.toLowerCase().includes(searchTerm.toLowerCase())) {
-          return question;
+        //define fn to check whether all words in search phrase are included the current question (defined inside here to use the current question in the fn)
+        function isIncluded(searchTerm) {
+          return question.question_body.toLowerCase().includes(searchTerm.toLowerCase())
+        }
+        // if all words in search phrase are included the current question
+        if (splitSearchPhrase.every(isIncluded)) {
+          console.log(question.question_body)
+          return question
         }
       })
+      // setQuestions(filteredQuestions)
+      console.log('filteredArr',filteredQuestions)
       setQuestions(filteredQuestions)
     }
     else {
@@ -54,7 +79,7 @@ function QAMain() {
   return (
     <div id="QAContainer">
       <h1>Questions & Answers</h1>
-      <SearchBar searchTerm={searchTerm} searchHandler={searchHandler} />
+      <SearchBar searchPhrase={searchPhrase} searchHandler={searchHandler} />
       <QAList questions={questions} />
     </div>
   )
