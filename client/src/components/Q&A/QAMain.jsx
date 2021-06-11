@@ -12,9 +12,10 @@ const auth = {
 };
 
 function QAMain() {
-
+  //full list of questions
+  const [fullQuestionsList, setFullQuestionsList] = useState([])
+  // questions to render (either full list or filtered)
   const [questions, setQuestions] = useState([]);
-  // const [searchTerm, setSearchTerm] = useState('');
   const [searchPhrase, setSearchPhrase] = useState('');
 
   useEffect(() => {
@@ -29,50 +30,36 @@ function QAMain() {
         var sortedQuestions = response.data.results.sort(function (a, b) {
           return b.question_helpfulness - a.question_helpfulness;
         });
-        setQuestions(sortedQuestions)
+        setFullQuestionsList(sortedQuestions);
+        setQuestions(sortedQuestions);
       })
       .catch((err) => {
         console.log(err);
       })
   }
 
-  // function searchHandler(searchTerm) {
-  //   setSearchTerm(searchTerm);
-  //   if (searchTerm.length >= 3) {
-  //     const filteredQuestions = questions.filter(question => {
-  //       if (question.question_body.toLowerCase().includes(searchTerm.toLowerCase())) {
-  //         return question;
-  //       }
-  //     })
-  //     setQuestions(filteredQuestions)
-  //   }
-  //   else {
-  //     getQuestions();
-  //   }
-  // }
-
+  // filters questions based on the searchPhrase in the SearchBar
   function searchHandler(searchPhrase) {
     setSearchPhrase(searchPhrase);
     if (searchPhrase.length >= 3) {
-      // split search phrase into individual words
       const splitSearchPhrase = searchPhrase.split(" ")
-      const filteredQuestions = questions.filter(question => {
-        //define fn to check whether all words in search phrase are included the current question (defined inside here to use the current question in the fn)
+      const filteredQuestions = fullQuestionsList.filter(question => {
+        //define fn to check whether all words in search phrase are included in current Q (defined here to use the current Q in the test)
         function isIncluded(searchTerm) {
           return question.question_body.toLowerCase().includes(searchTerm.toLowerCase())
         }
-        // if all words in search phrase are included the current question
         if (splitSearchPhrase.every(isIncluded)) {
-          console.log(question.question_body)
           return question
         }
       })
-      // setQuestions(filteredQuestions)
-      console.log('filteredArr',filteredQuestions)
-      setQuestions(filteredQuestions)
+      if (filteredQuestions.length > 0) {
+        setQuestions(filteredQuestions)
+      } else {
+        setQuestions(fullQuestionsList)
+      }
     }
     else {
-      getQuestions();
+      setQuestions(fullQuestionsList)
     }
   }
 
