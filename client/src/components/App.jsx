@@ -4,6 +4,8 @@ import Reviews from './Reviews'
 const keys = require('../config/config.js')
 import StarRender from './productDetails/StarRender.jsx';
 import MainProduct from './productDetails/MainProduct.jsx';
+import QAMain from './Q&A/QAMain.jsx'
+
 
 class App extends React.Component {
   constructor(props) {
@@ -40,6 +42,8 @@ class App extends React.Component {
         <MainProduct item={this.state.products[2]} />
         <StarRender item={this.state.products[2]} />
         <Reviews />
+        <QAMain product={this.state.products[2]} />
+
       </div>
     )
   }
