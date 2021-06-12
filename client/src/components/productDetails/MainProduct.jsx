@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductFeatures from './ProductFeatures.jsx';
-const key = require('/client/src/config/config.js');
 import ProductImages from './ProductImages.jsx';
 import Styles from './Styles.jsx';
-import SizeAndQuantity from './SizeAndQuantity';
+import Sizes from './Sizes.jsx';
+import Quantity from './Quantity.jsx';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+const key = require('/client/src/config/config.js');
 
 function MainProduct (props) {
   const [item, setItem] = useState({});
@@ -20,17 +21,17 @@ function MainProduct (props) {
   const [sizes, setSizes] = useState([]);
   const [quantities, setQuantities] = useState([]);
   const [resultIndex, setResultIndex] = useState(0);
+  const [selectedSize, setSelectedSize] = useState('Selected Size');
+  const [selectedQuantity, setSelectedQuantity] = useState([]);
+  const [sizeIndex, setSizeIndex] = useState('');
 
   const getSizesAndQuantities = (object) => {
-    let sizesArray = [];
-    let quantitiesArray = [];
+    let sizesArray = ['Select Size'];
+    let quantitiesArray = ['-'];
     for (var keys in object) {
-      for (var innerKeys in object.keys) {
-        if (innerKeys === 'quantity') {
-          quantities.push(object.keys.innerKeys)
-        } else if (innerKeys === 'size') {
-          quantities.push(object.keys.innerkeys);
-        }
+      if (object[keys].quantity > 0) {
+        sizesArray.push(object[keys].size)
+        quantitiesArray.push(object[keys].quantity)
       }
     }
     setSizes(sizesArray);
@@ -57,7 +58,7 @@ function MainProduct (props) {
       setOriginalPrice(imageStyleResponse.data.results[0].original_price);
       setSalePrice(imageStyleResponse.data.results[0].sale_price);
     }
-    getSizesAndQuantities(imageStyleResponse.data.results[0].skus)
+    getSizesAndQuantities(imageStyleResponse.data.results[0].skus);
   }, [])
 
 
@@ -92,14 +93,30 @@ function MainProduct (props) {
       })
   }
 
+  const handleSizeChange = (e) => {
+    console.log(e.target.selectedIndex);
+    let quantity = quantities[e.target.selectedIndex];
+    let numberArray = [];
+    let i = 1;
+    while (i < quantity || i <= 15) {
+      numberArray.push(i);
+    }
+    setSelectedQuantity(numberArray);
+  }
+
   return (
     <div>
       <img src={mainImage} />
       {subImages.map((image, index) => <ProductImages image={image} key={index} index={index} onClick={handleImageClick}/>)}
       <h1>{item.name}</h1>
       <h3>$ {originalPrice} {salePrice}</h3>
+      <select onChange={handleSizeChange} >
+        {sizes.map((size, index) => <Sizes size={size} key={index} index={index} onChange={handleSizeChange} sizeIndex={sizeIndex}/> )}
+      </select>
+      <select>
+        {selectedQuantity.map((number, index) => <Quantity number={number} key={index}/>)}
+      </select>
       <button>Add to Cart</button>
-      {sizes.map((size, index) => <SizeAndQuantity sizes={sizes} key={index} /> ) }
       {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange}/>)}
       <h4>category: {item.category}</h4>
       <p>description: {item.description} style ID: {styleId}</p>
