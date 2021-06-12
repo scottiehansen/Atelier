@@ -1,7 +1,11 @@
-import React from 'react'
-import axios from 'axios'
+import React from 'react';
+import axios from 'axios';
+import Reviews from './Reviews'
+const keys = require('../config/config.js')
+import StarRender from './productDetails/StarRender.jsx';
+import MainProduct from './productDetails/MainProduct.jsx';
 import QAMain from './Q&A/QAMain.jsx'
-// const keys = require('../config/config.js')
+
 
 class App extends React.Component {
   constructor(props) {
@@ -9,7 +13,6 @@ class App extends React.Component {
     this.state = {
       products: []
     }
-    this.getProducts = this.getProducts.bind(this)
   }
 
   componentDidMount() {
@@ -17,28 +20,33 @@ class App extends React.Component {
   }
 
 
-  getProducts() {
-    axios.get('/products')
-      .then(response => {
-        console.log(response.data)
-        this.setState({ products: response.data })
+  getProducts () {
+    axios.get('/api/products')
+    .then(response => {
+      this.setState({
+        products: response.data
       })
-      .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
   }
 
 
-  render() {
+  render () {
     if (this.state.products.length === 0) {
-      return <div>...loading</div>
-    } else {
       return (
-        <div>
-          <QAMain product={this.state.products[1]} />
-        </div>
+        <div>loading</div>
       )
     }
-  }
+    return (
+      <div className='reviews'>
+        <MainProduct item={this.state.products[2]} />
+        <StarRender item={this.state.products[2]} />
+        <Reviews />
+        <QAMain product={this.state.products[2]} />
 
+      </div>
+    )
+  }
 }
 
 export default App;

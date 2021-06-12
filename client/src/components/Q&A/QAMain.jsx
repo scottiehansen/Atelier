@@ -7,7 +7,7 @@ import axios from 'axios'
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax';
 const auth = {
   headers: {
-    Authorization: token.API_KEY
+    Authorization: token
   }
 };
 
