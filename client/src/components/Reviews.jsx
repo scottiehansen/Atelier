@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import ReviewTiles from "./ReviewTiles.jsx";
-import API_KEY from "./config.js";
+const key = require('../config/config.js');
 import Select from 'react-select';
 import sorters from './ReviewsSorters.jsx';
 import Ratings from './Ratings';
@@ -43,7 +43,7 @@ var Reviews = () => {
   useEffect(() => {
     // Doing inital data load for componenet did mount
     let config = {
-        headers: {Authorization: API_KEY}
+        headers: {Authorization: key.API_KEY}
     }
     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/reviews?product_id=${productID}`, config)
       .then(responseReviews => {

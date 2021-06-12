@@ -14,7 +14,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 app.use('/api', router);
 
-const port = 3000;
+const port = 3001;
 app.listen(port, () => {
   console.log(`Listening in on port ${port}`)
 })

@@ -80,7 +80,9 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+
+# Ignore Bundle
+bundle.js
 
 # Gatsby files
 .cache/
@@ -103,5 +105,5 @@ dist
 # TernJS port file
 .tern-port
 
-#config
+# config
 config.js

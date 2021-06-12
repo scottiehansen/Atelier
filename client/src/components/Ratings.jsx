@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import API_KEY from "./config.js";
 import axios from "axios";
 import RatingsBreakdown from "./RatingsBreakdown.jsx";
 import ProductsBreakdown from "./ProductsBreakdown.jsx"
