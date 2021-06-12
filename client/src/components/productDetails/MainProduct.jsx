@@ -7,7 +7,7 @@ import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-const key = require('/client/src/config/config.js');
+const key = require('/server/config/config.js');
 
 function MainProduct (props) {
   const [item, setItem] = useState({});
@@ -36,6 +36,7 @@ function MainProduct (props) {
     }
     setSizes(sizesArray);
     setQuantities(quantitiesArray);
+    setSelectedQuantity(quantitiesArray);
   }
 
   useEffect(async (index = 0) => {
@@ -95,12 +96,16 @@ function MainProduct (props) {
 
   const handleSizeChange = (e) => {
     console.log(e.target.selectedIndex);
+    console.log(quantities)
     let quantity = quantities[e.target.selectedIndex];
-    let numberArray = [];
+    console.log(quantity);
+    let numberArray = ['-'];
     let i = 1;
-    while (i < quantity || i <= 15) {
+    while (i <= quantity && i <= 15) {
       numberArray.push(i);
+      i++;
     }
+    console.log(numberArray);
     setSelectedQuantity(numberArray);
   }
 
