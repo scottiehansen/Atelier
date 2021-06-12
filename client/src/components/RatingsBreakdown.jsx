@@ -20,7 +20,7 @@ var RatingsBreakdown = (props) => {
       <div onClick={handleRatingClick}>
         {props.rating} Stars:
       </div>
-      <ProgressBar striped variant="success" now={(props.amount/props.totalReviews) * 100} />
+      <ProgressBar striped variant="success" now={(props.amount/props.totalReviews) * 100} style={{width: 500}} />
     </div>
   )
 }

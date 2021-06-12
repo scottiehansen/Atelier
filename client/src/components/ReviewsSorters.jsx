@@ -1,6 +1,6 @@
 import React from "react";
 
-const reviewHelpers = {
+const sorters = {
   sortReviewsByDate: (reviews) => {
     var reviewsCopy = [];
     for (var i = 0; i < reviews.length; i++) {
@@ -93,4 +93,4 @@ const reviewHelpers = {
   }
 }
 
-export default reviewHelpers;
+export default sorters;

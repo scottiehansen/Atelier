@@ -2,7 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import API_KEY from "./config.js";
 import axios from "axios";
-import RatingsBreakdown from "./RatingsBreakdown";
+import RatingsBreakdown from "./RatingsBreakdown.jsx";
+import ProductsBreakdown from "./ProductsBreakdown.jsx"
+import StarRatings from '../../../node_modules/react-star-ratings';
 
 var Ratings = (props) => {
 
@@ -22,11 +24,44 @@ var Ratings = (props) => {
   // I am looping through the object array. I am considering changing this to increase readability
   return (
     <div>
-      <h1>Rating: {averageRating}</h1>
+      <h1>
+        Rating Breakdown
+      </h1>
       <div>
-      {Object.keys(ratingsFormatted).reverse().map((element, index) => (
-        <RatingsBreakdown rating={element} amount={ratingsFormatted[element]} totalReviews={totalReviews} dispatchReviewFilters={props.dispatchReviewFilters} key={index} />
-      ))}
+        {
+          props.reviewFilters.length !== 0 ?
+            <h4>
+              Currently filtering for {props.reviewFilters.map(element => (
+              <span>{`[${element} Star Reviews] `}</span>
+              ))}
+              <div className='remove_filters' style={{color: "blue"}} onMouseEnter={event => {event.target.style.textDecoration = 'underline'; event.target.style.color = 'black'}}>Remove all filters</div>
+            </h4> :
+            null
+        }
+      </div>
+      <div>
+        Average User Rating: {averageRating}
+      </div>
+      <div>
+        <StarRatings
+          rating={averageRating}
+          starRatedColor="grey"
+          numberOfStars={5}
+          name='averageRating'
+        />
+      </div>
+      <div>
+        {Object.keys(ratingsFormatted).reverse().map((element, index) => (
+          <RatingsBreakdown rating={element} amount={ratingsFormatted[element]} totalReviews={totalReviews} dispatchReviewFilters={props.dispatchReviewFilters} key={index} />
+        ))}
+      </div>
+      <div>
+        {Math.round((props.reviewsMeta.recommended.true / (props.reviewsMeta.recommended.true + props.reviewsMeta.recommended.false) * 100))}% of users recommend this product.
+      </div>
+      <div>
+        {Object.keys(props.reviewsMeta.characteristics).map((category, index) => (
+          <ProductsBreakdown category={category} key={index} />
+        ))}
       </div>
     </div>
   )

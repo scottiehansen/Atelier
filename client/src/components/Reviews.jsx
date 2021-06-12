@@ -1,10 +1,12 @@
+// NOTE SHOULD THE FILTER BE A STATE, so it rerenders?
 import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import ReviewTiles from "./ReviewTiles.jsx";
 import API_KEY from "./config.js";
 import Select from 'react-select';
-import reviewHelpers from './ReviewsHelperFunctions.jsx';
+import sorters from './ReviewsSorters.jsx';
 import Ratings from './Ratings';
+import WriteNewReview from './WriteNewReview';
 
 // NOTE:
 // I am importing the response from axios and sifting them into seperate arrays. This will take more of a page loading time, but the app will work much faster after
@@ -36,23 +38,6 @@ var Reviews = () => {
     }
   }, []);
 
-  const filterFunction = (reviews, reviewFilter) => {
-    if (reviewFilter.length === 0) {
-      return reviews;
-    } else {
-      return reviews.filter(review => (
-        reviewFilter.includes(review.rating)
-      ))
-    }
-  };
-
-
-  const options = [
-    { value: 'Relevance', label: 'Relevance' },
-    { value: 'Helpful', label: 'Helpful' },
-    { value: 'Newest', label: 'Newest' }
-  ];
-
   // This useEffect is fetching the reviews from a specific product ID. It is then changing the state of the reviews var to include all of the review data.
   // This will only run on mount
   useEffect(() => {
@@ -65,11 +50,11 @@ var Reviews = () => {
         axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/reviews/meta?product_id=${productID}`, config)
           .then(responseReviewsMeta => {
             makeReviewsMeta(responseReviewsMeta.data)
-            makeReviewsSortedByHelpfulness(reviewHelpers.sortReviewsByHelpfulness(responseReviews.data.results));
-            makeReviewsSortedByDate(reviewHelpers.sortReviewsByDate(responseReviews.data.results));
-            let sortedReviewsHelpfulness = reviewHelpers.sortReviewsByHelpfulness(responseReviews.data.results);
-            let sortedReviewsDate = reviewHelpers.sortReviewsByDate(responseReviews.data.results);
-            let sortedReviewsRelevance = reviewHelpers.relevantReviewSorter(sortedReviewsHelpfulness, sortedReviewsDate);
+            makeReviewsSortedByHelpfulness(sorters.sortReviewsByHelpfulness(responseReviews.data.results));
+            makeReviewsSortedByDate(sorters.sortReviewsByDate(responseReviews.data.results));
+            let sortedReviewsHelpfulness = sorters.sortReviewsByHelpfulness(responseReviews.data.results);
+            let sortedReviewsDate = sorters.sortReviewsByDate(responseReviews.data.results);
+            let sortedReviewsRelevance = sorters.relevantReviewSorter(sortedReviewsHelpfulness, sortedReviewsDate);
             makeReviewsSortedByRelevance(sortedReviewsRelevance);
             makeIsPageLoading(false);
           })
@@ -93,56 +78,75 @@ var Reviews = () => {
     }
   }
 
+  const filterFunction = (reviews, reviewFilter) => {
+    if (reviewFilter.length === 0) {
+      return reviews.filter((element, index) => (
+        index < numberOfReviews
+      ))
+    } else {
+      return reviews.filter(review => (
+        reviewFilter.includes(review.rating)
+      ))
+    }
+  };
+
+
+  const options = [
+    { value: 'Relevance', label: 'Relevance' },
+    { value: 'Helpful', label: 'Helpful' },
+    { value: 'Newest', label: 'Newest' }
+  ];
+
   // rendering componenet
 
   if (isPageloading) {
     return (
       <div>
-        {console.log('render')}
         Loading... Please Wait
       </div>
     )
   } else if (reviewsSortedByRelevance.length === 0) {
     return (
       <div>
-        {console.log('render')}
-        <button>Write New Review</button>
+        {<WriteNewReview />}
       </div>
     )
   } else {
     return (
-      <div className='reviewTiles'>
-      {console.log('render')}
-      <Ratings reviewsMeta={reviewsMeta} dispatchReviewFilters={dispatchReviewFilters} />
-      <div className='SelectBar'>
-        < Select options={options} value={reviewSorter} onChange={value => {changeSorting(value)}} />
-      </div>
-      {/* Shows reviews depending on the current value of the length variable, default is 2 */}
-      {reviewSorter.value === 'Relevance' ?
-        filterFunction(reviewsSortedByRelevance, reviewFilters)
-        .filter((element, index) => (
-          index < numberOfReviews
-        ))
-        .map((review, index) => (
-          <ReviewTiles review={review} key={index}/>
-        )) :
-        reviewSorter.value === 'Helpful' ?
-          reviewsSortedByHelpfulness
-          .filter((element, index) => (
-            index < numberOfReviews
-          ))
-          .map((review, index) => (
-            <ReviewTiles review={review} key={index}/>
-          )) :
-          reviewHelpers.filterReviewsByLength(reviewsSortedByDate, numberOfReviews).map((review, index) => (
-            <ReviewTiles review={review} key={index}/>
-          ))
-      }
-      {/* This shows a "Click for more reviews" button which will increment the length variable by 2 and show 2 more reviews. If there are no more reviews, the button will disappear*/}
-        {reviewsSortedByRelevance.length > numberOfReviews ?
-          <button onClick={() => makeNumberOfReviews(numberOfReviews + 2)}>Click for more reviews</button> :
-          null
-        }
+      <div className='ratingsAndReviews'>
+        <div className='ratings'>
+          <Ratings reviewsMeta={reviewsMeta} reviewFilters={reviewFilters} dispatchReviewFilters={dispatchReviewFilters} key={reviewsMeta.product_id} />
+        </div>
+        <div className='selectBar'>
+          < Select options={options} value={reviewSorter} onChange={value => {changeSorting(value)}} />
+        </div>
+        <div className='reviewTiles'>
+          {reviewSorter.value === 'Relevance' ?
+            filterFunction(reviewsSortedByRelevance, reviewFilters)
+            .map((review, index) => (
+              <ReviewTiles review={review} key={index}/>
+            )) :
+            reviewSorter.value === 'Helpful' ?
+              filterFunction(reviewsSortedByHelpfulness, reviewFilters)
+              .map((review, index) => (
+                <ReviewTiles review={review} key={index}/>
+              )) :
+              filterFunction(reviewsSortedByDate, reviewFilters)
+              .map((review, index) => (
+                <ReviewTiles review={review} key={index}/>
+              ))
+          }
+        </div>
+        {/* This shows a "Click for more reviews" button which will increment the length variable by 2 and show 2 more reviews. If there are no more reviews, the button will disappear*/}
+        <div className="showMoreButton">
+          {reviewsSortedByRelevance.length > numberOfReviews && reviewFilters.length === 0 ?
+            <button onClick={() => makeNumberOfReviews(numberOfReviews + 2)}>Click for more reviews</button> :
+            <div></div>
+          }
+        </div>
+        <div>
+          {<WriteNewReview />}
+        </div>
       </div>
     )
   }
