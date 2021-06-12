@@ -11,20 +11,21 @@ const auth = {
   }
 };
 
-function QAMain() {
+function QAMain(props) {
   //full list of questions
-  const [fullQuestionsList, setFullQuestionsList] = useState([])
+  const [fullQuestionsList, setFullQuestionsList] = useState([]);
   // questions to render (either full list or filtered)
   const [questions, setQuestions] = useState([]);
   const [searchPhrase, setSearchPhrase] = useState('');
 
+  //render Q's on initial upload
   useEffect(() => {
-    getQuestions();
+    getQuestions(props.product.id);
   }, [])
 
-  function getQuestions() {
+   function getQuestions(id) {
     //edit product id later on based on default item/clicked item
-    axios.get(`${url}/qa/questions?count=100&product_id=16057`, auth)
+    axios.get(`${url}/qa/questions?count=100&product_id=${id}`, auth)
       .then((response) => {
         // sort questions by helpfullness
         var sortedQuestions = response.data.results.sort(function (a, b) {
@@ -66,8 +67,8 @@ function QAMain() {
   return (
     <div id="QAContainer">
       <h1>Questions & Answers</h1>
-      <SearchBar searchPhrase={searchPhrase} searchHandler={searchHandler} />
-      <QAList questions={questions} />
+      <SearchBar searchPhrase={searchPhrase} searchHandler={searchHandler} setSearchPhrase={setSearchPhrase}/>
+      <QAList questions={questions} getQuestions={getQuestions} />
     </div>
   )
 }

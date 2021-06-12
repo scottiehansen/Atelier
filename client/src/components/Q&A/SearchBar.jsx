@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 
 function SearchBar(props){
 
-  function getSearchTerm(event){
+  function getSearchPhrase(event){
     props.searchHandler(event.target.value)
+    // props.setSearchPhrase(event.target.value)
   }
 
   return(
@@ -11,8 +12,8 @@ function SearchBar(props){
       <input
         type='text'
         placeholder='HAVE A QUESTION? SEARCH FOR ANSWERS...'
-        value={props.searchTerm}
-        onChange={getSearchTerm}
+        value={props.searchPhrase}
+        onChange={getSearchPhrase}
         ></input>
     </div>
   )

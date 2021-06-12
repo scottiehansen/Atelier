@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import QAMain from './Q&A/QAMain.jsx'
-const keys = require('../config/config.js')
+// const keys = require('../config/config.js')
 
 class App extends React.Component {
   constructor(props) {
@@ -17,21 +17,26 @@ class App extends React.Component {
   }
 
 
-  getProducts () {
+  getProducts() {
     axios.get('/products')
-    .then(response => {
-      console.log(response.data)
-    })
-    .catch(err => console.log(err))
+      .then(response => {
+        console.log(response.data)
+        this.setState({ products: response.data })
+      })
+      .catch(err => console.log(err))
   }
 
 
-  render () {
-    return (
-      <div>
-        <QAMain/>
-      </div>
-    )
+  render() {
+    if (this.state.products.length === 0) {
+      return <div>...loading</div>
+    } else {
+      return (
+        <div>
+          <QAMain product={this.state.products[1]} />
+        </div>
+      )
+    }
   }
 
 }

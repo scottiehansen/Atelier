@@ -15,6 +15,7 @@ function Question(props) {
 
   const [answersLimit, setAnswersLimit] = useState(2);
   const [markedHelpful, setMarkedHelpful] = useState(false);
+  console.log('is question helpful?', markedHelpful)
 
   //sorts by seller's answers and then by helpfulness
   const answersArr = Object.values(props.question.answers).sort(function(a, b) {
@@ -46,8 +47,7 @@ function Question(props) {
       };
       axios.put(`${url}/qa/${event.target.name}/${id}/helpful`, newHelpfulness, auth)
         .then((response) => {
-          //re-render list based on filtered or unfiltered - scratching this and doing a surface level showing of the number
-          console.log(`updated helpfulness on ${event.target.name} w/ id: ${id}`)
+          props.getQuestions();
         })
         .catch((err) => {
           console.log(err);
@@ -64,10 +64,9 @@ function Question(props) {
           <button
             className="link-button"
             name="questions"
-            onClick={!markedHelpful ? ()=>{updateHelpfulness(event, props.id, props.question.question_helpfulness);          setMarkedHelpful(true)
-            } : null}
+            onClick={!markedHelpful ? ()=>{updateHelpfulness(event, props.id, props.question.question_helpfulness); setMarkedHelpful(true)} : null}
           >Yes</button>
-          ({(!markedHelpful) ? props.question.question_helpfulness : props.question.question_helpfulness + 1}) |
+          ({props.question.question_helpfulness}) |
           <button className="link-button">Add Answer</button>
         </span>
       </div>
