@@ -7,6 +7,7 @@ import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+import {FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, PinterestShareButton, PinterestIcon} from 'react-share';
 const key = require('/server/config/config.js');
 
 function MainProduct (props) {
@@ -95,17 +96,13 @@ function MainProduct (props) {
   }
 
   const handleSizeChange = (e) => {
-    console.log(e.target.selectedIndex);
-    console.log(quantities)
     let quantity = quantities[e.target.selectedIndex];
-    console.log(quantity);
     let numberArray = ['-'];
     let i = 1;
     while (i <= quantity && i <= 15) {
       numberArray.push(i);
       i++;
     }
-    console.log(numberArray);
     setSelectedQuantity(numberArray);
   }
 
@@ -126,6 +123,15 @@ function MainProduct (props) {
       <h4>category: {item.category}</h4>
       <p>description: {item.description} style ID: {styleId}</p>
       {features.map((feature, index) => <ProductFeatures feature={feature} key={index} />)}
+      <FacebookShareButton url={''}>
+        <FacebookIcon size={30} />
+      </FacebookShareButton>
+      <TwitterShareButton url={''}>
+        <TwitterIcon size={30}/>
+      </TwitterShareButton>
+      <PinterestShareButton url={''}>
+        <PinterestIcon size={30}/>
+      </PinterestShareButton>
     </div>
   )
 }
