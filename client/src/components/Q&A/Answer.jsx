@@ -3,6 +3,7 @@ import axios from 'axios'
 
 function Answer(props) {
   const [markedHelpful, setMarkedHelpful] = useState(false);
+  const [reported, setReported] = useState(false);
 
   //convert ISO time stamp to time obj and then to useable format
   var dateStr = props.answer.date;
@@ -18,15 +19,15 @@ function Answer(props) {
     <li>
       <p>{props.answer.body}</p>
       <span>
-        by {props.answer.answerer_name}, {formattedDate} | Helpful?
+        by {(props.answer.answerer_name === "Seller") ?<strong>{props.answer.answerer_name}</strong> : props.answer.answerer_name}, {formattedDate} | Helpful?
         <button
           className="link-button"
           name="answers"
           onClick={!markedHelpful ? ()=>{props.updateHelpfulness(event, props.id, props.answer.helpfulness); setMarkedHelpful(true)} : null}
         >Yes</button>
-        ({props.answer.helpfulness})
+        ({!markedHelpful ? props.answer.helpfulness : props.answer.helpfulness + 1})
         |
-        <button className="link-button">Report</button>
+        <button className="link-button" onClick={() => {setReported(true)}}>{(reported) ? 'Reported' : 'Report'}</button>
       </span>
     </li>
   )

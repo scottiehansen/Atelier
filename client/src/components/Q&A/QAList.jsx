@@ -27,21 +27,3 @@ function QAList(props) {
 
 export default QAList;
 
-// function QAList(){
-
-//   return(
-//     <div className="QAList">
-//       <div className="QAItem">
-//         <div className="Question">
-//           <span>Q: question body</span>
-//           <span>Helpful?</span>
-//           <span>Yes Btn</span>
-//           <span>Add Answer</span>
-//         </div>
-//         <div className="Answers">
-
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }

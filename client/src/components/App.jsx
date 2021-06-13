@@ -39,9 +39,9 @@ class App extends React.Component {
     }
     return (
       <div className='reviews'>
-        <MainProduct item={this.state.products[2]} />
+        {/* <MainProduct item={this.state.products[2]} />
         <StarRender item={this.state.products[2]} />
-        <Reviews />
+        <Reviews /> */}
         <QAMain product={this.state.products[2]} />
 
       </div>

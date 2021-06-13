@@ -54,6 +54,7 @@ function QAMain(props) {
         }
       })
       if (filteredQuestions.length > 0) {
+        console.log(filteredQuestions)
         setQuestions(filteredQuestions)
       } else {
         setQuestions(fullQuestionsList)

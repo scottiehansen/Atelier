@@ -7,7 +7,7 @@ import axios from 'axios'
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax';
 const auth = {
   headers: {
-    Authorization: token.API_KEY
+    Authorization: token
   }
 };
 
@@ -15,7 +15,6 @@ function Question(props) {
 
   const [answersLimit, setAnswersLimit] = useState(2);
   const [markedHelpful, setMarkedHelpful] = useState(false);
-  console.log('is question helpful?', markedHelpful)
 
   //sorts by seller's answers and then by helpfulness
   const answersArr = Object.values(props.question.answers).sort(function(a, b) {
@@ -47,7 +46,8 @@ function Question(props) {
       };
       axios.put(`${url}/qa/${event.target.name}/${id}/helpful`, newHelpfulness, auth)
         .then((response) => {
-          props.getQuestions();
+          //re-render with fresh data (commented out because I am doing a surface level update)
+          // props.getQuestions();
         })
         .catch((err) => {
           console.log(err);
@@ -66,7 +66,10 @@ function Question(props) {
             name="questions"
             onClick={!markedHelpful ? ()=>{updateHelpfulness(event, props.id, props.question.question_helpfulness); setMarkedHelpful(true)} : null}
           >Yes</button>
-          ({props.question.question_helpfulness}) |
+          {/* ( {props.question.question_helpfulness}) */}
+          |
+          ({!markedHelpful ? props.question.question_helpfulness : props.question.question_helpfulness + 1})
+          |
           <button className="link-button">Add Answer</button>
         </span>
       </div>
