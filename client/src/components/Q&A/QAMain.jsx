@@ -16,7 +16,7 @@ function QAMain(props) {
   const [fullQuestionsList, setFullQuestionsList] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [searchPhrase, setSearchPhrase] = useState('');
-  const [ questionsLimit, setQuestionsLimit ] = useState(2);
+  const [questionsLimit, setQuestionsLimit] = useState(2);
   const [temporaryQuestion, setTemporaryQuestion] = useState('');
 
   //render Q's on initial upload
@@ -24,7 +24,8 @@ function QAMain(props) {
     getQuestions(props.product.id);
   }, [])
 
-   function getQuestions(id) {
+  // get and sort all questions by helpfulness
+  function getQuestions(id) {
     axios.get(`${url}/qa/questions?count=100&product_id=${id}`, auth)
       .then((response) => {
         // sort questions by helpfullness
@@ -66,7 +67,7 @@ function QAMain(props) {
   }
 
   // added functionality to render more questions on click
-  var moreQuestions = (questionsLimit >= questions.length) ? null : <button onClick={()=>(setQuestionsLimit(questionsLimit + 2))}>MORE ANSWERED QUESTIONS</button>
+  var moreQuestions = (questionsLimit >= questions.length) ? null : <button onClick={() => (setQuestionsLimit(questionsLimit + 2))}>MORE ANSWERED QUESTIONS</button>
 
   return (
     <div id="QAContainer">

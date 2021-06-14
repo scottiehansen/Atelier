@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal';
-import { useForm } from 'react-hook-form'
+// import { useForm } from 'react-hook-form'
 import token from '../../../../server/config/config.js'
 import axios from 'axios'
 
@@ -13,20 +13,20 @@ const auth = {
 };
 
 const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
   }
 };
 
 // needed so screen readers don't see main content when modal is opened - must bind modal to your appElement
 Modal.setAppElement('#app');
 
-function NewQuestion(props){
+function NewQuestion(props) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [values, setValues] = useState({
     newQuestion: "",
@@ -35,14 +35,14 @@ function NewQuestion(props){
   })
   const [errors, setErrors] = useState({})
 
-  function handleChange(e){
+  function handleChange(e) {
     setValues({
       ...values,
       [e.target.name]: e.target.value
     })
   }
 
-  function handleSubmit(event){
+  function handleSubmit(event) {
     event.preventDefault();
     var validationErrors = validate(values)
     // if no errors
@@ -73,23 +73,30 @@ function NewQuestion(props){
   function validate(values) {
     var err = {}
 
-    if(!values.newQuestion) {
-      // err.newQuestion = "Question is required"
-      err.newQuestion = "Question"
-
+    if (!values.newQuestion) {
+      err.newQuestion = "Question is required"
+      // err.newQuestion = "Question"
+    } else if (values.newQuestion.length > 1000) {
+      // err.newQuestion = "Question"
+      err.NewQuestion = "Question character count cannot exceed 1000 characters"
     }
 
-    if(!values.nickname.trim()) {
-      // err.nickname = "Nickname is required"
-      err.nickname = "Nickname"
+    if (!values.nickname.trim()) {
+      err.nickname = "Nickname is required"
+      // err.nickname = "Nickname"
+    } else if (values.nickname.length > 60) {
+      // err.newQuestion = "Nickname"
+      err.newQuestion = "Nickname character count cannot exceed 60 characters"
     }
 
-    if(!values.email){
-      // err.email = "Email is required"
-      err.email = "Email"
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)){
-      // err.email = "Email address is invalid"
-      err.email = "Email"
+    if (!values.email) {
+      err.email = "Email is required"
+      // err.email = "Email"
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+      err.email = "Email address is invalid"
+      // err.email = "Email"
+    } else if (values.email.length > 60) {
+      err.email = "Email character count cannot exceed 60 characters"
     }
 
     return err;
@@ -97,7 +104,7 @@ function NewQuestion(props){
 
   return (
     <React.Fragment>
-      <button onClick={() => {setModalIsOpen(true)}}>ADD A QUESTION +</button>
+      <button onClick={() => { setModalIsOpen(true) }}>ADD A QUESTION +</button>
       <Modal
         isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}
         // style={Modal.defaultStyles}
@@ -107,6 +114,7 @@ function NewQuestion(props){
         <h6>About the {props.productName}</h6>
 
         <form onSubmit={handleSubmit}>
+          {(JSON.stringify(errors) !== "{}") && <p style={{ color: "red" }}>You must enter the following:</p>}
           <label>Your Question *</label>
           <input
             type="text" placeholder=""
@@ -114,7 +122,7 @@ function NewQuestion(props){
             value={values.newQuestion}
             onChange={handleChange}
           />
-          {/* {errors.newQuestion && <p style={{color: "red"}}>{errors.newQuestion}</p>} */}
+          {errors.newQuestion && <p style={{ color: "red" }}>{errors.newQuestion}</p>}
           <br></br>
 
           <label>What is your nickname *</label>
@@ -125,7 +133,7 @@ function NewQuestion(props){
             value={values.nickname}
             onChange={handleChange}
           />
-          {/* {errors.nickname && <p style={{color: "red"}}>{errors.nickname}</p>} */}
+          {errors.nickname && <p style={{ color: "red" }}>{errors.nickname}</p>}
           <p>For privacy reasons, do not use your full name or email address</p>
           <br></br>
 
@@ -138,22 +146,22 @@ function NewQuestion(props){
             value={values.email}
             onChange={handleChange}
           />
-          {/* {errors.email && <p style={{color: "red"}}>{errors.email}</p>} */}
+          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
           <p>For authentication reasons, you will not be emailed</p>
           <br></br>
 
-          {(JSON.stringify(errors) !== "{}") && <p style={{color: "red"}}>You must enter the following:</p>}
+          {/* {(JSON.stringify(errors) !== "{}") && <p style={{color: "red"}}>You must enter the following:</p>}
           {errors.question && <p style={{color: "red"}}>{errors.question}</p>}
           {errors.nickname && <p style={{color: "red"}}>{errors.nickname}</p>}
-          {errors.email && <p style={{color: "red"}}>{errors.email}</p>}
+          {errors.email && <p style={{color: "red"}}>{errors.email}</p>} */}
 
           <input
             type="submit"
-            />
+          />
 
         </form>
 
-        <button onClick={() => {setModalIsOpen(false)}}>Close</button>
+        <button onClick={() => { setModalIsOpen(false) }}>Close</button>
       </Modal>
     </React.Fragment>
   )
