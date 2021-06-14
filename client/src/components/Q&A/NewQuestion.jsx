@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal';
 import { useForm } from 'react-hook-form'
+import token from '../../../../server/config/config.js'
+import axios from 'axios'
+
+//duplicate code, consider moving
+const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax';
+const auth = {
+  headers: {
+    Authorization: token
+  }
+};
 
 const customStyles = {
   content : {
@@ -34,13 +44,30 @@ function NewQuestion(props){
 
   function handleSubmit(event){
     event.preventDefault();
-    // if validation object is empty (no errors) submit form
+    var validationErrors = validate(values)
+    // if no errors
+    if (JSON.stringify(validationErrors) === "{}") {
+      console.log('no errors found')
+      var question = {
+        body: values.newQuestion,
+        name: values.nickname,
+        email: values.email,
+        product_id: props.productId
+      }
+      console.log(question)
       // send post request
-        // shallow render of the question
-    // otherwise
-      // set errors
-      // close modal
-    setErrors(validate(values))
+      axios.post(`${url}/qa/questions`, question, auth)
+        .then((response) => {
+          console.log(response.data)
+          // shallow render of the question
+          props.setTemporaryQuestion(values.newQuestion)
+          // close modal
+          setModalIsOpen(false)
+        })
+    } else {
+      setErrors(validate(values))
+      console.log('errors found')
+    }
   }
 
   function validate(values) {
@@ -119,10 +146,9 @@ function NewQuestion(props){
           {errors.question && <p style={{color: "red"}}>{errors.question}</p>}
           {errors.nickname && <p style={{color: "red"}}>{errors.nickname}</p>}
           {errors.email && <p style={{color: "red"}}>{errors.email}</p>}
+
           <input
             type="submit"
-            placeholder=""
-            name=""
             />
 
         </form>
