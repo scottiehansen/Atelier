@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Question from './Question.jsx'
+import NewQuestion from './NewQuestion.jsx'
 
 function QAList(props) {
   const [ questionsLimit, setQuestionsLimit ] = useState(2);
@@ -18,8 +19,10 @@ function QAList(props) {
           />
         ))}
       </ul>
-      {moreQuestions}
-      <button>ADD A QUESTION +</button>
+      <div>
+        {moreQuestions}
+        <NewQuestion productName={props.productName} productId={props.productId}/>
+      </div>
     </div>
 
   )

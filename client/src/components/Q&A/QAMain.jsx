@@ -69,7 +69,7 @@ function QAMain(props) {
     <div id="QAContainer">
       <h1>Questions & Answers</h1>
       <SearchBar searchPhrase={searchPhrase} searchHandler={searchHandler} setSearchPhrase={setSearchPhrase}/>
-      <QAList questions={questions} getQuestions={getQuestions} />
+      <QAList questions={questions} getQuestions={getQuestions} productName={props.product.name} productId={props.product.id}/>
     </div>
   )
 }
