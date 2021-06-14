@@ -33,6 +33,7 @@ function QAMain(props) {
         });
         setFullQuestionsList(sortedQuestions);
         setQuestions(sortedQuestions);
+        setTemporaryQuestion('');
       })
       .catch((err) => {
         console.log(err);
