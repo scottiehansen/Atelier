@@ -6,7 +6,10 @@ import StarRender from './productDetails/StarRender.jsx';
 import MainProduct from './productDetails/MainProduct.jsx';
 import QAMain from './Q&A/QAMain.jsx';
 
-
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 class App extends React.Component {
   constructor(props) {
@@ -39,12 +42,23 @@ class App extends React.Component {
       )
     }
     return (
-      <div className='reviews'>
-        <MainProduct item={this.state.products[0]} />
-        <StarRender item={this.state.products[0]} />
+      <div>
+        <Navbar bg='dark' variant='dark' expand='lg'>
+          <Container>
+            <Navbar.Brand>Project Catwalk</Navbar.Brand>
+            <Nav>
+              <Nav.Link>Home</Nav.Link>
+              <Nav.Link>Our Story</Nav.Link>
+              <NavDropdown title='Products'>
+                <NavDropdown.Item>1</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Container>
+        </Navbar>
+        <MainProduct item={this.state.products[2]} />
+        <StarRender item={this.state.products[2]} />
         <Reviews />
         <QAMain product={this.state.products[2]} />
-
       </div>
     )
   }

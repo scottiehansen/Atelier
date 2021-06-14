@@ -5,10 +5,17 @@ import ProductImages from './ProductImages.jsx';
 import Styles from './Styles.jsx';
 import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
+
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+
 import {FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, PinterestShareButton, PinterestIcon} from 'react-share';
+import Button from 'react-bootstrap/Button';
+
+import '/client/dist/style.css';
+
 const key = require('/server/config/config.js');
+
 
 function MainProduct (props) {
   const [item, setItem] = useState({});
@@ -61,6 +68,7 @@ function MainProduct (props) {
       setSalePrice(imageStyleResponse.data.results[0].sale_price);
     }
     getSizesAndQuantities(imageStyleResponse.data.results[0].skus);
+    setSelectedQuantity(['-']);
   }, [])
 
 
@@ -118,7 +126,7 @@ function MainProduct (props) {
       <select>
         {selectedQuantity.map((number, index) => <Quantity number={number} key={index}/>)}
       </select>
-      <button>Add to Cart</button>
+      <Button variant='outline-secondary' size='lg'>Add to Cart</Button>
       {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange}/>)}
       <h4>category: {item.category}</h4>
       <p>description: {item.description} style ID: {styleId}</p>
