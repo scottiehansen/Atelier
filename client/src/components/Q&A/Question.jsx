@@ -75,7 +75,7 @@ function Question(props) {
       </div>
       <div className="answers">
         <ul>
-          <p>A: </p>
+          {(answersArr.length === 0) ? null : <p>A: </p>}
           {answersArr.slice(0, answersLimit).map(answer => (
             <Answer
               key={answer.id}

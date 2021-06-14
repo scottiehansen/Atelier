@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SearchBar from './SearchBar.jsx'
 import QAList from './QAList.jsx'
+import NewQuestion from './NewQuestion.jsx'
 import token from '../../../../server/config/config.js'
 import axios from 'axios'
 
@@ -17,6 +18,9 @@ function QAMain(props) {
   // questions to render (either full list or filtered)
   const [questions, setQuestions] = useState([]);
   const [searchPhrase, setSearchPhrase] = useState('');
+  const [ questionsLimit, setQuestionsLimit ] = useState(2);
+
+  var moreQuestions = (questionsLimit >= questions.length) ? null : <button onClick={()=>(setQuestionsLimit(questionsLimit + 2))}>MORE ANSWERED QUESTIONS</button>
 
   //render Q's on initial upload
   useEffect(() => {
@@ -69,7 +73,11 @@ function QAMain(props) {
     <div id="QAContainer">
       <h1>Questions & Answers</h1>
       <SearchBar searchPhrase={searchPhrase} searchHandler={searchHandler} setSearchPhrase={setSearchPhrase}/>
-      <QAList questions={questions} getQuestions={getQuestions} productName={props.product.name} productId={props.product.id}/>
+      <QAList questions={questions} getQuestions={getQuestions} questionsLimit={questionsLimit}/>
+      <div>
+        {moreQuestions}
+        <NewQuestion productName={props.productName} productId={props.productId}/>
+      </div>
     </div>
   )
 }

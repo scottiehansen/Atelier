@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal';
 import { useForm } from 'react-hook-form'
 
-// const customStyles = {
-//   content : {
-//     top                   : '50%',
-//     left                  : '50%',
-//     right                 : 'auto',
-//     bottom                : 'auto',
-//     marginRight           : '-50%',
-//     transform             : 'translate(-50%, -50%)'
-//   }
-// };
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 // needed so screen readers don't see main content when modal is opened - must bind modal to your appElement
 Modal.setAppElement('#app');
@@ -39,6 +39,7 @@ function NewQuestion(props){
         // shallow render of the question
     // otherwise
       // set errors
+      // close modal
     setErrors(validate(values))
   }
 
@@ -72,7 +73,8 @@ function NewQuestion(props){
       <button onClick={() => {setModalIsOpen(true)}}>ADD A QUESTION +</button>
       <Modal
         isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}
-        style={Modal.defaultStyles}
+        // style={Modal.defaultStyles}
+        style={customStyles}
       >
         <h3>Ask Your Question</h3>
         <h6>About the {props.productName}</h6>
@@ -103,7 +105,8 @@ function NewQuestion(props){
           <label>Your email *</label>
           <input
             type="text"
-            placeholder="Why did you like the product or not?"
+            // placeholder="Why did you like the product or not?"
+            placeholder="Example: jackson11@gmail.com"
             name="email"
             value={values.email}
             onChange={handleChange}
