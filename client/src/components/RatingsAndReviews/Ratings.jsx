@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import RatingsBreakdown from "./RatingsBreakdown.jsx";
 import ProductsBreakdown from "./ProductsBreakdown.jsx"
-import StarRatings from '../../../node_modules/react-star-ratings';
+import StarRatings from '../../../../node_modules/react-star-ratings';
 
 var Ratings = (props) => {
 
