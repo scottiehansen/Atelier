@@ -9,7 +9,7 @@ import Quantity from './Quantity.jsx';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-import {FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, PinterestShareButton, PinterestIcon} from 'react-share';
+import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, PinterestShareButton, PinterestIcon } from 'react-share';
 import Button from 'react-bootstrap/Button';
 
 import '/client/dist/style.css';
@@ -17,7 +17,7 @@ import '/client/dist/style.css';
 const key = require('/server/config/config.js');
 
 
-function MainProduct (props) {
+function MainProduct(props) {
   const [item, setItem] = useState({});
   const [features, setFeatures] = useState([]);
   const [mainImage, setMainImage] = useState('');
@@ -25,7 +25,8 @@ function MainProduct (props) {
   const [originalPrice, setOriginalPrice] = useState('');
   const [salePrice, setSalePrice] = useState('');
   const [availableStyles, setAvailableStyles] = useState([]);
-  const [styleId, setStyleId] = useState('')
+  const [styleId, setStyleId] = useState('');
+  const [selectedStyle, setSelectedStyle] = useState('');
   const [sizes, setSizes] = useState([]);
   const [quantities, setQuantities] = useState([]);
   const [resultIndex, setResultIndex] = useState(0);
@@ -38,8 +39,8 @@ function MainProduct (props) {
     let quantitiesArray = ['-'];
     for (var keys in object) {
       if (object[keys].quantity > 0) {
-        sizesArray.push(object[keys].size)
-        quantitiesArray.push(object[keys].quantity)
+        sizesArray.push(object[keys].size);
+        quantitiesArray.push(object[keys].quantity);
       }
     }
     setSizes(sizesArray);
@@ -50,7 +51,7 @@ function MainProduct (props) {
   useEffect(async (index = 0) => {
     setItem(props.item);
     const config = {
-      headers: {Authorization: `${key.API_KEY}`}
+      headers: { Authorization: `${key.API_KEY}` }
     };
     const [featureResponse, imageStyleResponse] = await Promise.all([
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/products/${props.item.id}`, config),
@@ -74,10 +75,10 @@ function MainProduct (props) {
 
   const handleImageClick = (index) => {
     const config = {
-      headers: {Authorization: `${key.API_KEY}`}
+      headers: { Authorization: `${key.API_KEY}` }
     };
     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/products/${props.item.id}/styles`, config)
-      .then (response => {
+      .then(response => {
         setMainImage(response.data.results[resultIndex].photos[index].url);
         setSubImages(response.data.results[resultIndex].photos);
       })
@@ -85,10 +86,10 @@ function MainProduct (props) {
 
   const handleStyleChange = (index) => {
     const config = {
-      headers: {Authorization: `${key.API_KEY}`}
+      headers: { Authorization: `${key.API_KEY}` }
     };
     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/products/${props.item.id}/styles`, config)
-      .then (response => {
+      .then(response => {
         setMainImage(response.data.results[index].photos[0].url);
         setSubImages(response.data.results[index].photos);
         setStyleId(response.data.results[index].style_id);
@@ -114,20 +115,40 @@ function MainProduct (props) {
     setSelectedQuantity(numberArray);
   }
 
+  const priceRender = () => {
+    if (salePrice !== '') {
+      return (
+        <div>
+          <h3 style={{ textDecorationLine: 'line-through' }}>${originalPrice} </h3> <h3 style={{ color: 'red' }}>SALE ${salePrice}</h3>
+        </div>
+      )
+    } else {
+      return (
+        <h3>${originalPrice}</h3>
+      )
+    }
+  }
+
   return (
     <div>
-      <img src={mainImage} />
-      {subImages.map((image, index) => <ProductImages image={image} key={index} index={index} onClick={handleImageClick}/>)}
+      <div id='image_container'>
+        <img id='main_image' src={mainImage} />
+        <ul>
+          {subImages.map((image, index) => <ProductImages image={image} key={index} index={index} onClick={handleImageClick} />)}
+        </ul>
+      </div>
       <h1>{item.name}</h1>
-      <h3>$ {originalPrice} {salePrice}</h3>
-      <select onChange={handleSizeChange} >
-        {sizes.map((size, index) => <Sizes size={size} key={index} index={index} onChange={handleSizeChange} sizeIndex={sizeIndex}/> )}
+      {priceRender()}
+      <select className='sel' onChange={handleSizeChange} >
+        {sizes.map((size, index) => <Sizes size={size} key={index} index={index} onChange={handleSizeChange} sizeIndex={sizeIndex} />)}
       </select>
-      <select>
-        {selectedQuantity.map((number, index) => <Quantity number={number} key={index}/>)}
+      <select className='sel'>
+        {selectedQuantity.map((number, index) => <Quantity number={number} key={index} />)}
       </select>
       <Button variant='outline-secondary' size='lg'>Add to Cart</Button>
-      {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange}/>)}
+      <ul id='style_grid'>
+        {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} />)}
+      </ul>
       <h4>category: {item.category}</h4>
       <p>description: {item.description} style ID: {styleId}</p>
       {features.map((feature, index) => <ProductFeatures feature={feature} key={index} />)}
@@ -135,10 +156,10 @@ function MainProduct (props) {
         <FacebookIcon size={30} />
       </FacebookShareButton>
       <TwitterShareButton url={''}>
-        <TwitterIcon size={30}/>
+        <TwitterIcon size={30} />
       </TwitterShareButton>
       <PinterestShareButton url={''}>
-        <PinterestIcon size={30}/>
+        <PinterestIcon size={30} />
       </PinterestShareButton>
     </div>
   )
