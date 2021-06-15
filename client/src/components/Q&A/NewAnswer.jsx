@@ -33,8 +33,9 @@ function NewAnswer(props) {
     newAnswer: "",
     nickname: "",
     email: "",
-    photos: [],
   })
+  const [pictures, setPictures] = useState([])
+  const [picturePreviews, setPicturePreviews] = useState([])
 
   function handleChange(e) {
     setValues({
@@ -46,6 +47,7 @@ function NewAnswer(props) {
   function handleSubmit(event) {
     event.preventDefault();
     var validationErrors = validate(values)
+    console.log(validationErrors)
     // if no errors
     if (JSON.stringify(validationErrors) === "{}") {
       console.log('no errors found')
@@ -53,11 +55,8 @@ function NewAnswer(props) {
         body: values.newAnswer,
         name: values.nickname,
         email: values.email,
-        photos: values.photos
+        photos: picturePreviews
       }
-      console.log(answer);
-      console.log('question id', props.question.question_id)
-      // send post request
       axios.post(`${url}/qa/questions/${props.question.question_id}/answers`, answer, auth)
         .then((response) => {
           console.log(response.data)
@@ -95,12 +94,23 @@ function NewAnswer(props) {
       err.email = "Email character count cannot exceed 60 characters"
     }
 
+    // if(){
+    //   //photo errors
+    // }
+
     return err;
   }
 
-  function incrementPhotoCount(event){
+  function incrementPhotoCount(event) {
     event.preventDefault()
     setPhotoCount(photoCount + 1)
+  }
+
+  function fileSelectedHandler(event) {
+    console.log(event.target.files[0]);
+    setPictures([...pictures, event.target.files[0]])
+    setPicturePreviews([...picturePreviews, URL.createObjectURL(event.target.files[0])])
+
   }
 
   return (
@@ -116,6 +126,7 @@ function NewAnswer(props) {
         <h6>{props.productName}: {props.question.question_body}</h6>
 
         <form onSubmit={handleSubmit}>
+          {(JSON.stringify(errors) !== "{}") && <p style={{ color: "red" }}>You must enter the following:</p>}
           <label>Your Answer *</label>
           <input
             type="text"
@@ -133,6 +144,7 @@ function NewAnswer(props) {
             value={values.nickname}
             onChange={handleChange}
           />
+          {errors.nickname && <p style={{ color: "red" }}>{errors.nickname}</p>}
           <p>For privacy reasons, do not use your full name or email address</p>
           <br></br>
 
@@ -144,12 +156,19 @@ function NewAnswer(props) {
             value={values.email}
             onChange={handleChange}
           />
+          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
           <p>For authentication reasons, you will not be emailed</p>
           <br></br>
 
           <label>Upload your photos :</label>
-          {[...Array(photoCount)].map((fileUpload, index) => <input key={index} type="file"/>)}
+          {[...Array(photoCount)].map((fileUpload, index) => (
+            <div key={index}>
+              <input type="file" id={index} onChange={fileSelectedHandler} />
+              <img src={picturePreviews[index]} style={(picturePreviews[index] !== undefined) ? { width: 75, height: 75 } : {}} />
+            </div>
+          ))}
           {(photoCount >= 5) ? null : <button onClick={incrementPhotoCount}>Add Another Photo</button>}
+          {errors.photos && <p style={{ color: "red" }}>{errors.photos}</p>}
           <br></br>
 
           <input type="submit" />

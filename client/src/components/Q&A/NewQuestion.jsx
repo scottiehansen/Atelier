@@ -153,11 +153,6 @@ function NewQuestion(props) {
           <p>For authentication reasons, you will not be emailed</p>
           <br></br>
 
-          {/* {(JSON.stringify(errors) !== "{}") && <p style={{color: "red"}}>You must enter the following:</p>}
-          {errors.question && <p style={{color: "red"}}>{errors.question}</p>}
-          {errors.nickname && <p style={{color: "red"}}>{errors.nickname}</p>}
-          {errors.email && <p style={{color: "red"}}>{errors.email}</p>} */}
-
           <input
             type="submit"
           />
