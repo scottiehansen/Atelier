@@ -6,6 +6,9 @@ import Styles from './Styles.jsx';
 import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper.scss';
+
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
@@ -33,6 +36,7 @@ function MainProduct(props) {
   const [selectedSize, setSelectedSize] = useState('Selected Size');
   const [selectedQuantity, setSelectedQuantity] = useState([]);
   const [sizeIndex, setSizeIndex] = useState('');
+  const [shoppingCart, setShoppingCart] = useState([])
 
   const getSizesAndQuantities = (object) => {
     let sizesArray = ['Select Size'];
@@ -137,18 +141,20 @@ function MainProduct(props) {
           {subImages.map((image, index) => <ProductImages image={image} key={index} index={index} onClick={handleImageClick} />)}
         </ul>
       </div>
-      <h1>{item.name}</h1>
-      {priceRender()}
-      <select className='sel' onChange={handleSizeChange} >
-        {sizes.map((size, index) => <Sizes size={size} key={index} index={index} onChange={handleSizeChange} sizeIndex={sizeIndex} />)}
-      </select>
-      <select className='sel'>
-        {selectedQuantity.map((number, index) => <Quantity number={number} key={index} />)}
-      </select>
-      <Button variant='outline-secondary' size='lg'>Add to Cart</Button>
-      <ul id='style_grid'>
-        {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} />)}
-      </ul>
+      <div id='col_style'>
+        <h1>{item.name}</h1>
+        {priceRender()}
+        <select className='sel' onChange={handleSizeChange} >
+          {sizes.map((size, index) => <Sizes size={size} key={index} index={index} onChange={handleSizeChange} sizeIndex={sizeIndex} />)}
+        </select>
+        <select className='sel'>
+          {selectedQuantity.map((number, index) => <Quantity number={number} key={index} />)}
+        </select>
+        <Button variant='outline-secondary' size='lg'>Add to Cart</Button>
+        <ul id='style_grid'>
+          {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} />)}
+        </ul>
+      </div>
       <h4>category: {item.category}</h4>
       <p>description: {item.description} style ID: {styleId}</p>
       {features.map((feature, index) => <ProductFeatures feature={feature} key={index} />)}

@@ -15,18 +15,22 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      products: []
+      products: [],
+      selectedProductIndex: 0
     }
+    this.selectProduct = this.selectProduct.bind(this);
+    this.getProducts = this.getProducts.bind(this);
   }
 
   componentDidMount() {
-    this.getProducts()
+    this.getProducts();
   }
 
 
   getProducts () {
     axios.get('/api/products')
     .then(response => {
+      console.log('products:', response.data)
       this.setState({
         products: response.data
       })
@@ -34,6 +38,12 @@ class App extends React.Component {
     .catch(err => console.log(err))
   }
 
+  selectProduct (index) {
+    console.log(index);
+    this.setState({
+      selectedProductIndex: index
+    })
+  }
 
   render () {
     if (this.state.products.length === 0) {
@@ -49,16 +59,16 @@ class App extends React.Component {
             <Nav>
               <Nav.Link>Home</Nav.Link>
               <Nav.Link>Our Story</Nav.Link>
-              <NavDropdown title='Products'>
-                <NavDropdown.Item>1</NavDropdown.Item>
+              <NavDropdown title='Products' >
+                {this.state.products.map((item, index) => <NavDropdown.Item onSelect={() => this.selectProduct(index)} index={index} key={item.id}>{item.name}</NavDropdown.Item>)}
               </NavDropdown>
             </Nav>
           </Container>
         </Navbar>
-        <MainProduct item={this.state.products[2]} />
-        <StarRender item={this.state.products[2]} />
+        <MainProduct item={this.state.products[this.state.selectedProductIndex]} /> {this.state.selectedProductIndex}
+        <StarRender item={this.state.products[this.state.selectedProductIndex]} />
         <Reviews />
-        <QAMain product={this.state.products[2]} />
+        <QAMain product={this.state.products[this.state.selectedProductIndex]} />
       </div>
     )
   }
