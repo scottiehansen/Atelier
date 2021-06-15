@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Answer from './Answer.jsx'
+import NewAnswer from './NewAnswer.jsx'
 import token from '../../../../server/config/config.js'
 import axios from 'axios'
 
@@ -66,11 +67,11 @@ function Question(props) {
             name="questions"
             onClick={!markedHelpful ? ()=>{updateHelpfulness(event, props.id, props.question.question_helpfulness); setMarkedHelpful(true)} : null}
           >Yes</button>
-          {/* ( {props.question.question_helpfulness}) */}
           |
           ({!markedHelpful ? props.question.question_helpfulness : props.question.question_helpfulness + 1})
           |
-          <button className="link-button">Add Answer</button>
+          {/* <button className="link-button">Add Answer</button> */}
+          <NewAnswer productName={props.productName} question={props.question}/>
         </span>
       </div>
       <div className="answers">

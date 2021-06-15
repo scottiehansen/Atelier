@@ -14,6 +14,7 @@ function QAList(props) {
             id={question.question_id}
             question={question}
             getQuestions={props.getQuestions}
+            productName={props.productName}
           />
         ))}
       </ul>

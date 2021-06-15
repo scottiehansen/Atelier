@@ -78,6 +78,7 @@ function QAMain(props) {
       />
 
       <QAList
+        productName={props.product.name}
         questions={questions}
         getQuestions={getQuestions}
         questionsLimit={questionsLimit}
