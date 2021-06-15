@@ -29,9 +29,9 @@ const Summary = (props) => {
         {props.reviewBody.length < 50 ?
           <div>
             <textarea placeholder='Why did you like the product or not?' value={props.reviewBody} onChange={handleReviewBody}/>
-              <div>
+            <div>
               Minimum required characters left: [{50 - props.reviewBody.length}]
-              </div>
+            </div>
           </div> :
           <div>
             <textarea placeholder='Why did you like the product or not?' value={props.reviewBody} onChange={handleReviewBody}/>
