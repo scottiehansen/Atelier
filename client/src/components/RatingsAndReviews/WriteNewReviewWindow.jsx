@@ -7,15 +7,7 @@ import Characteristics from './WriteNewReviewWindowComponents/Characteristics.js
 
 const WriteNewReviewWindow = (props) => {
   let [productRecommendation, changeProductRecommendation] = useState(null) // or no value
-  // let [productCharacteristics, makeProductCharacteristics] = useState({size: null, width: null, comfort: null, quality: null, length: null, fit: null})
-  let [productCharacteristics, dispatchProductCharacteristics] = useReducer((state={size: null, width: null, comfort: null, quality: null, length: null, fit: null}, action) => {
-    switch(action.type) {
-      case 'add':
-        return {...state, [action.characteristicType] : action.characteristicValue}
-      default:
-        return state;
-    }
-  }, []);
+  let [productCharacteristics, makeProductCharacteristics] = useState({Size: null, Width: null, Comfort: null, Quality: null, Length: null, productFit: null})
 
   if (props.showWindow) {
     return (
@@ -25,7 +17,7 @@ const WriteNewReviewWindow = (props) => {
           <h3>PLACEHOLDER PRODUCT NAME </h3>
           <div>Placeholder for stars component </div>
           <Recommendation productRecommendation={productRecommendation} changeProductRecommendation = {changeProductRecommendation} />
-          <Characteristics productCharacteristics={productCharacteristics} dispatchProductCharacteristics = {dispatchProductCharacteristics} />
+          <Characteristics productCharacteristics={productCharacteristics} makeProductCharacteristics = {makeProductCharacteristics} />
           <label>
             PLACEHOLDER LABEL:
             <textarea/>
