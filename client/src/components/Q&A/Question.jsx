@@ -16,6 +16,7 @@ function Question(props) {
 
   const [answersLimit, setAnswersLimit] = useState(2);
   const [markedHelpful, setMarkedHelpful] = useState(false);
+  const [temporaryAnswer, setTemporaryAnswer] = useState("")
 
   //sorts by seller's answers and then by helpfulness
   const answersArr = Object.values(props.question.answers).sort(function(a, b) {
@@ -71,12 +72,15 @@ function Question(props) {
           ({!markedHelpful ? props.question.question_helpfulness : props.question.question_helpfulness + 1})
           |
           {/* <button className="link-button">Add Answer</button> */}
-          <NewAnswer productName={props.productName} question={props.question}/>
+          <NewAnswer
+            productName={props.productName} question={props.question} setTemporaryAnswer={setTemporaryAnswer}
+          />
         </span>
       </div>
       <div className="answers">
         <ul>
           {(answersArr.length === 0) ? null : <p>A: </p>}
+          {temporaryAnswer && <li>{temporaryAnswer}</li>}
           {answersArr.slice(0, answersLimit).map(answer => (
             <Answer
               key={answer.id}

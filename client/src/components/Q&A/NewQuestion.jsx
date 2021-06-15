@@ -64,6 +64,9 @@ function NewQuestion(props) {
           // close modal
           setModalIsOpen(false)
         })
+        .catch((err) => {
+          console.log(err);
+        })
     } else {
       setErrors(validate(values))
       console.log('errors found')
