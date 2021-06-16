@@ -4,7 +4,7 @@ const key = require('./config/config.js')
 const controllers = {
   getProducts: (req, res) => {
     const config = {
-      headers: {Authorization: key}
+      headers: {Authorization: key.API_KEY}
     };
     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/products`, config)
       .then(response => {res.status(200).send(response.data)})
@@ -13,7 +13,7 @@ const controllers = {
   getReviews: (req, res) => {
     console.log(req);
     const config = {
-      headers: {Authorization: key},
+      headers: {Authorization: key.API_KEY},
       params: req.query
     };
     axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/reviews`, config)

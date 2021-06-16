@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import SearchBar from './SearchBar.jsx'
 import QAList from './QAList.jsx'
-import token from '../../../../server/config/config.js'
+const key = require('/server/config/config.js');
 import axios from 'axios'
 
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax';
 const auth = {
   headers: {
-    Authorization: token
+    Authorization: key.API_KEY
   }
 };
 
