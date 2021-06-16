@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 function ProductImages (props) {
   return (
-    <li className='sub_images_list'>
+    <SwiperSlide className='sub_images_list'>
       <img className='sub_images' onClick={() => props.onClick(props.index)} index={props.index} src={props.image.thumbnail_url}/>
-    </li>
+    </SwiperSlide>
   )
 }
 

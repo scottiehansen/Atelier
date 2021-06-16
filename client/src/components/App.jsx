@@ -30,7 +30,6 @@ class App extends React.Component {
   getProducts () {
     axios.get('/api/products')
     .then(response => {
-      console.log('products:', response.data)
       this.setState({
         products: response.data
       })

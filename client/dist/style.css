@@ -26,8 +26,8 @@
 
 #main_image {
   position: relative;
-  width: 700px;
-  height: 700px;
+  width: 800px;
+  height: 800px;
 }
 
 .sub_images {
@@ -44,7 +44,6 @@
 
 #style_grid {
   display: grid;
-
   list-style-type: none;
   grid-template-columns: repeat(4, 1fr);
 }

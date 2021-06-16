@@ -7,6 +7,7 @@ import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/components/scrollbar/scrollbar.scss';
 import 'swiper/swiper.scss';
 
 import "core-js/stable";
@@ -65,6 +66,8 @@ function MainProduct(props) {
     setMainImage(imageStyleResponse.data.results[index].photos[index].url);
     setSubImages(imageStyleResponse.data.results[index].photos);
     setAvailableStyles(imageStyleResponse.data.results);
+    console.log(imageStyleResponse.data.results);
+    setSelectedStyle(imageStyleResponse.data.results[index].name);
     setStyleId(imageStyleResponse.data.results[index].style_id);
     if (imageStyleResponse.data.results[index].sale_price === null) {
       setOriginalPrice(imageStyleResponse.data.results[0].original_price);
@@ -97,6 +100,7 @@ function MainProduct(props) {
         setMainImage(response.data.results[index].photos[0].url);
         setSubImages(response.data.results[index].photos);
         setStyleId(response.data.results[index].style_id);
+        setSelectedStyle(response.data.results[index].name);
         if (response.data.results[index].sale_price === null) {
           setOriginalPrice(response.data.results[index].original_price);
           setSalePrice('');
@@ -137,9 +141,17 @@ function MainProduct(props) {
     <div>
       <div id='image_container'>
         <img id='main_image' src={mainImage} />
-        <ul>
-          {subImages.map((image, index) => <ProductImages image={image} key={index} index={index} onClick={handleImageClick} />)}
-        </ul>
+        <Swiper
+          spaceBetween={50}
+          slidesPerView={7}
+          scrollbar={{draggable: true}}
+        >
+          {subImages.map((image, index) =>
+            <SwiperSlide key={index}>
+              <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => handleImageClick(index)}/>
+            </SwiperSlide>
+          )}
+        </Swiper>
       </div>
       <div id='col_style'>
         <h1>{item.name}</h1>
@@ -151,6 +163,7 @@ function MainProduct(props) {
           {selectedQuantity.map((number, index) => <Quantity number={number} key={index} />)}
         </select>
         <Button variant='outline-secondary' size='lg'>Add to Cart</Button>
+        <h4>Style > {selectedStyle}</h4>
         <ul id='style_grid'>
           {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} />)}
         </ul>
