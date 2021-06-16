@@ -88,6 +88,7 @@ function MainProduct(props) {
       .then(response => {
         setMainImage(response.data.results[resultIndex].photos[index].url);
         setSubImages(response.data.results[resultIndex].photos);
+
       })
   }
 
@@ -154,6 +155,7 @@ function MainProduct(props) {
         </Swiper>
       </div>
       <div id='col_style'>
+        <h5>Category: {item.category}</h5>
         <h1>{item.name}</h1>
         {priceRender()}
         <select className='sel' onChange={handleSizeChange} >
@@ -168,9 +170,12 @@ function MainProduct(props) {
           {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} />)}
         </ul>
       </div>
-      <h4>category: {item.category}</h4>
-      <p>description: {item.description} style ID: {styleId}</p>
+      <h5>Work the Runway</h5>
+      <p>{item.description}</p>
+      <p>Style ID: {styleId}</p>
+      <h5> Details: </h5>
       {features.map((feature, index) => <ProductFeatures feature={feature} key={index} />)}
+
       <FacebookShareButton url={''}>
         <FacebookIcon size={30} />
       </FacebookShareButton>

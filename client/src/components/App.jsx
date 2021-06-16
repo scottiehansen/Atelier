@@ -54,7 +54,6 @@ class App extends React.Component {
       <div>
         <Navbar bg='dark' variant='dark' expand='lg'>
           <Container>
-            <Navbar.Brand>Project Catwalk</Navbar.Brand>
             <Nav>
               <Nav.Link>Home</Nav.Link>
               <Nav.Link>Our Story</Nav.Link>
