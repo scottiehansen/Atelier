@@ -62,7 +62,7 @@ function MainProduct(props) {
   useEffect(async (index = 0) => {
     setItem(props.item);
     const config = {
-      headers: { Authorization: `${key.API_KEY}` }
+      headers: { Authorization: key }
     };
     const [featureResponse, imageStyleResponse] = await Promise.all([
       axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/products/${props.item.id}`, config),
@@ -148,8 +148,8 @@ function MainProduct(props) {
     <div>
       <div id='image_container'>
         <img id='main_image' src={mainImage} />
-        <button class="custom_prev">Custom Prev Btn</button>
-        <button class="custom_next">Custom Next Btn</button>
+        <button className="custom_prev">Custom Prev Btn</button>
+        <button className="custom_next">Custom Next Btn</button>
         <Swiper
           spaceBetween={5}
           slidesPerView={2}
@@ -159,7 +159,7 @@ function MainProduct(props) {
           }}
         >
           {subImages.map((image, index) =>
-            <div className='swiper-button-next'>
+            <div className='swiper-button-next' key={index}>
               <SwiperSlide key={index}>
                 <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => handleImageClick(index)} />
               </SwiperSlide>
