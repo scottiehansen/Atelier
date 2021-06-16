@@ -1,9 +1,10 @@
-import React from 'react';
-import {useState, useReducer} from 'react';
+import React from 'react'
+import {useState, useReducer} from 'react'
 import Recommendation from './WriteNewReviewWindowComponents/Recommendation.jsx'
 import Characteristics from './WriteNewReviewWindowComponents/Characteristics.jsx'
 import Summary from './WriteNewReviewWindowComponents/Summary.jsx'
 import Photos from './WriteNewReviewWindowComponents/Photos.jsx'
+import UserInfo from './WriteNewReviewWindowComponents/UserInfo.jsx'
 
 // YOU NEED TO PASS THE PRODUCT NAME DOWN AS A PROP TO THIS FUNCTION FROM THE APP FUNCTION
 
@@ -14,6 +15,8 @@ const WriteNewReviewWindow = (props) => {
   let [reviewBody, makeReviewBody] = useState('')
   let [photoURLs, makePhotoURLs] = useState([])
   let [photoURL, makePhotoURL] = useState('')
+  let [nickname, makeNickname] = useState('')
+  let [email, makeEmail] = useState('')
 
   if (props.showWindow) {
     return (
@@ -26,11 +29,8 @@ const WriteNewReviewWindow = (props) => {
           <Characteristics productCharacteristics={productCharacteristics} makeProductCharacteristics = {makeProductCharacteristics} />
           <Summary reviewSummary = {reviewSummary} reviewBody = {reviewBody} makeReviewSummary = {makeReviewSummary} makeReviewBody={makeReviewBody} />
           <Photos photoURLs={photoURLs} makePhotoURLs ={makePhotoURLs} photoURL={photoURL} makePhotoURL={makePhotoURL}/>
-          <label>
-            PLACEHOLDER LABEL:
-            <textarea/>
-          </label>
-          <input type="submit" value="Submit Review" on />
+          <UserInfo nickname={nickname} makeNickname={makeNickname} email={email} makeEmail = {makeEmail} />
+          <input type="submit" value="Submit Review"/>
         </form>
       </div>
     )
