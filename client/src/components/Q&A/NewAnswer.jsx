@@ -94,9 +94,7 @@ function NewAnswer(props) {
       err.email = "Email character count cannot exceed 60 characters"
     }
 
-    // if(){
-    //   //photo errors
-    // }
+    // validate photos: unsure how to do this since i'm currently sending blobs to the api
 
     return err;
   }

@@ -107,7 +107,7 @@ function NewQuestion(props) {
 
   return (
     <React.Fragment>
-      <button onClick={() => { setModalIsOpen(true) }}>ADD A QUESTION +</button>
+      <button className="boldTitle" onClick={() => { setModalIsOpen(true) }}>ADD A QUESTION +</button>
       <Modal
         isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}
         // style={Modal.defaultStyles}

@@ -1,6 +1,86 @@
+#QAContainer{
+  /* For center align */
+  margin: 0 auto;
+  /* For grow & shrink as per screen size change values as per your requirements */
+  width: 80%;
+  height: 50%;
+  display: grid;
+  grid-template-rows: 5% 12.5% 70% 12.5%;
+  row-gap: 10px;
+  font-family: sans-serif;
+}
+
 #QAList {
   overflow: auto;
   max-height: 45vh;
   max-width: 150vh;
-  width: 110vs;
 }
+
+div.question > span {
+  font-size: 10px;
+  justify-self: end;
+}
+
+li.answer > span {
+  font-size: 10px
+}
+
+div#SearchBar > input {
+  width: 100%;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+div.answers > ul {
+  padding-bottom: 15px
+}
+
+ul {
+  list-style: none;
+  padding: 0
+}
+
+#added-functionality {
+  align-self: center;
+}
+
+.boldTitle {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  text-decoration: underline;
+}
+
+.borderless-button {
+  border: none;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: white
+}
+
+.question {
+  display: grid;
+  grid-template-columns: 70% 30%
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: 2% 96%;
+  column-gap: 7.3px
+}
+
+.answer {
+  display: grid;
+  grid-template-rows: 50% 50%
+}
+
+
+h1 {
+  font-size: 12px
+}
+

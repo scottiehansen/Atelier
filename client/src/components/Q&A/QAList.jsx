@@ -5,9 +5,9 @@ import NewQuestion from './NewQuestion.jsx'
 function QAList(props) {
 
   return (
-    <div id="QAList">
-      <ul>
-        {props.temporaryQuestion && <li>Q: {props.temporaryQuestion}</li>}
+    <div id="QAList" >
+      <ul >
+        {props.temporaryQuestion && <li className="boldTitle">Q: {props.temporaryQuestion}</li>}
         {props.questions.slice(0, props.questionsLimit).map(question => (
           <Question
             key={question.question_id}

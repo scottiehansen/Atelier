@@ -36,9 +36,9 @@ function Question(props) {
   if(answersArr.length <= 2){
     moreAnswers = null;
   } else if(answersLimit === answersArr.length){
-    moreAnswers = <button onClick={() => (setAnswersLimit(2))}>Collapse answers</button>
+    moreAnswers = <button className="borderless-button" onClick={() => (setAnswersLimit(2))}>Collapse answers</button>
   } else if (answersArr.length > 2) {
-    moreAnswers = <button onClick={() => (setAnswersLimit(answersArr.length))}>See more answers</button>
+    moreAnswers = <button className="borderless-button" onClick={() => (setAnswersLimit(answersArr.length))}>See more answers</button>
   }
 
   // update helpfulness score on question or answer
@@ -56,11 +56,24 @@ function Question(props) {
         })
   }
 
+  /*
+  var temporaryAnswerDisplay;
+  if temporaryAnswer && answersArr.length > 0
+    <li style={{padding-left: 20px}}>{temporaryAnswer}</li>
+    OR
+    <li class="answer">
+      <p>{temporaryAnswer}</p>
+      <span>by Nickname</span>
+    </li>
+  else temporaryAnswer && answersArr is empty
+
+  */
+
 
   return (
     <li className="QA">
       <div className="question">
-        <p>Q: {props.question.question_body}</p>
+        <p className="boldTitle">Q: {props.question.question_body}</p>
         <span>
           Helpful?
           <button
@@ -68,7 +81,6 @@ function Question(props) {
             name="questions"
             onClick={!markedHelpful ? ()=>{updateHelpfulness(event, props.id, props.question.question_helpfulness); setMarkedHelpful(true)} : null}
           >Yes</button>
-          |
           ({!markedHelpful ? props.question.question_helpfulness : props.question.question_helpfulness + 1})
           |
           {/* <button className="link-button">Add Answer</button> */}
@@ -78,9 +90,9 @@ function Question(props) {
         </span>
       </div>
       <div className="answers">
+          {(answersArr.length === 0 && !temporaryAnswer) ? null : <p className="boldTitle">A: </p>}
         <ul>
-          {(answersArr.length === 0) ? null : <p>A: </p>}
-          {temporaryAnswer && <li>{temporaryAnswer}</li>}
+          {temporaryAnswer && <li className="tempAnswer">{temporaryAnswer}</li>}
           {answersArr.slice(0, answersLimit).map(answer => (
             <Answer
               key={answer.id}

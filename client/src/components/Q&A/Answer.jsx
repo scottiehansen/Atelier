@@ -16,7 +16,7 @@ function Answer(props) {
   var formattedDate = longEnUSFormatter.format(dateObj)
 
   return (
-    <li>
+    <li className="answer">
       <p>{props.answer.body}</p>
       <span>
         by {(props.answer.answerer_name === "Seller") ?<strong>{props.answer.answerer_name}</strong> : props.answer.answerer_name}, {formattedDate} | Helpful?
