@@ -3,6 +3,14 @@ import ReactStars from "react-rating-stars-component"
 
 const Stars = (props) => {
 
+  const starMessage = {
+    1: 'Poor',
+    2: 'Fair',
+    3: 'Average',
+    4: 'Good',
+    5: 'Great'
+  }
+
   return (
     <div>
       <ReactStars
@@ -11,6 +19,10 @@ const Stars = (props) => {
       size={24}
       activeColor="#ffd700"
       />
+      {props.stars === null ?
+      <div></div> :
+      <div>{starMessage[props.stars]}</div>
+      }
     </div>
   )
 }
