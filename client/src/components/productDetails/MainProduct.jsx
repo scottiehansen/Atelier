@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ProductFeatures from './ProductFeatures.jsx';
 import ProductImages from './ProductImages.jsx';
@@ -7,8 +7,14 @@ import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination, Scrollbar } from 'swiper';
+
+SwiperCore.use([Navigation]);
+
+import "swiper/swiper.scss";
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
-import 'swiper/swiper.scss';
 
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -142,22 +148,34 @@ function MainProduct(props) {
     <div>
       <div id='image_container'>
         <img id='main_image' src={mainImage} />
+        <button class="custom_prev">Custom Prev Btn</button>
+        <button class="custom_next">Custom Next Btn</button>
         <Swiper
-          spaceBetween={50}
-          slidesPerView={7}
-          scrollbar={{draggable: true}}
+          spaceBetween={5}
+          slidesPerView={2}
+          navigation={{
+            nextEl: ".custom_next",
+            prevEl: ".custom_prev"
+          }}
         >
           {subImages.map((image, index) =>
-            <SwiperSlide key={index}>
-              <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => handleImageClick(index)}/>
-            </SwiperSlide>
+            <div className='swiper-button-next'>
+              <SwiperSlide key={index}>
+                <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => handleImageClick(index)} />
+              </SwiperSlide>
+            </div>
           )}
         </Swiper>
+
       </div>
       <div id='col_style'>
         <h5>Category: {item.category}</h5>
         <h1>{item.name}</h1>
         {priceRender()}
+        <h4>Style > {selectedStyle}</h4>
+        <ul id='style_grid'>
+          {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} />)}
+        </ul>
         <select className='sel' onChange={handleSizeChange} >
           {sizes.map((size, index) => <Sizes size={size} key={index} index={index} onChange={handleSizeChange} sizeIndex={sizeIndex} />)}
         </select>
@@ -165,10 +183,6 @@ function MainProduct(props) {
           {selectedQuantity.map((number, index) => <Quantity number={number} key={index} />)}
         </select>
         <Button variant='outline-secondary' size='lg'>Add to Cart</Button>
-        <h4>Style > {selectedStyle}</h4>
-        <ul id='style_grid'>
-          {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} />)}
-        </ul>
       </div>
       <h5>Work the Runway</h5>
       <p>{item.description}</p>

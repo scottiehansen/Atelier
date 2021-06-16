@@ -37,10 +37,10 @@ class App extends React.Component {
     .catch(err => console.log(err))
   }
 
-  selectProduct (index) {
-    console.log(index);
+  selectProduct (e) {
+    console.log(e);
     this.setState({
-      selectedProductIndex: index
+      selectedProductIndex: e.target.id
     })
   }
 
@@ -58,7 +58,7 @@ class App extends React.Component {
               <Nav.Link>Home</Nav.Link>
               <Nav.Link>Our Story</Nav.Link>
               <NavDropdown title='Products' >
-                {this.state.products.map((item, index) => <NavDropdown.Item onSelect={() => this.selectProduct(index)} index={index} key={item.id}>{item.name}</NavDropdown.Item>)}
+                {this.state.products.map((item, index) => <NavDropdown.Item onClick={e => this.selectProduct(e)} id={index} key={item.id}>{item.name}</NavDropdown.Item>)}
               </NavDropdown>
             </Nav>
           </Container>
