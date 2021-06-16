@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import ReviewTiles from "./ReviewTiles.jsx";
-const key = require('../config/config.js');
+const key = require('/server/config/config.js');
 import Select from 'react-select';
 import sorters from './ReviewsSorters.jsx';
 import Ratings from './Ratings';
