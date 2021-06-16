@@ -17,58 +17,45 @@ function Question(props) {
   const [answersLimit, setAnswersLimit] = useState(2);
   const [markedHelpful, setMarkedHelpful] = useState(false);
   const [temporaryAnswer, setTemporaryAnswer] = useState("")
+  const [temporaryNickname, setTemporaryNickname] = useState("")
 
   //sorts by seller's answers and then by helpfulness
-  const answersArr = Object.values(props.question.answers).sort(function(a, b) {
-    if(a.answerer_name === "Seller" && b.answerer_name === "Seller") {
-      return  b.helpfulness - a.helpfulness;
-    } else if(a.answerer_name === "Seller"){
+  const answersArr = Object.values(props.question.answers).sort(function (a, b) {
+    if (a.answerer_name === "Seller" && b.answerer_name === "Seller") {
+      return b.helpfulness - a.helpfulness;
+    } else if (a.answerer_name === "Seller") {
       return -1;
     } else if (b.answerer_name === "Seller") {
       return 1;
     } else {
-      return  b.helpfulness - a.helpfulness;
+      return b.helpfulness - a.helpfulness;
     }
   });
 
   // renders desired number of answers on page with button to render more or less answers
   var moreAnswers;
-  if(answersArr.length <= 2){
+  if (answersArr.length <= 2) {
     moreAnswers = null;
-  } else if(answersLimit === answersArr.length){
+  } else if (answersLimit === answersArr.length) {
     moreAnswers = <button className="borderless-button" onClick={() => (setAnswersLimit(2))}>Collapse answers</button>
   } else if (answersArr.length > 2) {
     moreAnswers = <button className="borderless-button" onClick={() => (setAnswersLimit(answersArr.length))}>See more answers</button>
   }
 
   // update helpfulness score on question or answer
-  function updateHelpfulness(event, id, currentHelpfulness){
-      var newHelpfulness = {
-        helpfulness: currentHelpfulness + 1
-      };
-      axios.put(`${url}/qa/${event.target.name}/${id}/helpful`, newHelpfulness, auth)
-        .then((response) => {
-          //re-render with fresh data (commented out because I am doing a surface level update)
-          // props.getQuestions();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+  function updateHelpfulness(event, id, currentHelpfulness) {
+    var newHelpfulness = {
+      helpfulness: currentHelpfulness + 1
+    };
+    axios.put(`${url}/qa/${event.target.name}/${id}/helpful`, newHelpfulness, auth)
+      .then((response) => {
+        //re-render with fresh data (commented out because I am doing a surface level update)
+        // props.getQuestions();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
-
-  /*
-  var temporaryAnswerDisplay;
-  if temporaryAnswer && answersArr.length > 0
-    <li style={{padding-left: 20px}}>{temporaryAnswer}</li>
-    OR
-    <li class="answer">
-      <p>{temporaryAnswer}</p>
-      <span>by Nickname</span>
-    </li>
-  else temporaryAnswer && answersArr is empty
-
-  */
-
 
   return (
     <li className="QA">
@@ -79,20 +66,24 @@ function Question(props) {
           <button
             className="link-button"
             name="questions"
-            onClick={!markedHelpful ? ()=>{updateHelpfulness(event, props.id, props.question.question_helpfulness); setMarkedHelpful(true)} : null}
+            onClick={!markedHelpful ? () => { updateHelpfulness(event, props.id, props.question.question_helpfulness); setMarkedHelpful(true) } : null}
           >Yes</button>
           ({!markedHelpful ? props.question.question_helpfulness : props.question.question_helpfulness + 1})
           |
           {/* <button className="link-button">Add Answer</button> */}
           <NewAnswer
             productName={props.productName} question={props.question} setTemporaryAnswer={setTemporaryAnswer}
+            setTemporaryNickname={setTemporaryNickname}
           />
         </span>
       </div>
       <div className="answers">
-          {(answersArr.length === 0 && !temporaryAnswer) ? null : <p className="boldTitle">A: </p>}
+        {(answersArr.length === 0 && !temporaryAnswer) ? null : <p className="boldTitle">A: </p>}
         <ul>
-          {temporaryAnswer && <li className="tempAnswer">{temporaryAnswer}</li>}
+          {temporaryAnswer && (<li className="answer">
+            <p>{temporaryAnswer}</p>
+            <span>by {temporaryNickname}</span>
+          </li>)}
           {answersArr.slice(0, answersLimit).map(answer => (
             <Answer
               key={answer.id}

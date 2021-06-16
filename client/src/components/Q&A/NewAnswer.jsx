@@ -61,6 +61,7 @@ function NewAnswer(props) {
         .then((response) => {
           console.log(response.data)
           props.setTemporaryAnswer(values.newAnswer)
+          props.setTemporaryNickname(values.nickname)
           setModalIsOpen(false)
         })
         .catch((err) => {
