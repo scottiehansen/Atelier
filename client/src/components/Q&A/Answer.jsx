@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import token from '../../../../server/config/config.js'
 import axios from 'axios'
+
+const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax';
+const auth = {
+  headers: {
+    Authorization: token
+  }
+};
 
 function Answer(props) {
   const [markedHelpful, setMarkedHelpful] = useState(false);
-  const [reported, setReported] = useState(false);
+  const [reportAnswer, setReportAnswer] = useState(false);
 
   //convert ISO time stamp to time obj and then to useable format
   var dateStr = props.answer.date;
@@ -14,6 +22,17 @@ function Answer(props) {
     day: 'numeric',
   });
   var formattedDate = longEnUSFormatter.format(dateObj)
+
+  function report(id){
+    console.log(id)
+    axios.put(`${url}/qa/answers/${id}/report`,{}, auth)
+      .then((response) => {
+        console.log(response.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   return (
     <li className="answer">
@@ -27,7 +46,8 @@ function Answer(props) {
         >Yes</button>
         ({!markedHelpful ? props.answer.helpfulness : props.answer.helpfulness + 1})
         |
-        <button className="link-button" onClick={() => {setReported(true)}}>{(reported) ? 'Reported' : 'Report'}</button>
+        <button className="link-button" onClick={() => {report(props.id); setReportAnswer(true)}}>{(reportAnswer) ? 'Reported' : 'Report'}</button>
+        {/* <button className="link-button" onClick={() => {setReportAnswer(true)}}>{(reportAnswer) ? 'Reported' : 'Report'}</button> */}
       </span>
     </li>
   )

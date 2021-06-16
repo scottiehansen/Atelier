@@ -67,7 +67,7 @@ function QAMain(props) {
   }
 
   // added functionality to render more questions on click
-  var moreQuestions = (questionsLimit >= questions.length) ? null : <button className="boldTitle" onClick={() => (setQuestionsLimit(questionsLimit + 2))}>MORE ANSWERED QUESTIONS</button>
+  var moreQuestions = (questionsLimit >= questions.length) ? null : <button className="boldTitle" className="functional-btn" onClick={() => (setQuestionsLimit(questionsLimit + 2))}>MORE ANSWERED QUESTIONS</button>
 
   return (
     <div id="QAContainer">
@@ -85,7 +85,7 @@ function QAMain(props) {
         temporaryQuestion={temporaryQuestion}
       />
 
-      <div id="added-functionality" >
+      <div >
         {moreQuestions}
         <NewQuestion
           productName={props.product.name}

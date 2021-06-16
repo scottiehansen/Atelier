@@ -107,17 +107,20 @@ function NewQuestion(props) {
 
   return (
     <React.Fragment>
-      <button className="boldTitle" onClick={() => { setModalIsOpen(true) }}>ADD A QUESTION +</button>
+      <button className="boldTitle" className="functional-btn"  onClick={() => { setModalIsOpen(true) }}>ADD A QUESTION +</button>
       <Modal
         isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}
         // style={Modal.defaultStyles}
         style={customStyles}
       >
-        <h3>Ask Your Question</h3>
-        <h6>About the {props.productName}</h6>
+        <div className="modalHeader">
+          <h3>Ask Your Question</h3>
+          <h6>About the {props.productName}</h6>
+          <button className="exitModal" onClick={() => { setModalIsOpen(false) }}>Close</button>
+        </div>
 
         <form onSubmit={handleSubmit}>
-          {(JSON.stringify(errors) !== "{}") && <p style={{ color: "red" }}>You must enter the following:</p>}
+          {(JSON.stringify(errors) !== "{}") && <p className="inputsub" style={{ color: "red" }}>You must enter the following:</p>}
           <label>Your Question *</label>
           <input
             type="text" placeholder=""
@@ -125,7 +128,7 @@ function NewQuestion(props) {
             value={values.newQuestion}
             onChange={handleChange}
           />
-          {errors.newQuestion && <p style={{ color: "red" }}>{errors.newQuestion}</p>}
+          {errors.newQuestion && <p className="inputsub" style={{ color: "red" }}>{errors.newQuestion}</p>}
           <br></br>
 
           <label>What is your nickname *</label>
@@ -136,8 +139,8 @@ function NewQuestion(props) {
             value={values.nickname}
             onChange={handleChange}
           />
-          {errors.nickname && <p style={{ color: "red" }}>{errors.nickname}</p>}
-          <p>For privacy reasons, do not use your full name or email address</p>
+          {errors.nickname && <p className="inputsub" style={{ color: "red" }}>{errors.nickname}</p>}
+          <p className="inputsub">For privacy reasons, do not use your full name or email address</p>
           <br></br>
 
           <label>Your email *</label>
@@ -149,17 +152,17 @@ function NewQuestion(props) {
             value={values.email}
             onChange={handleChange}
           />
-          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
-          <p>For authentication reasons, you will not be emailed</p>
+          {errors.email && <p className="inputsub" style={{ color: "red" }}>{errors.email}</p>}
+          <p className="inputsub">For authentication reasons, you will not be emailed</p>
           <br></br>
 
           <input
+            className="submitBtn"
             type="submit"
           />
 
         </form>
 
-        <button onClick={() => { setModalIsOpen(false) }}>Close</button>
       </Modal>
     </React.Fragment>
   )

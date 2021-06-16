@@ -51,6 +51,7 @@ function Question(props) {
       .then((response) => {
         //re-render with fresh data (commented out because I am doing a surface level update)
         // props.getQuestions();
+        console.log('updated')
       })
       .catch((err) => {
         console.log(err);

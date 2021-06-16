@@ -6,7 +6,6 @@ import StarRender from './productDetails/StarRender.jsx';
 import MainProduct from './productDetails/MainProduct.jsx';
 import QAMain from './Q&A/QAMain.jsx'
 
-
 class App extends React.Component {
   constructor(props) {
     super(props)

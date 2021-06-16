@@ -16,7 +16,7 @@ function SearchBar(props){
         value={props.searchPhrase}
         onChange={getSearchPhrase}
       />
-      <FaSistrix />
+      {/* <FaSistrix /> */}
     </div>
   )
 }
