@@ -36,6 +36,7 @@
     "react-dropzone": "^11.3.2",
     "react-flip-move": "^3.0.4",
     "react-images-upload": "^1.2.8",
+    "react-rating-stars-component": "^2.2.0",
     "react-select": "^4.3.1",
     "react-star-ratings": "^2.3.0",
     "regenerator-runtime": "^0.13.7"
