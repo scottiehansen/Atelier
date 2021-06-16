@@ -71,7 +71,7 @@ function QAMain(props) {
 
   return (
     <div id="QAContainer">
-      <h1>Questions & Answers</h1>
+      <h1 className="inputsub">Questions & Answers</h1>
       <SearchBar
         searchPhrase={searchPhrase}
         searchHandler={searchHandler} setSearchPhrase={setSearchPhrase}
