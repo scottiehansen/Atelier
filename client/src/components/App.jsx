@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Reviews from './Reviews'
+import Reviews from './RatingsAndReviews/Reviews'
 import keys from '../../../server/config/config.js'
 import StarRender from './productDetails/StarRender.jsx';
 import MainProduct from './productDetails/MainProduct.jsx';

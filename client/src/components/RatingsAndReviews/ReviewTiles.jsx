@@ -1,5 +1,5 @@
 import React from 'react';
-import StarRatings from '../../../node_modules/react-star-ratings';
+import StarRatings from '../../../../node_modules/react-star-ratings';
 import {useState, useEffect} from 'react';
 import moment from 'moment';
 import ReviewTilesBody from './ReviewTilesBody.jsx';
