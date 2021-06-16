@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SearchBar from './SearchBar.jsx'
 import QAList from './QAList.jsx'
+import NewQuestion from './NewQuestion.jsx'
 import token from '../../../../server/config/config.js'
 import axios from 'axios'
 
@@ -12,19 +13,19 @@ const auth = {
 };
 
 function QAMain(props) {
-  //full list of questions
   const [fullQuestionsList, setFullQuestionsList] = useState([]);
-  // questions to render (either full list or filtered)
   const [questions, setQuestions] = useState([]);
   const [searchPhrase, setSearchPhrase] = useState('');
+  const [questionsLimit, setQuestionsLimit] = useState(2);
+  const [temporaryQuestion, setTemporaryQuestion] = useState('');
 
   //render Q's on initial upload
   useEffect(() => {
     getQuestions(props.product.id);
   }, [])
 
-   function getQuestions(id) {
-    //edit product id later on based on default item/clicked item
+  // get and sort all questions by helpfulness
+  function getQuestions(id) {
     axios.get(`${url}/qa/questions?count=100&product_id=${id}`, auth)
       .then((response) => {
         // sort questions by helpfullness
@@ -33,6 +34,7 @@ function QAMain(props) {
         });
         setFullQuestionsList(sortedQuestions);
         setQuestions(sortedQuestions);
+        setTemporaryQuestion('');
       })
       .catch((err) => {
         console.log(err);
@@ -45,7 +47,6 @@ function QAMain(props) {
     if (searchPhrase.length >= 3) {
       const splitSearchPhrase = searchPhrase.split(" ")
       const filteredQuestions = fullQuestionsList.filter(question => {
-        //define fn to check whether all words in search phrase are included in current Q (defined here to use the current Q in the test)
         function isIncluded(searchTerm) {
           return question.question_body.toLowerCase().includes(searchTerm.toLowerCase())
         }
@@ -54,6 +55,7 @@ function QAMain(props) {
         }
       })
       if (filteredQuestions.length > 0) {
+        console.log(filteredQuestions)
         setQuestions(filteredQuestions)
       } else {
         setQuestions(fullQuestionsList)
@@ -64,11 +66,33 @@ function QAMain(props) {
     }
   }
 
+  // added functionality to render more questions on click
+  var moreQuestions = (questionsLimit >= questions.length) ? null : <button className="boldTitle" className="functional-btn" onClick={() => (setQuestionsLimit(questionsLimit + 2))}>MORE ANSWERED QUESTIONS</button>
+
   return (
     <div id="QAContainer">
       <h1>Questions & Answers</h1>
-      <SearchBar searchPhrase={searchPhrase} searchHandler={searchHandler} setSearchPhrase={setSearchPhrase}/>
-      <QAList questions={questions} getQuestions={getQuestions} />
+      <SearchBar
+        searchPhrase={searchPhrase}
+        searchHandler={searchHandler} setSearchPhrase={setSearchPhrase}
+      />
+
+      <QAList
+        productName={props.product.name}
+        questions={questions}
+        getQuestions={getQuestions}
+        questionsLimit={questionsLimit}
+        temporaryQuestion={temporaryQuestion}
+      />
+
+      <div >
+        {moreQuestions}
+        <NewQuestion
+          productName={props.product.name}
+          productId={props.product.id}
+          setTemporaryQuestion={setTemporaryQuestion}
+        />
+      </div>
     </div>
   )
 }

@@ -137,7 +137,6 @@ var Reviews = () => {
               ))
           }
         </div>
-        {/* This shows a "Click for more reviews" button which will increment the length variable by 2 and show 2 more reviews. If there are no more reviews, the button will disappear*/}
         <div className="showMoreButton">
           {reviewsSortedByRelevance.length > numberOfReviews && reviewFilters.length === 0 ?
             <button onClick={() => makeNumberOfReviews(numberOfReviews + 2)}>Click for more reviews</button> :
