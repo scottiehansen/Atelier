@@ -125,7 +125,7 @@ function NewAnswer(props) {
         <h6>{props.productName}: {props.question.question_body}</h6>
 
         <form onSubmit={handleSubmit}>
-          {(JSON.stringify(errors) !== "{}") && <p style={{ color: "red" }}>You must enter the following:</p>}
+          {(JSON.stringify(errors) !== "{}") && <p className="inputsub" style={{ color: "red" }}>You must enter the following:</p>}
           <label>Your Answer *</label>
           <input
             type="text"
@@ -143,8 +143,8 @@ function NewAnswer(props) {
             value={values.nickname}
             onChange={handleChange}
           />
-          {errors.nickname && <p style={{ color: "red" }}>{errors.nickname}</p>}
-          <p>For privacy reasons, do not use your full name or email address</p>
+          {errors.nickname && <p className="inputsub" style={{ color: "red" }}>{errors.nickname}</p>}
+          <p className="inputsub">For privacy reasons, do not use your full name or email address</p>
           <br></br>
 
           <label>Your email *</label>
@@ -155,8 +155,8 @@ function NewAnswer(props) {
             value={values.email}
             onChange={handleChange}
           />
-          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
-          <p>For authentication reasons, you will not be emailed</p>
+          {errors.email && <p className="inputsub" style={{ color: "red" }}>{errors.email}</p>}
+          <p className="inputsub">For authentication reasons, you will not be emailed</p>
           <br></br>
 
           <label>Upload your photos :</label>
@@ -171,7 +171,7 @@ function NewAnswer(props) {
           <br></br>
 
           <input className="functional-btn" type="submit" />
-          <button className="functional-btn" onClick={() => { setModalIsOpen(false) }}>Close</button>
+          <button className="functional-btn" type="button" onClick={() => { setModalIsOpen(false) }}>Close</button>
         </form>
       </Modal>
     </React.Fragment>
