@@ -4,6 +4,8 @@
   /* For grow & shrink as per screen size change values as per your requirements */
   width: 80%;
   height: 50%;
+  padding-top: 20px;
+  padding-bottom: 20px;
   display: grid;
   grid-template-rows: 5% 12.5% 70% 12.5%;
   row-gap: 10px;
@@ -14,6 +16,27 @@
   overflow: auto;
   max-height: 45vh;
   max-width: 150vh;
+}
+
+#QModal{
+  display: grid;
+  /* grid-template-rows: 12% 90% */
+  grid-template-rows: 15% 80%;
+  row-gap: 5px;
+  width: 40%;
+  height: 80%;
+  /* max-height: 90% */
+}
+
+.QModalForm{
+  display: grid;
+}
+
+h6{
+  border-bottom:1px solid #CCC;
+  width:100%;
+  float:left;
+  padding-bottom:3px;
 }
 
 div.question > span {
@@ -33,17 +56,19 @@ div#SearchBar > input {
 }
 
 div.answers > ul {
-  padding-bottom: 15px
+  padding: 0px 0px 15px 0px
 }
 
 ul {
   list-style: none;
-  padding: 0
 }
 
-#added-functionality {
-  align-self: center;
-}
+/* .modalFooter{
+  border-top:1px solid #CCC;
+  width:100%;
+  float:left;
+  padding-bottom:3px;
+} */
 
 .boldTitle {
   font-size: 14px;
@@ -72,6 +97,10 @@ ul {
   border: 1px solid black
 }
 
+.inputRow{
+  display: grid;
+}
+
 .question {
   display: grid;
   grid-template-columns: 70% 30%
@@ -80,7 +109,7 @@ ul {
 .answers {
   display: grid;
   grid-template-columns: 2% 96%;
-  column-gap: 7.3px
+  column-gap: 1.5px
 }
 
 .answer {
@@ -93,7 +122,4 @@ ul {
 }
 
 
-h1 {
-  font-size: 12px
-}
 

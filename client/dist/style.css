@@ -33,7 +33,12 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  display:inline-block;
+  display: inline-block;
+}
+
+.details {
+  display: block;
+  font-size: 18px;
 }
 
 .sel {
@@ -41,7 +46,7 @@
   height: 50px;
 }
 
-#image_container {
+#col_image {
   position: relative;
   width: 50%;
   float: left;
@@ -49,9 +54,12 @@
 }
 
 #main_image {
-  position: relative;
-  width: 800px;
-  height: 800px;
+  background-color: #e2e3e4;
+  width: 750px;
+  height: 700px;
+  object-fit: contain;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .sub_images {
@@ -60,10 +68,8 @@
 }
 
 .sub_images_list {
-  position: absolute;
   width: 40px;
   height: 40px;
-  top: 0;
 }
 
 #style_grid {
@@ -74,21 +80,24 @@
 
 #col_style {
   position: relative;
+  display:grid;
   width: 50%;
-  float:left;
+  float: left;
   height: 100%;
 }
 
-.swiper-button-next {
-  color: red
+.swiper-container {
+  width: 100%;
+  height: 100%;
 }
 
-
-
-/* .swiper-slide {
+.swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #fff;
+  margin-left: auto;
+  margin-right: auto;
+
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -101,4 +110,58 @@
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-} */
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-container {
+  width: 100%;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-slide {
+  background-size: cover;
+  background-position: center;
+}
+
+.mySwiper2 {
+  height: 80%;
+  width: 100%;
+}
+
+.mySwiper {
+  height: 25%;
+  box-sizing: border-box;
+  padding: 10px 0;
+}
+
+.mySwiper .swiper-slide {
+  width: 40%;
+  height: 70%;
+  opacity: 0.3;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
+#main_image_expanded {
+  display: block;
+  width: 2000px;
+  height: 2000px;
+  object-fit: contain;
+}

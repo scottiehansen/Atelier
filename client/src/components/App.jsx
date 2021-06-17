@@ -38,7 +38,8 @@ class App extends React.Component {
   }
 
   selectProduct (e) {
-    console.log(e);
+    console.log(e.target.id);
+    console.log(this.state.products[e.target.id])
     this.setState({
       selectedProductIndex: e.target.id
     })
@@ -63,7 +64,7 @@ class App extends React.Component {
             </Nav>
           </Container>
         </Navbar>
-        <MainProduct item={this.state.products[this.state.selectedProductIndex]} /> {this.state.selectedProductIndex}
+        <MainProduct item={this.state.products[this.state.selectedProductIndex]} />
         <StarRender item={this.state.products[this.state.selectedProductIndex]} />
         <QAMain product={this.state.products[this.state.selectedProductIndex]} />
         <Reviews />
