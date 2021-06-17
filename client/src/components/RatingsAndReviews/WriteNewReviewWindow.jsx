@@ -19,63 +19,52 @@ const WriteNewReviewWindow = (props) => {
   let [nickname, makeNickname] = useState('')
   let [email, makeEmail] = useState('')
   let [stars, makeStars] = useState(null)
-  let [warning, makeWarning] =
-  useState({'productRecommendation': null, 'productCharacteristics': null, 'reviewSummary': null, 'reviewBody': null,
-  'photoURLs': null, 'nickname': null, 'email': null, 'stars': null })
-  let [missingRequirement, makeMissingRequirement] = useState(false)
-  let primitiveHooks = {productRecommendation, reviewSummary, reviewBody, nickname, email, stars}
+  let [submittedReview, makeSubmittedReview] = useState(false);
 
+  // useEffect(() => {
+  //   if (submittedReview === true) {
+  //   }
+  // }, submittedReview)
 
-  // tech debt, i still do not know how to check for incorrect photos
   const areAnyFieldsIncorrect = () => {
-    let charMissing = false;
-    for (var key in primitiveHooks) {
-      if (key === 'reviewBody' && primitiveHooks[key].length < 50) {
-        charMissing = true
-        makeWarning({...warning, [key]: 'A review body that is at least 50 characters'})
-        makeWarning({'one key': 'missing'})
-        console.log(warning);
+    let hooks = {'Star rating': stars, 'Product recommendation' : productRecommendation, 'Product characteristics' : productCharacteristics, 'Review summary': reviewSummary, 'Review body' : reviewBody, 'User nickname': nickname, 'Email address': email};
+    let warningMessage = 'You must enter the following:\n';
+    let fieldMissing = false;
+    for (var key in hooks) {
+      if (key === 'Review body' && hooks[key].length < 50) {
+        fieldMissing = true
+        warningMessage += `${key} that is at least 50 characters\n`
       }
-      else if (key === 'email') {
-        let emailSplit = primitiveHooks[key].split('@');
+      else if (key === 'Email address') {
+        let emailSplit = hooks[key].split('@');
         if (emailSplit.length === 1 || emailSplit[1].includes('.') === false) {
-          makeWarning({...warning, [key]: 'An email address that is in a correct format'})
-        } else {
-          makeWarning({...warning, [key]: null})
+          fieldMissing = true;
+          warningMessage += `${key} that is in a correct format\n`
+        }
+      } else if (key === 'Product characteristics') {
+        for (var characteristic in productCharacteristics) {
+          if (productCharacteristics[characteristic] === null) {
+            fieldMissing = true
+            warningMessage += `${key}\n`
+            break;
+          }
         }
       }
-      else if (primitiveHooks[key] === '' || primitiveHooks[key] === null) {
-        charMissing = true
-        makeWarning({...warning, [key]: `${key}`})
-      }
-      else (
-        makeWarning({...warning, [key]: null})
-      )
-    }
-    for (var key in productCharacteristics) {
-      if (productCharacteristics[key] === null) {
-        charMissing = true
-        makeWarning({...warning, 'productCharacteristics' : 'Product Characteristics'})
-        break;
-      } else {
-        makeWarning({...warning, 'productCharacteristics' : null})
+      else if (hooks[key] === '' || hooks[key] === null) {
+        fieldMissing = true
+        warningMessage += `${key}\n`
       }
     }
-    return charMissing
+    return {fieldMissing, warningMessage}
   }
 
   const handleReviewSubmission = (event) => {
     event.preventDefault();
-    if (areAnyFieldsIncorrect() === true) {
-      let warningMessage = 'You must enter the following\n';
-      for (var key in warning) {
-        if (warning[key] === null) {
-          warningMessage += `${warning[key]}\n`
-        }
-      }
-      alert(warningMessage)
+    let missingFields = areAnyFieldsIncorrect();
+    if (missingFields.fieldMissing === true) {
+      alert(missingFields.warningMessage)
     } else {
-      alert('correct input')
+      alert('Your product review has been submitted. Thank you!')
       props.changeShowWindow(false)
     }
   }
@@ -85,9 +74,8 @@ const WriteNewReviewWindow = (props) => {
       <div>
         <form onSubmit={handleReviewSubmission}>
           <h1>Write Your Review</h1>
-          {console.log(primitiveHooks)}
           <h3>PLACEHOLDER PRODUCT NAME </h3>
-          <Stars stars={stars} makeStars={makeStars} warning={warning} makeWarning={makeWarning}/>
+          <Stars stars={stars} makeStars={makeStars}/>
           <Recommendation productRecommendation={productRecommendation} changeProductRecommendation = {changeProductRecommendation} />
           <Characteristics productCharacteristics={productCharacteristics} makeProductCharacteristics = {makeProductCharacteristics} />
           <Summary reviewSummary = {reviewSummary} reviewBody = {reviewBody} makeReviewSummary = {makeReviewSummary} makeReviewBody={makeReviewBody} />
@@ -106,3 +94,12 @@ const WriteNewReviewWindow = (props) => {
 };
 
 export default WriteNewReviewWindow;
+
+
+// Notes below:
+// IF YOU WANT TO USE HOOKS. DO THE FOLLOWING FORMAT
+  // let [warning, makeWarning] = useState({'productRecommendation': null, 'productCharacteristics': null, 'reviewSummary': null, 'reviewBody': null, 'photoURLs': null, 'nickname': null, 'email': null, 'stars': null })
+  // useEffect(() => {
+  //   productReccomendations
+  // }, [productRecommendation, productCharacteristics, reviewSummary, reviewBody, photoURLs, nickname, email, stars])
+  // tech debt, i still do not know how to check for incorrect photos

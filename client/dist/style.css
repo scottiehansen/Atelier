@@ -1,8 +1,33 @@
+/* Styles for Ratings Component */
+
+.ratings_and_reviews {
+  display: grid;
+  grid-template-columns: [col1] 50% [col2] 50%;
+  grid-template-rows: [row1] 5% [row2] 95%;
+}
+
+.ratings {
+  grid-column-start: col1;
+  grid-column-end: col1;
+  grid-row-start: row2;
+  grid-row-end: row2;
+}
+
+.reviews {
+  grid-column-start: col2;
+  grid-column-end: col2;
+  grid-row-start: row2;
+  grid-row-end: row2;
+
+}
+
 .review-photo {
   object-fit: cover;
   height: 10vh;
   width: 8vh;
 }
+/* End styles for ratings component */
+
 
 .styles {
   width: 120px;
