@@ -35,6 +35,16 @@ function NewQuestion(props) {
   })
   const [errors, setErrors] = useState({})
 
+  // ensures that no previous input or errors are displayed when you exit/submit modal
+  function resetValAndErr() {
+    setValues({
+      newQuestion: "",
+      nickname: "",
+      email: ""
+    });
+    setErrors({});
+  }
+
   function handleChange(e) {
     setValues({
       ...values,
@@ -61,6 +71,14 @@ function NewQuestion(props) {
           console.log(response.data)
           // shallow render of the question
           props.setTemporaryQuestion(values.newQuestion)
+          // //reset values & errors
+          // setValues({
+          //   newQuestion: "",
+          //   nickname: "",
+          //   email: ""
+          // });
+          // setErrors({});
+          resetValAndErr()
           // close modal
           setModalIsOpen(false)
         })
@@ -107,59 +125,69 @@ function NewQuestion(props) {
 
   return (
     <React.Fragment>
-      <button className="boldTitle" className="functional-btn"  onClick={() => { setModalIsOpen(true) }}>ADD A QUESTION +</button>
+      <button className="boldTitle" className="functional-btn" onClick={() => { setModalIsOpen(true) }}>ADD A QUESTION +</button>
       <Modal
-        isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}
+        id="QModal"
+        isOpen={modalIsOpen} onRequestClose={() => {setModalIsOpen(false); resetValAndErr()}}
         // style={Modal.defaultStyles}
         style={customStyles}
       >
         <div className="modalHeader">
           <h3>Ask Your Question</h3>
           <h6>About the {props.productName}</h6>
-          <button className="exitModal" onClick={() => { setModalIsOpen(false) }}>Close</button>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form className="QModalForm" onSubmit={handleSubmit}>
           {(JSON.stringify(errors) !== "{}") && <p className="inputsub" style={{ color: "red" }}>You must enter the following:</p>}
-          <label>Your Question *</label>
-          <input
-            type="text" placeholder=""
-            name="newQuestion"
-            value={values.newQuestion}
-            onChange={handleChange}
-          />
-          {errors.newQuestion && <p className="inputsub" style={{ color: "red" }}>{errors.newQuestion}</p>}
-          <br></br>
+          <div className="inputRow">
+            <label>Your Question *</label>
+            <input
+              type="text" placeholder=""
+              name="newQuestion"
+              value={values.newQuestion}
+              onChange={handleChange}
+            />
+            {errors.newQuestion && <p className="inputsub" style={{ color: "red" }}>{errors.newQuestion}</p>}
+            {/* <br></br> */}
+          </div>
 
-          <label>What is your nickname *</label>
-          <input
-            type="text"
-            placeholder="Example: jackson11!"
-            name="nickname"
-            value={values.nickname}
-            onChange={handleChange}
-          />
-          {errors.nickname && <p className="inputsub" style={{ color: "red" }}>{errors.nickname}</p>}
-          <p className="inputsub">For privacy reasons, do not use your full name or email address</p>
-          <br></br>
+          <div className="inputRow">
+            <label>What is your nickname *</label>
+            <input
+              type="text"
+              placeholder="Example: jackson11!"
+              name="nickname"
+              value={values.nickname}
+              onChange={handleChange}
+            />
+            {errors.nickname && <p className="inputsub" style={{ color: "red" }}>{errors.nickname}</p>}
+            <p className="inputsub">For privacy reasons, do not use your full name or email address</p>
+            {/* <br></br> */}
+          </div>
 
-          <label>Your email *</label>
-          <input
-            type="text"
-            // placeholder="Why did you like the product or not?"
-            placeholder="Example: jackson11@gmail.com"
-            name="email"
-            value={values.email}
-            onChange={handleChange}
-          />
-          {errors.email && <p className="inputsub" style={{ color: "red" }}>{errors.email}</p>}
-          <p className="inputsub">For authentication reasons, you will not be emailed</p>
-          <br></br>
+          <div className="inputRow">
+            <label>Your email *</label>
+            <input
+              type="text"
+              // placeholder="Why did you like the product or not?"
+              placeholder="Example: jackson11@gmail.com"
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+            />
+            {errors.email && <p className="inputsub" style={{ color: "red" }}>{errors.email}</p>}
+            <p className="inputsub">For authentication reasons, you will not be emailed</p>
+            {/* <br></br> */}
+          </div>
 
-          <input
-            className="submitBtn"
-            type="submit"
-          />
+          <div className="modalFooter">
+            <input
+              className="functional-btn"
+              type="submit"
+            />
+            <button className="functional-btn"
+            type="button" onClick={() => { setModalIsOpen(false); resetValAndErr()}}>Close</button>
+          </div>
 
         </form>
 
