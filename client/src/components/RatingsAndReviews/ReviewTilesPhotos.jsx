@@ -9,7 +9,7 @@ var ReviewTilesPhotos = (props) => {
   } else {
     return (
       <span>
-        <img className='review-photo' src={props.photo.url} alt="Photo of Product" defaultSource={'../../assets/default-image.jpeg'} />
+        <img className='review-photo' src={props.photo.url} alt="Photo of Product" defaultsource={'../../assets/default-image.jpeg'} />
       </span>
     )
   }

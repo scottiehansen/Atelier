@@ -113,38 +113,40 @@ var Reviews = () => {
     )
   } else {
     return (
-      <div className='ratingsAndReviews'>
+      <div className='ratings_and_reviews'>
         <div className='ratings'>
           <Ratings reviewsMeta={reviewsMeta} reviewFilters={reviewFilters} dispatchReviewFilters={dispatchReviewFilters} key={reviewsMeta.product_id} />
         </div>
-        <div className='selectBar'>
-          < Select options={options} value={reviewSorter} onChange={value => {changeSorting(value)}} />
-        </div>
-        <div className='reviewTiles'>
-          {reviewSorter.value === 'Relevance' ?
-            filterFunction(reviewsSortedByRelevance, reviewFilters)
-            .map((review, index) => (
-              <ReviewTiles review={review} key={index}/>
-            )) :
-            reviewSorter.value === 'Helpful' ?
-              filterFunction(reviewsSortedByHelpfulness, reviewFilters)
+        <div className='reviews'>
+          <div className='select_bar'>
+            < Select options={options} value={reviewSorter} onChange={value => {changeSorting(value)}} />
+          </div>
+          <div className='review_tiles'>
+            {reviewSorter.value === 'Relevance' ?
+              filterFunction(reviewsSortedByRelevance, reviewFilters)
               .map((review, index) => (
                 <ReviewTiles review={review} key={index}/>
               )) :
-              filterFunction(reviewsSortedByDate, reviewFilters)
-              .map((review, index) => (
-                <ReviewTiles review={review} key={index}/>
-              ))
-          }
-        </div>
-        <div className="showMoreButton">
-          {reviewsSortedByRelevance.length > numberOfReviews && reviewFilters.length === 0 ?
-            <button onClick={() => makeNumberOfReviews(numberOfReviews + 2)}>Click for more reviews</button> :
-            <div></div>
-          }
-        </div>
-        <div>
-          {<WriteNewReview />}
+              reviewSorter.value === 'Helpful' ?
+                filterFunction(reviewsSortedByHelpfulness, reviewFilters)
+                .map((review, index) => (
+                  <ReviewTiles review={review} key={index}/>
+                )) :
+                filterFunction(reviewsSortedByDate, reviewFilters)
+                .map((review, index) => (
+                  <ReviewTiles review={review} key={index}/>
+                ))
+            }
+          </div>
+          <div className="show_more_button">
+            {reviewsSortedByRelevance.length > numberOfReviews && reviewFilters.length === 0 ?
+              <button onClick={() => makeNumberOfReviews(numberOfReviews + 2)}>Click for more reviews</button> :
+              <div></div>
+            }
+          </div>
+          <div>
+            {<WriteNewReview />}
+          </div>
         </div>
       </div>
     )
