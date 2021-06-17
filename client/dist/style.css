@@ -12,7 +12,8 @@
 }
 
 .details {
-
+  display: block;
+  font-size: 18px;
 }
 
 .sel {
@@ -32,6 +33,8 @@
   width: 750px;
   height: 700px;
   object-fit: contain;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .sub_images {
@@ -67,8 +70,9 @@
   text-align: center;
   font-size: 18px;
   background: #fff;
+  margin-left: auto;
+  margin-right: auto;
 
-  /* Center slide text vertically */
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -125,14 +129,14 @@
 
 .swiper-slide img {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
 }
 
 #main_image_expanded {
   display: block;
-  width: 3000px;
+  width: 2000px;
   height: 2000px;
   object-fit: contain;
 }

@@ -7,16 +7,17 @@ import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Thumbs } from 'swiper/core';
+import SwiperCore, { Navigation, Thumbs, Zoom } from 'swiper/core';
 
 
 import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css"
 import "swiper/components/thumbs/thumbs.min.css";
+import "swiper/components/zoom/zoom.min.css"
 
 import '/client/dist/style.css';
 
-SwiperCore.use([Navigation, Thumbs]);
+SwiperCore.use([Navigation, Thumbs, Zoom]);
 
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -86,7 +87,7 @@ function MainProduct(props) {
     }
     getSizesAndQuantities(imageStyleResponse.data.results[0].skus);
     setSelectedQuantity(['-']);
-  }, [])
+  }, [props.item.id])
 
   const handleImageClick = (index) => {
     const config = {
@@ -168,8 +169,8 @@ function MainProduct(props) {
           </Swiper>
           <Swiper
             onSwiper={setThumbsSwiper}
-            spaceBetween={10}
-            slidesPerView={4}
+            spaceBetween={5}
+            slidesPerView={7}
             freeMode={true}
             watchSlidesVisibility={true}
             watchSlidesProgress={true}
@@ -190,6 +191,7 @@ function MainProduct(props) {
             navigation={true}
             thumbs={{ swiper: thumbsSwiper }}
             className="mySwiper2"
+            zoom={true}
           >
             {subImages.map((image, index) =>
               <SwiperSlide key={index} tag='li'>
@@ -199,8 +201,8 @@ function MainProduct(props) {
           </Swiper>
           <Swiper
             onSwiper={setThumbsSwiper}
-            spaceBetween={10}
-            slidesPerView={4}
+            spaceBetween={5}
+            slidesPerView={7}
             freeMode={true}
             watchSlidesVisibility={true}
             watchSlidesProgress={true}
