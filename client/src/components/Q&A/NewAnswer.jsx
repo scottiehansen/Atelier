@@ -170,9 +170,9 @@ function NewAnswer(props) {
           {errors.photos && <p style={{ color: "red" }}>{errors.photos}</p>}
           <br></br>
 
-          <input type="submit" />
+          <input className="functional-btn" type="submit" />
+          <button className="functional-btn" onClick={() => { setModalIsOpen(false) }}>Close</button>
         </form>
-        <button onClick={() => { setModalIsOpen(false) }}>Close</button>
       </Modal>
     </React.Fragment>
   )

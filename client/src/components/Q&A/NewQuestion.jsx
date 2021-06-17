@@ -35,6 +35,16 @@ function NewQuestion(props) {
   })
   const [errors, setErrors] = useState({})
 
+  // ensures that no previous input or errors are displayed when you exit/submit modal
+  function resetValAndErr() {
+    setValues({
+      newQuestion: "",
+      nickname: "",
+      email: ""
+    });
+    setErrors({});
+  }
+
   function handleChange(e) {
     setValues({
       ...values,
@@ -61,6 +71,14 @@ function NewQuestion(props) {
           console.log(response.data)
           // shallow render of the question
           props.setTemporaryQuestion(values.newQuestion)
+          // //reset values & errors
+          // setValues({
+          //   newQuestion: "",
+          //   nickname: "",
+          //   email: ""
+          // });
+          // setErrors({});
+          resetValAndErr()
           // close modal
           setModalIsOpen(false)
         })
@@ -110,7 +128,7 @@ function NewQuestion(props) {
       <button className="boldTitle" className="functional-btn" onClick={() => { setModalIsOpen(true) }}>ADD A QUESTION +</button>
       <Modal
         id="QModal"
-        isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}
+        isOpen={modalIsOpen} onRequestClose={() => {setModalIsOpen(false); resetValAndErr()}}
         // style={Modal.defaultStyles}
         style={customStyles}
       >
@@ -121,7 +139,7 @@ function NewQuestion(props) {
 
         <form className="QModalForm" onSubmit={handleSubmit}>
           {(JSON.stringify(errors) !== "{}") && <p className="inputsub" style={{ color: "red" }}>You must enter the following:</p>}
-          <div>
+          <div className="inputRow">
             <label>Your Question *</label>
             <input
               type="text" placeholder=""
@@ -133,7 +151,7 @@ function NewQuestion(props) {
             {/* <br></br> */}
           </div>
 
-          <div>
+          <div className="inputRow">
             <label>What is your nickname *</label>
             <input
               type="text"
@@ -147,7 +165,7 @@ function NewQuestion(props) {
             {/* <br></br> */}
           </div>
 
-          <div>
+          <div className="inputRow">
             <label>Your email *</label>
             <input
               type="text"
@@ -162,12 +180,13 @@ function NewQuestion(props) {
             {/* <br></br> */}
           </div>
 
-          <div>
+          <div className="modalFooter">
             <input
               className="functional-btn"
               type="submit"
             />
-            <button className="functional-btn" onClick={() => { setModalIsOpen(false) }}>Close</button>
+            <button className="functional-btn"
+            type="button" onClick={() => { setModalIsOpen(false); resetValAndErr()}}>Close</button>
           </div>
 
         </form>
