@@ -79,7 +79,7 @@ function Question(props) {
         </span>
       </div>
       <div className="answers">
-        {(answersArr.length === 0 && !temporaryAnswer) ? null : <p className="boldTitle">A: </p>}
+        {(answersArr.length === 0 && !temporaryAnswer) ? null : <p className="boldTitle">A:  </p>}
         <ul>
           {temporaryAnswer && (<li className="answer">
             <p>{temporaryAnswer}</p>

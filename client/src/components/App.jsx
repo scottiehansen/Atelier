@@ -38,8 +38,6 @@ class App extends React.Component {
   }
 
   selectProduct (e) {
-    console.log(e.target.id);
-    console.log(this.state.products[e.target.id])
     this.setState({
       selectedProductIndex: e.target.id
     })
