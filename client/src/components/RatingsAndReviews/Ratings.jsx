@@ -27,12 +27,15 @@ var Ratings = (props) => {
         {
           props.reviewFilters.length !== 0 ?
             <h4>
-              Currently filtering for {props.reviewFilters.map(element => (
-              <span>{`[${element} Star Reviews] `}</span>
+              Currently filtering for {props.reviewFilters.map((element, index) => (
+              <div key={index}>{`[${element} Star Reviews] `}</div>
               ))}
               <div className='remove_filters' style={{color: "blue"}}
               onMouseEnter={event => {event.target.style.textDecoration = 'underline'; event.target.style.color = 'black'}}
-              >Remove all filters</div>
+              onMouseLeave={event => {event.target.style.textDecoration = 'none'; event.target.style.color = 'blue'}}
+              onClick={() => {props.dispatchReviewFilters({type: 'removeAll'})}}>
+                Remove all filters
+              </div>
             </h4> :
             null
         }
@@ -60,7 +63,7 @@ var Ratings = (props) => {
       </div>
       <div>
         {Object.keys(props.reviewsMeta.characteristics).map((category, index) => (
-          <ProductsBreakdown category={category} key={index} />
+          <ProductsBreakdown category={category} categoryData={props.reviewsMeta.characteristics[category]} key={index} />
         ))}
       </div>
     </div>

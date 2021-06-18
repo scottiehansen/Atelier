@@ -10,7 +10,7 @@
   width: 80%;
   display: grid;
   grid-template-columns: [col1] 30% [col2] 10% [col3] 60%;
-  grid-template-rows: [row1] 5% [row2] 95%;
+  grid-template-rows: [row1] 50px [row2] 95%;
 }
 
 .css-2b097c-container {
@@ -69,6 +69,17 @@
  float: left;
  width:33.33333%;
  text-align:right;
+}
+
+.rating_characteristics {
+  display: grid;
+}
+
+.caret {
+  position: absolute;
+}
+.bar {
+  position: relative;
 }​
 /* End styles for ratings component */
 

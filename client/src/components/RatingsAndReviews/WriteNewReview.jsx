@@ -8,7 +8,7 @@ var WriteNewReview = () => {
 
   return (
     <div>
-      <button onClick={() => {changeShowWindow(true)}}>Write New Review</button>
+      <button className='functional-btn' onClick={() => {changeShowWindow(true)}}>Write New Review</button>
       <WriteNewReviewWindow showWindow={showWindow} changeShowWindow={changeShowWindow} />
     </div>
   )

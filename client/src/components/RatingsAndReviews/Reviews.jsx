@@ -142,9 +142,9 @@ var Reviews = (props) => {
                 ))
             }
           </div>
-          <div className="show_more_button">
+          <div>
             {reviewsSortedByRelevance.length > numberOfReviews && reviewFilters.length === 0 ?
-              <button onClick={() => makeNumberOfReviews(numberOfReviews + 2)}>Click for more reviews</button> :
+              <button className="show_more_button functional-btn" onClick={() => makeNumberOfReviews(numberOfReviews + 2)}>Click for more reviews</button> :
               <div></div>
             }
           </div>
