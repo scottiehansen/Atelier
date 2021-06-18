@@ -25,7 +25,7 @@ var ProductsBreakdown = (props) => {
       <div className="rating_characteristics">
         {/* <CaretDownFill className="caret" size={30}/> */}
         <ProgressBar className="bar" striped variant="success" now={(props.categoryData.value/5) * 100} style={{width: '100%', position:'relative'}}>
-          <CaretDownFill className="caret" style={{width: (((props.categoryData.value/5) * 200) + '%'), height: '21px'}}/>
+          <CaretDownFill className="caret" style={{width: ((((props.categoryData.value - 1)/4) * 200) + '%'), height: '21px'}}/>
         </ProgressBar>
       </div>
       <p className="alignleft">{labels[props.category][0]}</p>
