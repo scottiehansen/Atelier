@@ -17,6 +17,8 @@ var ReviewTiles = (reviews) => {
           starRatedColor="grey"
           numberOfStars={5}
           name='rating'
+          starDimension="20px"
+          starSpacing="1px"
         />
       </div>
       <div className='review_reviewer_name'>
@@ -58,6 +60,7 @@ var ReviewTiles = (reviews) => {
       <div className='review_helpfulness'>
         Was this helpful? Yes ({reviews.review.helpfulness})
       </div>
+      <hr />
     </div>
   )
 }

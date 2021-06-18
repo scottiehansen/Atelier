@@ -1,4 +1,6 @@
 import React from 'react'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 import {useState, useReducer} from 'react'
 import Recommendation from './WriteNewReviewWindowComponents/Recommendation.jsx'
 import Characteristics from './WriteNewReviewWindowComponents/Characteristics.jsx'
@@ -69,20 +71,37 @@ const WriteNewReviewWindow = (props) => {
     }
   }
 
-  if (props.showWindow) {
+  if (props.show) {
     return (
       <div>
-        <form onSubmit={handleReviewSubmission}>
-          <h1>Write Your Review</h1>
-          <h3>PLACEHOLDER PRODUCT NAME </h3>
-          <Stars stars={stars} makeStars={makeStars}/>
-          <Recommendation productRecommendation={productRecommendation} changeProductRecommendation = {changeProductRecommendation} />
-          <Characteristics productCharacteristics={productCharacteristics} makeProductCharacteristics = {makeProductCharacteristics} />
-          <Summary reviewSummary = {reviewSummary} reviewBody = {reviewBody} makeReviewSummary = {makeReviewSummary} makeReviewBody={makeReviewBody} />
-          <Photos photoURLs={photoURLs} makePhotoURLs ={makePhotoURLs} photoURL={photoURL} makePhotoURL={makePhotoURL} />
-          <UserInfo nickname={nickname} makeNickname={makeNickname} email={email} makeEmail = {makeEmail} />
-          <input type="submit" value="Submit Review" />
-        </form>
+        <Modal
+        show={props.show}
+        onHide={props.onHide}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Write New Review
+             </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={handleReviewSubmission}>
+              <h3>{props.productName}</h3>
+              <Stars stars={stars} makeStars={makeStars}/>
+              <Recommendation productRecommendation={productRecommendation} changeProductRecommendation = {changeProductRecommendation} />
+              <Characteristics productCharacteristics={productCharacteristics} makeProductCharacteristics = {makeProductCharacteristics} />
+              <Summary reviewSummary = {reviewSummary} reviewBody = {reviewBody} makeReviewSummary = {makeReviewSummary} makeReviewBody={makeReviewBody} />
+              <Photos photoURLs={photoURLs} makePhotoURLs ={makePhotoURLs} photoURL={photoURL} makePhotoURL={makePhotoURL} />
+              <UserInfo nickname={nickname} makeNickname={makeNickname} email={email} makeEmail = {makeEmail} />
+              <input type="submit" value="Submit Review" />
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={props.onHide}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     )
   } else {
