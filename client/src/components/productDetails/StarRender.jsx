@@ -24,7 +24,7 @@ function StarRender (props) {
   // }, [])
 
   return (
-    <div>{data}
+    <div>
     {/* <ReactStars
       count={5}
       isHalf={true}
