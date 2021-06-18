@@ -183,7 +183,13 @@
   margin-bottom: 15px;
   margin-left: 10px;
 }
-/*
+
 .active_style {
-  border: 3px solid red;
-} */
+  position: relative;
+  border: 10px solid ;
+  border-radius: 50%;
+  width: 135px;
+  height: 135px;
+  display:flex;
+  flex-wrap: nowrap;
+}

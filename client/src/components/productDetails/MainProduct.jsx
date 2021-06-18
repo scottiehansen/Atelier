@@ -48,7 +48,7 @@ function MainProduct(props) {
   const [shoppingCart, setShoppingCart] = useState([]);
   const [imageClickStatus, setImageClickStatus] = useState(false);
   const [soldOutStatus, setSoldOutStatus] = useState(false);
-  const [activeStyle, setActiveStyle] = useState(false);
+  const [activeStyle, setActiveStyle] = useState(0);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const getSizesAndQuantities = (object) => {
@@ -117,7 +117,7 @@ function MainProduct(props) {
         setSubImages(response.data.results[index].photos);
         setStyleId(response.data.results[index].style_id);
         setSelectedStyle(response.data.results[index].name);
-        setActiveStyle(!activeStyle);
+        setActiveStyle(index);
         if (response.data.results[index].sale_price === null) {
           setOriginalPrice(response.data.results[index].original_price);
           setSalePrice('');
