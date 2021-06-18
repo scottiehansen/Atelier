@@ -108,7 +108,7 @@ var Reviews = (props) => {
   } else if (reviewsSortedByRelevance.length === 0) {
     return (
       <div className='no-review'>
-        {<WriteNewReview />}
+        {<WriteNewReview productName={props.product.name}/>}
       </div>
     )
   } else {
@@ -149,7 +149,7 @@ var Reviews = (props) => {
             }
           </div>
           <div>
-            {<WriteNewReview />}
+            {<WriteNewReview productName={props.product.name}/>}
           </div>
         </div>
       </div>

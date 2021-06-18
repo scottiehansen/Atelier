@@ -88,7 +88,7 @@ const WriteNewReviewWindow = (props) => {
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={handleReviewSubmission}>
-              <h3>PLACEHOLDER PRODUCT NAME </h3>
+              <h3>{props.productName}</h3>
               <Stars stars={stars} makeStars={makeStars}/>
               <Recommendation productRecommendation={productRecommendation} changeProductRecommendation = {changeProductRecommendation} />
               <Characteristics productCharacteristics={productCharacteristics} makeProductCharacteristics = {makeProductCharacteristics} />
