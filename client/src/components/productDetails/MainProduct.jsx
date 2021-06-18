@@ -47,7 +47,8 @@ function MainProduct(props) {
   const [sizeIndex, setSizeIndex] = useState('');
   const [shoppingCart, setShoppingCart] = useState([]);
   const [imageClickStatus, setImageClickStatus] = useState(false);
-
+  const [soldOutStatus, setSoldOutStatus] = useState(false);
+  const [activeStyle, setActiveStyle] = useState(false);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const getSizesAndQuantities = (object) => {
@@ -58,6 +59,11 @@ function MainProduct(props) {
         sizesArray.push(object[keys].size);
         quantitiesArray.push(object[keys].quantity);
       }
+    }
+    if (quantitiesArray.length <= 1) {
+      setSoldOutStatus(true);
+    } else {
+      setSoldOutStatus(false);
     }
     setSizes(sizesArray);
     setQuantities(quantitiesArray);
@@ -85,7 +91,7 @@ function MainProduct(props) {
       setOriginalPrice(imageStyleResponse.data.results[0].original_price);
       setSalePrice(imageStyleResponse.data.results[0].sale_price);
     }
-    getSizesAndQuantities(imageStyleResponse.data.results[0].skus);
+    getSizesAndQuantities(imageStyleResponse.data.results[index].skus);
     setSelectedQuantity(['-']);
   }, [props.item.id])
 
@@ -111,6 +117,7 @@ function MainProduct(props) {
         setSubImages(response.data.results[index].photos);
         setStyleId(response.data.results[index].style_id);
         setSelectedStyle(response.data.results[index].name);
+        setActiveStyle(!activeStyle);
         if (response.data.results[index].sale_price === null) {
           setOriginalPrice(response.data.results[index].original_price);
           setSalePrice('');
@@ -118,6 +125,7 @@ function MainProduct(props) {
           setOriginalPrice(response.data.results[index].original_price);
           setSalePrice(response.data.results[index].sale_price);
         }
+        getSizesAndQuantities(response.data.results[index].skus);
         setResultIndex(index);
       })
   }
@@ -151,6 +159,28 @@ function MainProduct(props) {
     setImageClickStatus(!imageClickStatus)
   }
 
+  const addToCartButtonRender = () => {
+    if (soldOutStatus) {
+      return (
+        <h3 style={{ color: 'red' }}>SOLD OUT! Sign-up with us to get a notification when it comes back in stock</h3>
+      )
+    } else {
+      return (
+        <React.Fragment>
+          <div style={{ display: 'inline-block' }}>
+            <select className='sel' onChange={handleSizeChange} >
+              {sizes.map((size, index) => <Sizes size={size} key={index} index={index} onChange={handleSizeChange} sizeIndex={sizeIndex} />)}
+            </select>
+            <select className='sel'>
+              {selectedQuantity.map((number, index) => <Quantity number={number} key={index} />)}
+            </select>
+          </div>
+          <Button className='addBtn' variant='outline-secondary' size='lg'>Add to Cart</Button>
+        </React.Fragment>
+      )
+    }
+  }
+
   const zoomImageRender = () => {
     if (imageClickStatus === false) {
       return (
@@ -161,11 +191,13 @@ function MainProduct(props) {
             thumbs={{ swiper: thumbsSwiper }}
             className="mySwiper2"
           >
+            <div className=''>prev</div>
             {subImages.map((image, index) =>
               <SwiperSlide key={index} tag='li'>
-                <img id='main_image' key={index} src={image.url} onClick={() => handleMainImageClick()}/>
+                <img id='main_image' key={index} src={image.url} onClick={() => handleMainImageClick()} />
               </SwiperSlide>
             )}
+            <div className=''>next</div>
           </Swiper>
           <Swiper
             onSwiper={setThumbsSwiper}
@@ -195,7 +227,7 @@ function MainProduct(props) {
           >
             {subImages.map((image, index) =>
               <SwiperSlide key={index} tag='li'>
-                <img id='main_image_expanded' key={index} src={image.url} onClick={() => handleMainImageClick()}/>
+                <img id='main_image_expanded' key={index} src={image.url} onClick={() => handleMainImageClick()} />
               </SwiperSlide>
             )}
           </Swiper>
@@ -222,109 +254,37 @@ function MainProduct(props) {
     <div>
       {zoomImageRender()}
       <div id='col_style'>
-        <h5>Category: {item.category}</h5>
+        <h5 style={{marginTop: 10}}>Category: {item.category}</h5>
         <h1>{item.name}</h1>
         {priceRender()}
         <h4>Style > {selectedStyle}</h4>
         <ul id='style_grid'>
-          {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} />)}
+          {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} activeStyle={activeStyle}/>)}
         </ul>
-        <select className='sel' onChange={handleSizeChange} >
-          {sizes.map((size, index) => <Sizes size={size} key={index} index={index} onChange={handleSizeChange} sizeIndex={sizeIndex} />)}
-        </select>
-        <select className='sel'>
-          {selectedQuantity.map((number, index) => <Quantity number={number} key={index} />)}
-        </select>
-        <Button variant='outline-secondary' size='lg'>Add to Cart</Button>
+        {addToCartButtonRender()}
+        <div className='details'>
+          <h5>Work the Runway</h5>
+          <p>{item.description}</p>
+          <p>Style ID: {styleId}</p>
+        </div>
+        <div className='details'>
+          <h5> Details:</h5>
+          {features.map((feature, index) => <ProductFeatures feature={feature} key={index} />)}
+        </div>
+        <div className='social_media'>
+          <FacebookShareButton url={''}>
+            <FacebookIcon size={30} />
+          </FacebookShareButton>
+          <TwitterShareButton url={''}>
+            <TwitterIcon size={30} />
+          </TwitterShareButton>
+          <PinterestShareButton url={''}>
+            <PinterestIcon size={30} />
+          </PinterestShareButton>
+        </div>
       </div>
-      <div className='details'>
-        <h5>Work the Runway</h5>
-        <p>{item.description}</p>
-      </div>
-      <div className='details'>
-        <p>Style ID: {styleId}</p>
-        <h5> Details: </h5>
-        {features.map((feature, index) => <ProductFeatures feature={feature} key={index} />)}
-      </div>
-
-      <FacebookShareButton url={''}>
-        <FacebookIcon size={30} />
-      </FacebookShareButton>
-      <TwitterShareButton url={''}>
-        <TwitterIcon size={30} />
-      </TwitterShareButton>
-      <PinterestShareButton url={''}>
-        <PinterestIcon size={30} />
-      </PinterestShareButton>
     </div>
   )
 }
 
 export default MainProduct;
-{/*
-id="main"
-          tag="section"
-          wrapperTag="ul"
-          navigation={true}
-          spaceBetween={0}
-          slidesPerView={1}
-        >
-          {subImages.map((image, index) =>
-            <SwiperSlide key={index} tag='li'>
-              <img id='main_image' key={index} src={image.url} />
-            </SwiperSlide>
-          )}
-        </Swiper>
-        <div className='swiper-button-next'>next</div>
-
-        <Swiper
-          wrapperTag='ul'
-          navigation
-          spaceBetween={5}
-          slidesPerView={4}
-          observer={true}
-        >
-          {subImages.map((image, index) =>
-            <SwiperSlide key={index} tag='li'>
-              <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => handleImageClick(index)} />
-            </SwiperSlide>
-          )}
-        </Swiper> */}
-
-        // let mainImages = [];
-        // const renderMainArray = (array) => {
-        //   for (let i = 0; i < array.length; i++) {
-        //     <SwiperSlide>
-        //       <img id='main_image'src={image.url} />
-        //     </SwiperSlide>
-        //   }
-        // }
-
-
-
-        // <Swiper
-        //   spaceBetween={10}
-        //   navigation={true}
-        //   thumbs={{ swiper: thumbsSwiper }}
-        //   className="mySwiper2"
-        // >
-        //   {subImages.map((image, index) =>
-        //     <SwiperSlide key={index} tag='li'>
-        //       <img id='main_image' key={index} src={image.url} onClick={() => handleMainImageClick()} />
-        //     </SwiperSlide>
-        //   )}
-        // </Swiper>
-        // <Swiper
-        //   onSwiper={setThumbsSwiper}
-        //   spaceBetween={10}
-        //   slidesPerView={4}
-        //   freeMode={true}
-        //   watchSlidesVisibility={true}
-        //   watchSlidesProgress={true}
-        //   className="mySwiper"
-        // >
-        //   {subImages.map((image, index) =>
-        //     <SwiperSlide key={index}>
-        //       <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => handleImageClick(index)} />
-        //     </SwiperSlide>)}
-        // </Swiper>
