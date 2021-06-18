@@ -251,7 +251,7 @@ function MainProduct(props) {
   }
 
   return (
-    <div id='PD'>
+    <div className='product_details'>
       {zoomImageRender()}
       <div id='col_style'>
         <h5 style={{marginTop: 10}}>Category: {item.category}</h5>
