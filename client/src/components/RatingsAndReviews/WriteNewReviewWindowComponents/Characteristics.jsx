@@ -12,21 +12,57 @@ let Characteristics = (props) => {
   }
 
   return (
-    <div>
+    // <div>
+    //   {Object.keys(characteristics).map((type, index) => (
+    //     <div className={`write_${type}`} key={index}>
+    //       <label>{type} :</label>
+    //       {characteristics[type].map((selection, index) => (
+    //         <span className="radio" key={index}>
+    //           <label>{selection} </label>
+    //             <input type="radio" value={selection} checked={(props.productCharacteristics[type] === selection)}
+    //             onChange={() => props.makeProductCharacteristics({...props.productCharacteristics, [type]: selection})} />
+    //         </span>
+    //       ))}
+    //     </div>
+    //   ))}
+    // </div>
+    <tbody>
       {Object.keys(characteristics).map((type, index) => (
-        <div className={`write_${type}`} key={index}>
-          <label>{type} :</label>
+        <tr className={`write_${type}`} key={index}>
+          <th>{type} :</th>
           {characteristics[type].map((selection, index) => (
-            <span className="radio" key={index}>
-              <label>{selection} </label>
+            <td>
+              <div className="radio" key={index}>{selection}</div>
+              <div className="radio" key={index}>
                 <input type="radio" value={selection} checked={(props.productCharacteristics[type] === selection)}
-                onChange={() => props.makeProductCharacteristics({...props.productCharacteristics, [type]: selection})} />
-            </span>
+                  onChange={() => props.makeProductCharacteristics({...props.productCharacteristics, [type]: selection})} />
+              </div>
+            </td>
           ))}
-        </div>
+        </tr>
       ))}
-    </div>
+    </tbody>
   )
 }
+
+<tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
 
 export default Characteristics;
