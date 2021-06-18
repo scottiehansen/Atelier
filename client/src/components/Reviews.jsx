@@ -107,13 +107,13 @@ var Reviews = () => {
     )
   } else if (reviewsSortedByRelevance.length === 0) {
     return (
-      <div>
+      <div className='no_reviews'>
         {<WriteNewReview />}
       </div>
     )
   } else {
     return (
-      <div className='ratingsAndReviews'>
+      <div className='ratings_and_reviews'>
         <div className='ratings'>
           <Ratings reviewsMeta={reviewsMeta} reviewFilters={reviewFilters} dispatchReviewFilters={dispatchReviewFilters} key={reviewsMeta.product_id} />
         </div>

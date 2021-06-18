@@ -23,9 +23,6 @@ var Ratings = (props) => {
   // I am looping through the object array. I am considering changing this to increase readability
   return (
     <div>
-      <h1>
-        Rating Breakdown
-      </h1>
       <div>
         {
           props.reviewFilters.length !== 0 ?
@@ -33,18 +30,22 @@ var Ratings = (props) => {
               Currently filtering for {props.reviewFilters.map(element => (
               <span>{`[${element} Star Reviews] `}</span>
               ))}
-              <div className='remove_filters' style={{color: "blue"}} onMouseEnter={event => {event.target.style.textDecoration = 'underline'; event.target.style.color = 'black'}}>Remove all filters</div>
+              <div className='remove_filters' style={{color: "blue"}}
+              onMouseEnter={event => {event.target.style.textDecoration = 'underline'; event.target.style.color = 'black'}}
+              >Remove all filters</div>
             </h4> :
             null
         }
       </div>
-      <div>
-        Average User Rating: {averageRating}
-      </div>
+      <h1>
+        {averageRating}
+      </h1>
       <div>
         <StarRatings
           rating={averageRating}
           starRatedColor="grey"
+          starDimension="20px"
+          starSpacing="1px"
           numberOfStars={5}
           name='averageRating'
         />

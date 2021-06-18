@@ -21,8 +21,13 @@ var ProductsBreakdown = (props) => {
   return (
     <div>
       {props.category}
-      <ProgressBar striped variant="success" style={{width: 500}} />
-      {labels[props.category][0]} {labels[props.category][1]} {labels[props.category][2]} NEED TO ALLIGN THESE
+      <ProgressBar striped variant="success" style={{width: '100%'}} />
+      <p class="alignleft">{labels[props.category][0]}</p>
+      <p class="aligncenter">{labels[props.category][1]}</p>
+      <p class="alignright">{labels[props.category][2]}</p>
+      {/* <label className='start_rating'>{labels[props.category][0]}</label>
+      <label className='middle_rating'>{labels[props.category][1]}</label>
+      <label className='end_rating'>{labels[props.category][2]}</label> */}
     </div>
   )
 }
