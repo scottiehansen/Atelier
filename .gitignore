@@ -80,7 +80,7 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+bundle.js
 
 # Gatsby files
 .cache/
@@ -92,7 +92,6 @@ dist
 .vuepress/dist
 
 # Serverless directories
-.serverless/
 
 # FuseBox cache
 .fusebox/
@@ -102,3 +101,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# config
+config.js
