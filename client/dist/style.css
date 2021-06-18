@@ -81,6 +81,11 @@
 }
 .bar {
   position: relative;
+}
+
+textarea {
+  height: auto;
+  resize: none;
 }​
 /* End styles for ratings component */
 

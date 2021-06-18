@@ -83,17 +83,27 @@ const WriteNewReviewWindow = (props) => {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Write New Review
+              <h2>Write Your Review</h2>
+              <h4>About <em>{props.productName}</em></h4>
              </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={handleReviewSubmission}>
-              <h3>{props.productName}</h3>
+              {/* <h4>About {props.productName}</h4> */}
+              <h5>Overall rating:</h5>
               <Stars stars={stars} makeStars={makeStars}/>
+              <hr/>
+              <h5>Do you recommend this product?</h5>
               <Recommendation productRecommendation={productRecommendation} changeProductRecommendation = {changeProductRecommendation} />
+              <hr/>
+              <h5>Rate product features:</h5>
               <Characteristics productCharacteristics={productCharacteristics} makeProductCharacteristics = {makeProductCharacteristics} />
+              <hr/>
               <Summary reviewSummary = {reviewSummary} reviewBody = {reviewBody} makeReviewSummary = {makeReviewSummary} makeReviewBody={makeReviewBody} />
+              <hr/>
+              <h5>Upload photos (in url format):</h5>
               <Photos photoURLs={photoURLs} makePhotoURLs ={makePhotoURLs} photoURL={photoURL} makePhotoURL={makePhotoURL} />
+              <hr/>
               <UserInfo nickname={nickname} makeNickname={makeNickname} email={email} makeEmail = {makeEmail} />
               <input type="submit" value="Submit Review" />
             </form>
