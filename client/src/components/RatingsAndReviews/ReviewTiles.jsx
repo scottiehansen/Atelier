@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 import moment from 'moment';
 import ReviewTilesBody from './ReviewTilesBody.jsx';
 import ReviewTilesPhotos from './ReviewTilesPhotos.jsx';
+import { Checkmark } from 'react-checkmark'
 // import Container from 'react-bootstrap/Container';
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
@@ -24,6 +25,7 @@ var ReviewTiles = (reviews) => {
         </div>
         <div className={'review_reviewer_name' + ' review_date'}>
           {reviews.review.reviewer_name}, {moment(reviews.review.date).format('MMMM DD, YYYY')}
+          {/* NOTE, THIS NEEDS TO SUBMIT A GET REQUEST TO THE API TO FIND THIS REVIEWERS EMAIL ADDRESS, BY THEIR USERNAME. IF THE EMAIL ADDRESS IS FOUND AND IS ASSOCIATED WITH A SALE, THEN VERIFIED PURCHASER WILL APPEAR*/}
         </div>
       </div>
       <div className='summary'>
@@ -42,22 +44,26 @@ var ReviewTiles = (reviews) => {
       </div>
       <div className='review_recommend'>
         {reviews.review.recommend ?
-        '**CHECKMARK** I reccomend this product' :
+          '✔  I reccomend this product'
+        :
         ''}
       </div>
-      <div className='review_name'>
-        {reviews.review.reviewer_name}
-        {/* NOTE, THIS NEEDS TO SUBMIT A GET REQUEST TO THE API TO FIND THIS REVIEWERS EMAIL ADDRESS, BY THEIR USERNAME. IF THE EMAIL ADDRESS IS FOUND AND IS ASSOCIATED WITH A SALE, THEN VERIFIED PURCHASER WILL APPEAR*/}
-      </div>
-      <div className='review_response'>
-        {reviews.review.response ?
-          <div className='review_response'> Response from Seller : {reviews.review.response} </div> :
-          null
-        }
-      </div>
+      {reviews.review.response ?
+        <div className='review_response'>
+          <div style={{fontWeight: 'bold'}}> Response from Seller: </div>
+          <div> {reviews.review.response} </div>
+          </div> :
+        null
+      }
       {/* NOTE, SEE DIRK QUESTION IN SLACK. ALSO, YOU NEED TO FIND A WAY TO TRACK A USER BY A COOKIE, TO SEE IF THEY HAVE SUBMITTED A REVIEW BEFORE. YOU ALSO NEED TO RENDER THESE INTO BUTTONS*/}
       <div className='review_helpfulness'>
-        Was this helpful? Yes ({reviews.review.helpfulness})
+        <span>Was this helpful? </span>
+        <span
+        onMouseEnter={event => {event.target.style.textDecoration = 'underline'}}
+        onMouseLeave={event => {event.target.style.textDecoration = 'none'}}>
+          Yes
+        </span>
+        <span> ({reviews.review.helpfulness})</span>
       </div>
       <hr />
     </div>
