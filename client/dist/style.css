@@ -10,7 +10,8 @@
   width: 80%;
   display: grid;
   grid-template-columns: [col1] 30% [col2] 10% [col3] 60%;
-  grid-template-rows: [row1] 50px [row2] 95%;
+  grid-template-rows: [row1] 50px [row2] calc(100vh - 55px);
+  /* or 95% */
 }
 
 .css-2b097c-container {

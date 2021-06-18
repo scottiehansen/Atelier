@@ -4,12 +4,12 @@ import WriteNewReviewWindow from './WriteNewReviewWindow.jsx'
 
 var WriteNewReview = () => {
 
-  let [showWindow, changeShowWindow] = useState(false);
+  let [modalShow, setModalShow] = useState(false);
 
   return (
     <div>
-      <button className='functional-btn' onClick={() => {changeShowWindow(true)}}>Write New Review</button>
-      <WriteNewReviewWindow showWindow={showWindow} changeShowWindow={changeShowWindow} />
+      <button className='functional-btn' onClick={() => {setModalShow(true)}}>Write New Review</button>
+      <WriteNewReviewWindow show={modalShow} onHide={() => setModalShow(false)} />
     </div>
   )
 }
