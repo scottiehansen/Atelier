@@ -82,7 +82,32 @@
 textarea {
   height: auto;
   resize: none;
-}​
+}
+
+.review_reviewer_name {
+  font-style: italic;
+  align-self: flex-end;
+  height: 21px
+}
+
+.review {
+  display: grid;
+  grid-auto-rows: auto;
+}
+
+.stars_name_date {
+  display: flex;
+  justify-content: space-between
+}
+
+
+
+/* .review_date {
+  vertical-align: bottom
+}
+.review_reviewer_name {
+  vertical-align: bottom
+} */
 /* End styles for ratings component */
 
 .product_details {

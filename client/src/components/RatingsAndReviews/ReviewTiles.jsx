@@ -11,23 +11,22 @@ import ReviewTilesPhotos from './ReviewTilesPhotos.jsx';
 var ReviewTiles = (reviews) => {
   return (
     <div className='review'>
-      <div className='review_star_rating'>
-        <StarRatings
-          rating={reviews.review.rating}
-          starRatedColor="grey"
-          numberOfStars={5}
-          name='rating'
-          starDimension="20px"
-          starSpacing="1px"
-        />
+      <div className='stars_name_date'>
+        <div className='review_star_rating'>
+          <StarRatings
+            rating={reviews.review.rating}
+            starRatedColor="grey"
+            numberOfStars={5}
+            name='rating'
+            starDimension="20px"
+            starSpacing="1px"
+          />
+        </div>
+        <div className={'review_reviewer_name' + ' review_date'}>
+          {reviews.review.reviewer_name}, {moment(reviews.review.date).format('MMMM DD, YYYY')}
+        </div>
       </div>
-      <div className='review_reviewer_name'>
-        {reviews.review.reviewer_name}
-      </div>
-      <div className='review_date'>
-        {moment(reviews.review.date).format('MMMM DD, YYYY')}
-      </div>
-      <div className='review_summary'>
+      <div className='summary'>
         <h3>{reviews.review.summary.slice(0, 60)}</h3>
       </div>
       <div className='review_body'>

@@ -18,10 +18,12 @@ class App extends React.Component {
     super(props)
     this.state = {
       products: [],
-      selectedProductIndex: 0
+      selectedProductIndex: 0,
+      averageRating: null
     }
     this.selectProduct = this.selectProduct.bind(this);
     this.getProducts = this.getProducts.bind(this);
+    this.fetchAverageRating = this.fetchAverageRating.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +44,12 @@ class App extends React.Component {
   selectProduct (e) {
     this.setState({
       selectedProductIndex: e.target.id
+    })
+  }
+
+  fetchAverageRating (rating) {
+    this.setState({
+      averageRating: rating
     })
   }
 
@@ -67,7 +75,7 @@ class App extends React.Component {
         <MainProduct item={this.state.products[this.state.selectedProductIndex]} />
         <StarRender item={this.state.products[this.state.selectedProductIndex]} />
         <QAMain product={this.state.products[this.state.selectedProductIndex]} />
-        <Reviews product={this.state.products[this.state.selectedProductIndex]}/>
+        <Reviews product={this.state.products[this.state.selectedProductIndex]} fetchAverageRating={this.fetchAverageRating}/>
       </div>
     )
   }
