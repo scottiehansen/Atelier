@@ -11,6 +11,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
+import '/client/dist/style.css';
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -62,7 +64,7 @@ class App extends React.Component {
             </Nav>
           </Container>
         </Navbar>
-        <MainProduct item={this.state.products[this.state.selectedProductIndex]} />
+        <MainProduct id='PD' item={this.state.products[this.state.selectedProductIndex]} />
         <StarRender item={this.state.products[this.state.selectedProductIndex]} />
         <QAMain product={this.state.products[this.state.selectedProductIndex]} />
         <Reviews product={this.state.products[this.state.selectedProductIndex]}/>
