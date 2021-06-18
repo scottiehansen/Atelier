@@ -65,7 +65,7 @@ class App extends React.Component {
         <MainProduct item={this.state.products[this.state.selectedProductIndex]} />
         <StarRender item={this.state.products[this.state.selectedProductIndex]} />
         <QAMain product={this.state.products[this.state.selectedProductIndex]} />
-        <Reviews />
+        <Reviews product={this.state.products[this.state.selectedProductIndex]}/>
       </div>
     )
   }

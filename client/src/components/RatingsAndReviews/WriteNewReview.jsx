@@ -2,14 +2,14 @@ import React from 'react';
 import { useState } from 'react';
 import WriteNewReviewWindow from './WriteNewReviewWindow.jsx'
 
-var WriteNewReview = () => {
+var WriteNewReview = (props) => {
 
-  let [showWindow, changeShowWindow] = useState(false);
+  let [modalShow, setModalShow] = useState(false);
 
   return (
     <div>
-      <button onClick={() => {changeShowWindow(true)}}>Write New Review</button>
-      <WriteNewReviewWindow showWindow={showWindow} changeShowWindow={changeShowWindow} />
+      <button className='functional-btn' onClick={() => {setModalShow(true)}}>Write New Review</button>
+      <WriteNewReviewWindow show={modalShow} onHide={() => setModalShow(false)} productName={props.productName} />
     </div>
   )
 }

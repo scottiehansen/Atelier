@@ -12,10 +12,10 @@ import WriteNewReview from './WriteNewReview';
 // I am importing the response from axios and sifting them into seperate arrays. This will take more of a page loading time, but the app will work much faster after
 // the initial page load, because the data will have already been sorted. Granted, when a put request is added, I am going to have to resort everything.
 
-var Reviews = () => {
+var Reviews = (props) => {
 
   // PRODUCT ID IS HARDCODED IN. USE A AXIOS CALL TO GET THEM OR GET THEM FROM THE MAIN STORE IF USING REDUX
-  let [productID, makeProductID] = useState(16057)
+  let productID = props.product.id
   let [isPageloading, makeIsPageLoading] = useState(true);
   let [numberOfReviews, makeNumberOfReviews] = useState(2);
   let [reviewSorter, makeReviewSorter] = useState({value: 'Relevance', label: 'Relevance'});
@@ -65,7 +65,7 @@ var Reviews = () => {
       .catch(errorOne => {
         console.log('errorOne: ', errorOne)
       });
-  }, [])
+  }, [productID])
 
   // sorting function
   const changeSorting = (value) => {
@@ -107,16 +107,20 @@ var Reviews = () => {
     )
   } else if (reviewsSortedByRelevance.length === 0) {
     return (
-      <div>
-        {<WriteNewReview />}
+      <div className='no-review'>
+        {<WriteNewReview productName={props.product.name}/>}
       </div>
     )
   } else {
     return (
       <div className='ratings_and_reviews'>
+        <div className='section_heading'>
+          {'Ratings & Reviews'}
+        </div>
         <div className='ratings'>
           <Ratings reviewsMeta={reviewsMeta} reviewFilters={reviewFilters} dispatchReviewFilters={dispatchReviewFilters} key={reviewsMeta.product_id} />
         </div>
+        <div className='seperator'></div>
         <div className='reviews'>
           <div className='select_bar'>
             < Select options={options} value={reviewSorter} onChange={value => {changeSorting(value)}} />
@@ -138,14 +142,14 @@ var Reviews = () => {
                 ))
             }
           </div>
-          <div className="show_more_button">
+          <div>
             {reviewsSortedByRelevance.length > numberOfReviews && reviewFilters.length === 0 ?
-              <button onClick={() => makeNumberOfReviews(numberOfReviews + 2)}>Click for more reviews</button> :
+              <button className="show_more_button functional-btn" onClick={() => makeNumberOfReviews(numberOfReviews + 2)}>Click for more reviews</button> :
               <div></div>
             }
           </div>
           <div>
-            {<WriteNewReview />}
+            {<WriteNewReview productName={props.product.name}/>}
           </div>
         </div>
       </div>
