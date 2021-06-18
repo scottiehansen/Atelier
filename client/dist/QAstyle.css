@@ -15,7 +15,7 @@
 #QAList {
   overflow: auto;
   max-height: 45vh;
-  max-width: 150vh;
+  /* max-width: 150vh; */
 }
 
 #QModal{
