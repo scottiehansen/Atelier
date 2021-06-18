@@ -18,7 +18,7 @@ const UserInfo = (props) => {
       <h5>Enter display name for review:</h5>
       <div>
         <div>
-          <textarea placeholder='jackson11!' rows="1" style={{width: '40%'}} value={props.nickname} onChange={handleNicknameChange}/>
+          <textarea placeholder='jackson11!' rows="1" style={{width: '30%'}} value={props.nickname} onChange={handleNicknameChange}/>
         </div>
         <label>For privacy reasons, do not use your full name or email address</label>
       </div>
