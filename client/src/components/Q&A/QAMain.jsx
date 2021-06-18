@@ -20,22 +20,13 @@ function QAMain(props) {
   const [temporaryQuestion, setTemporaryQuestion] = useState('');
 
   var currentProductId = props.product.id
-  console.log('QAMain currentproduct:', currentProductId)
-
-  //render Q's on initial upload
-  // useEffect(() => {
-  //   getQuestions(currentProductId);
-  //   console.log('initial useEffect in QA on', currentProductId)
-  // }, [])
 
   useEffect(() => {
-    console.log('update useEffect is running w/', currentProductId)
     getQuestions(currentProductId);
   }, [currentProductId])
 
   // get and sort all questions by helpfulness
   function getQuestions(id) {
-    console.log('running get request on:', currentProductId)
     axios.get(`${url}/qa/questions?count=100&product_id=${id}`, auth)
       .then((response) => {
         // sort questions by helpfullness
@@ -65,7 +56,6 @@ function QAMain(props) {
         }
       })
       if (filteredQuestions.length > 0) {
-        console.log(filteredQuestions)
         setQuestions(filteredQuestions)
       } else {
         setQuestions(fullQuestionsList)

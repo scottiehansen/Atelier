@@ -28,6 +28,10 @@
   /* max-height: 90% */
 }
 
+div#QAList ul {
+  padding-left: 0
+}
+
 .QModalForm{
   display: grid;
 }
@@ -63,12 +67,6 @@ ul {
   list-style: none;
 }
 
-/* .modalFooter{
-  border-top:1px solid #CCC;
-  width:100%;
-  float:left;
-  padding-bottom:3px;
-} */
 
 .boldTitle {
   font-size: 14px;

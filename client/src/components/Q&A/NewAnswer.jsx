@@ -47,7 +47,6 @@ function NewAnswer(props) {
   function handleSubmit(event) {
     event.preventDefault();
     var validationErrors = validate(values)
-    console.log(validationErrors)
     // if no errors
     if (JSON.stringify(validationErrors) === "{}") {
       console.log('no errors found')
@@ -59,7 +58,6 @@ function NewAnswer(props) {
       }
       axios.post(`${url}/qa/questions/${props.question.question_id}/answers`, answer, auth)
         .then((response) => {
-          console.log(response.data)
           props.setTemporaryAnswer(values.newAnswer)
           props.setTemporaryNickname(values.nickname)
           setModalIsOpen(false)

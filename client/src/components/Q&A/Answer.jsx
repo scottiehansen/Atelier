@@ -36,7 +36,7 @@ function Answer(props) {
 
   return (
     <li className="answer">
-      <p>{props.answer.body}</p>
+      <p> {props.answer.body}</p>
       <span>
         by {(props.answer.answerer_name === "Seller") ?<strong>{props.answer.answerer_name}</strong> : props.answer.answerer_name}, {formattedDate} | Helpful?
         <button
