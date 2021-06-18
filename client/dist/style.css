@@ -30,6 +30,13 @@
 }
 /* End styles for ratings component */
 
+.product_details {
+  display: inline-flexbox;
+  margin: 0 auto;
+  width: 80%;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
 
 .styles {
   width: 120px;
@@ -91,8 +98,9 @@
 #col_style {
   position: relative;
   display:grid;
-  width: 50%;
+  width: 45%;
   float: left;
+  margin: 10px;
   height: 1000px;
 }
 
@@ -184,17 +192,14 @@
 .social_media {
   margin-bottom: 15px;
   margin-left: 10px;
+
 }
 
 .active_style {
-  width: 120px;
-  height: 120px;
-  border: 10px solid ;
-  border-radius: 75%;
-}
-
-.product_details {
-  margin: 0 auto;
-  width: 80%;
-  margin-bottom: 20px;
+  position: relative;
+  width: 135px;
+  height: 135px;
+  border: 5px #8a8d8f;
+  background:#8a8d8f;
+  border-radius: 50%;
 }
