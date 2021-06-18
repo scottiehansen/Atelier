@@ -64,7 +64,7 @@ class App extends React.Component {
             </Nav>
           </Container>
         </Navbar>
-        <MainProduct id='PD' item={this.state.products[this.state.selectedProductIndex]} />
+        <MainProduct item={this.state.products[this.state.selectedProductIndex]} />
         <StarRender item={this.state.products[this.state.selectedProductIndex]} />
         <QAMain product={this.state.products[this.state.selectedProductIndex]} />
         <Reviews product={this.state.products[this.state.selectedProductIndex]}/>

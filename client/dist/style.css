@@ -4,6 +4,8 @@
   display: grid;
   grid-template-columns: [col1] 50% [col2] 50%;
   grid-template-rows: [row1] 5% [row2] 95%;
+  margin: 0 auto;
+  width: 80%;
 }
 
 .ratings {
@@ -191,6 +193,8 @@
   border-radius: 75%;
 }
 
-#PD {
-  background-color: chocolate;
+.product_details {
+  margin: 0 auto;
+  width: 80%;
+  margin-bottom: 20px;
 }
