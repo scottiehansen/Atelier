@@ -18,23 +18,22 @@ const Summary = (props) => {
 
   return (
     <div>
+      <h5>Write a review headline:</h5>
       <div>
-        <label>Please write a short summary of your review for this product: </label>
-        <div>
-          <textarea placeholder='Example: Best purchase ever!'  value={props.reviewSummary} onChange={handleReviewSummary}/>
-        </div>
+        <textarea rows="1" style={{width: '60%'}} placeholder='Example: Best purchase ever!'  value={props.reviewSummary} onChange={handleReviewSummary}/>
       </div>
+      <hr/>
+      <h5>Write a product review:</h5>
       <div>
-        <label>Please write a review for this product </label>
         {props.reviewBody.length < 50 ?
           <div>
-            <textarea placeholder='Why did you like the product or not?' value={props.reviewBody} onChange={handleReviewBody}/>
+            <textarea rows="5" style={{width:'100%'}} placeholder='Why did you like the product or not?' value={props.reviewBody} onChange={handleReviewBody}/>
             <div>
               Minimum required characters left: [{50 - props.reviewBody.length}]
             </div>
           </div> :
           <div>
-            <textarea placeholder='Why did you like the product or not?' value={props.reviewBody} onChange={handleReviewBody}/>
+            <textarea rows="5" style={{width:'100%'}} placeholder='Why did you like the product or not?' value={props.reviewBody} onChange={handleReviewBody}/>
             <div>
               Minimum reached
             </div>

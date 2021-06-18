@@ -30,8 +30,8 @@ const Photos = (props) => {
       ))}
       {props.photoURLs.length < 5 ?
         <div>
-          <input type="text" value={props.photoURL} onChange={handlePhotoURLChange} />
-          <button onClick={handlePhotoURLSubmission}> Submit Photos of Product (in URL format) </button>
+          <input type="text" rows="1" style={{width: '40%'}} value={props.photoURL} onChange={handlePhotoURLChange} />
+          <button onClick={handlePhotoURLSubmission}> Submit Product Photo URL </button>
         </div> :
         <div></div>
       }

@@ -2,10 +2,22 @@
 
 .ratings_and_reviews {
   display: grid;
-  grid-template-columns: [col1] 50% [col2] 50%;
-  grid-template-rows: [row1] 5% [row2] 95%;
+  grid-template-columns: [col1] 30% [col2] 10% [col3] 60%;
+  grid-template-rows: [row1] 50px [row2] calc(100vh - 55px);
+  /* or 95% */
   margin: 0 auto;
   width: 80%;
+}
+
+/* .css-2b097c-container {
+  width: 30%;
+} */
+
+.seperator {
+  grid-column-start: col2;
+  grid-column-end: col2;
+  grid-row-start: row2;
+  grid-row-end: row2;
 }
 
 .ratings {
@@ -15,12 +27,23 @@
   grid-row-end: row2;
 }
 
+.section_heading {
+  grid-column-start: col1;
+  grid-column-end: col1;
+  grid-row-start: row1;
+  grid-row-end: row1;
+}
+
 .reviews {
-  grid-column-start: col2;
-  grid-column-end: col2;
+  grid-column-start: col3;
+  grid-column-end: col3;
   grid-row-start: row2;
   grid-row-end: row2;
+  overflow: auto;
+}
 
+.progress {
+  width: 100%;
 }
 
 .review-photo {
@@ -28,6 +51,38 @@
   height: 10vh;
   width: 8vh;
 }
+
+.alignleft {
+  float: left;
+  width:33.33333%;
+  text-align:left;
+}
+.aligncenter {
+  float: left;
+  width:33.33333%;
+  text-align:center;
+}
+.alignright {
+ float: left;
+ width:33.33333%;
+ text-align:right;
+}
+
+.rating_characteristics {
+  display: grid;
+}
+
+.caret {
+  position: absolute;
+}
+.bar {
+  position: relative;
+}
+
+textarea {
+  height: auto;
+  resize: none;
+}​
 /* End styles for ratings component */
 
 
