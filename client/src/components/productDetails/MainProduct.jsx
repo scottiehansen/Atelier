@@ -47,7 +47,7 @@ function MainProduct(props) {
   const [sizeIndex, setSizeIndex] = useState('');
   const [shoppingCart, setShoppingCart] = useState([]);
   const [imageClickStatus, setImageClickStatus] = useState(false);
-
+  const [soldOutStatus, setSoldOutStatus] = useState(false);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const getSizesAndQuantities = (object) => {
@@ -58,6 +58,11 @@ function MainProduct(props) {
         sizesArray.push(object[keys].size);
         quantitiesArray.push(object[keys].quantity);
       }
+    }
+    if (quantitiesArray.length <= 1) {
+      setSoldOutStatus(true);
+    } else {
+      setSoldOutStatus(false);
     }
     setSizes(sizesArray);
     setQuantities(quantitiesArray);
@@ -85,7 +90,7 @@ function MainProduct(props) {
       setOriginalPrice(imageStyleResponse.data.results[0].original_price);
       setSalePrice(imageStyleResponse.data.results[0].sale_price);
     }
-    getSizesAndQuantities(imageStyleResponse.data.results[0].skus);
+    getSizesAndQuantities(imageStyleResponse.data.results[index].skus);
     setSelectedQuantity(['-']);
   }, [props.item.id])
 
@@ -118,6 +123,7 @@ function MainProduct(props) {
           setOriginalPrice(response.data.results[index].original_price);
           setSalePrice(response.data.results[index].sale_price);
         }
+        getSizesAndQuantities(response.data.results[index].skus);
         setResultIndex(index);
       })
   }
@@ -151,6 +157,26 @@ function MainProduct(props) {
     setImageClickStatus(!imageClickStatus)
   }
 
+  const addToCartButtonRender = () => {
+    if (soldOutStatus) {
+      return (
+        <h3 style={{color: 'red'}}>SORRY, BABY! SOLD OUT</h3>
+      )
+    } else {
+      return (
+        <React.Fragment>
+          <select className='sel' onChange={handleSizeChange} >
+            {sizes.map((size, index) => <Sizes size={size} key={index} index={index} onChange={handleSizeChange} sizeIndex={sizeIndex} />)}
+          </select>
+          <select className='sel'>
+            {selectedQuantity.map((number, index) => <Quantity number={number} key={index} />)}
+          </select>
+          <Button variant='outline-secondary' size='lg'>Add to Cart</Button>
+        </React.Fragment>
+      )
+    }
+  }
+
   const zoomImageRender = () => {
     if (imageClickStatus === false) {
       return (
@@ -161,11 +187,13 @@ function MainProduct(props) {
             thumbs={{ swiper: thumbsSwiper }}
             className="mySwiper2"
           >
+            <div className=''>prev</div>
             {subImages.map((image, index) =>
               <SwiperSlide key={index} tag='li'>
                 <img id='main_image' key={index} src={image.url} onClick={() => handleMainImageClick()}/>
               </SwiperSlide>
             )}
+            <div className=''>next</div>
           </Swiper>
           <Swiper
             onSwiper={setThumbsSwiper}
@@ -229,13 +257,7 @@ function MainProduct(props) {
         <ul id='style_grid'>
           {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} />)}
         </ul>
-        <select className='sel' onChange={handleSizeChange} >
-          {sizes.map((size, index) => <Sizes size={size} key={index} index={index} onChange={handleSizeChange} sizeIndex={sizeIndex} />)}
-        </select>
-        <select className='sel'>
-          {selectedQuantity.map((number, index) => <Quantity number={number} key={index} />)}
-        </select>
-        <Button variant='outline-secondary' size='lg'>Add to Cart</Button>
+        {addToCartButtonRender()}
       </div>
       <div className='details'>
         <h5>Work the Runway</h5>
