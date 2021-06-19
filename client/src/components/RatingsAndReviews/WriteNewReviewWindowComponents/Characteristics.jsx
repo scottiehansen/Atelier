@@ -33,7 +33,7 @@ let Characteristics = (props) => {
           {characteristics[type].map((selection, index) => (
             <td>
               <div className="radio" key={index}>{selection}</div>
-              <div className="radio" key={index}>
+              <div className="radio" key={index + 5}>
                 <input type="radio" value={selection} checked={(props.productCharacteristics[type] === selection)}
                   onChange={() => props.makeProductCharacteristics({...props.productCharacteristics, [type]: selection})} />
               </div>

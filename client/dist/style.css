@@ -82,7 +82,34 @@
 textarea {
   height: auto;
   resize: none;
-}​
+
+}
+
+.review_reviewer_name {
+  font-style: italic;
+  align-self: flex-end;
+  height: 21px
+}
+
+.review {
+  display: grid;
+  grid-auto-rows: auto;
+}
+
+.stars_name_date {
+  display: flex;
+  justify-content: space-between
+}
+
+.review_response {
+  width: 320px;
+  padding: 10px;
+  border: 5px solid gray;
+  margin: 0;
+}
+
+/* End styles for ratings component */
+
 
 #product_container{
 
