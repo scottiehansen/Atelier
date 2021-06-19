@@ -1,5 +1,5 @@
 import React from "react";
-import ProgressBar from 'react-bootstrap/progressbar';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import { CaretDownFill } from 'react-bootstrap-icons';
 
 var ProductsBreakdown = (props) => {
