@@ -13,7 +13,6 @@ const Stars = (props) => {
 
   return (
     <div>
-      Overall rating:
       <ReactStars
       count={5}
       onChange={(newStarRating) => {props.makeStars(newStarRating)}}
