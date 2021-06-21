@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import RatingsBreakdown from "./RatingsBreakdown.jsx";
 import ProductsBreakdown from "./ProductsBreakdown.jsx"
-import StarRatings from '../../../../node_modules/react-star-ratings';
+import StarRatings from 'react-star-ratings';
 
 var Ratings = (props) => {
 
@@ -83,7 +83,8 @@ const sumRatings = (ratings) => {
     averageRating += (Number(rating) * Number(ratings[rating]));
     length += Number(ratings[rating]);
   }
-  return [(Math.round((averageRating/length) * 10) / 10), length]
+  var average = [(Math.round((averageRating/length) * 10) / 10), length]
+  return average;
 }
 
 const formatRatings = (ratings, ratingsFormatted) => {
