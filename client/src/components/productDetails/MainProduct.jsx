@@ -148,13 +148,13 @@ function MainProduct(props) {
   const priceRender = () => {
     if (salePrice !== '') {
       return (
-        <div>
-          <h3 style={{ textDecorationLine: 'line-through' }}>${originalPrice} </h3> <h3 style={{ color: 'red' }}>SALE ${salePrice}</h3>
+        <div className="price_header">
+          <h4 style={{ textDecorationLine: 'line-through' }}>${originalPrice} </h4> <h4 style={{ color: 'red' }}>SALE ${salePrice}</h4>
         </div>
       )
     } else {
       return (
-        <h3>${originalPrice}</h3>
+        <h4 className="price_header">${originalPrice}</h4>
       )
     }
   }
@@ -190,18 +190,16 @@ function MainProduct(props) {
       return (
         <div id='col_image'>
           <Swiper
-            spaceBetween={10}
+            spaceBetween={50}
             navigation={true}
             thumbs={{ swiper: thumbsSwiper }}
             className="mySwiper2"
           >
-            <div className=''>prev</div>
             {images.map((image, index) =>
               <SwiperSlide key={index} tag='li'>
                 <img id='main_image' key={index} src={image.url} onClick={() => handleMainImageClick()} />
               </SwiperSlide>
             )}
-            <div className=''>next</div>
           </Swiper>
           <Swiper
             onSwiper={setThumbsSwiper}
@@ -260,10 +258,10 @@ function MainProduct(props) {
       <div id='product_wrapper'>
         {zoomImageRender()}
         <div id='col_style'>
-          <h5 style={{ marginTop: 10 }}>Category: {item.category}</h5>
+          <h4 style={{ marginTop: 10 }}>Category: {item.category}</h4>
           <h1>{item.name}</h1>
           {priceRender()}
-          <h4>Style > {selectedStyle}</h4>
+          <h5 id='selected_style'>Style > {selectedStyle}</h5>
           <ul id='style_grid'>
             {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} activeStyle={activeStyle} />)}
           </ul>
