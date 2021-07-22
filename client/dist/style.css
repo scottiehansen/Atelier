@@ -257,26 +257,6 @@ textarea {
   object-fit: cover;
 }
 
-.swiper-button-next {
-  position: relative;
-  float: right;
-  width: 0;
-  height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-left: 20px solid lightgray;
-}
-
-.swiper-button-prev {
-  position: relative;
-  float: left;
-  width: 0;
-  height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-right: 20px solid lightgray;
-}
-
 #main_image_expanded {
   display: block;
   width: 2000px;

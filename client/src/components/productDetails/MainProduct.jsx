@@ -9,7 +9,7 @@ import Quantity from './Quantity.jsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Thumbs, Zoom } from 'swiper/core';
 
-import "swiper/swiper.min.css";
+import "swiper/swiper-bundle.min.css";
 import "swiper/components/navigation/navigation.min.css"
 import "swiper/components/thumbs/thumbs.min.css";
 import "swiper/components/zoom/zoom.min.css"
