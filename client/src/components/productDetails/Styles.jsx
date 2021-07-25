@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Styles (props) {
+export default function Styles (props) {
 
   return (
     <li className={props.activeStyle === props.index ? 'active_style' : null}>
@@ -8,5 +8,3 @@ function Styles (props) {
     </li>
   )
 }
-
-export default Styles;

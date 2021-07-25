@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import Reviews from './RatingsAndReviews/Reviews'
 import keys from '../../../server/config/config.js'
-import StarRender from './productDetails/StarRender.jsx';
 import MainProduct from './productDetails/MainProduct.jsx';
 import QAMain from './Q&A/QAMain.jsx';
 
@@ -65,7 +64,6 @@ class App extends React.Component {
           </Container>
         </Navbar>
         <MainProduct className='product_details' item={this.state.products[this.state.selectedProductIndex]} />
-        <StarRender item={this.state.products[this.state.selectedProductIndex]} />
         <QAMain product={this.state.products[this.state.selectedProductIndex]} />
         <Reviews product={this.state.products[this.state.selectedProductIndex]} />
       </div>

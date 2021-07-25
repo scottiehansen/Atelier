@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ProductFeatures from './ProductFeatures.jsx';
-import ProductImages from './ProductImages.jsx';
 import Styles from './Styles.jsx';
 import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Thumbs, Zoom } from 'swiper/core';
 
@@ -28,7 +26,7 @@ import Button from 'react-bootstrap/Button';
 const key = require('/server/config/config.js');
 
 
-function MainProduct(props) {
+export default function MainProduct(props) {
   const [item, setItem] = useState({});
   const [features, setFeatures] = useState([]);
   const [images, setImages] = useState([]);
@@ -185,12 +183,12 @@ function MainProduct(props) {
     }
   }
 
-  const zoomImageRender = () => {
-    if (imageClickStatus === false) {
-      return (
+  return (
+    <div>
+      <div id='product_wrapper'>
         <div id='col_image'>
           <Swiper
-            spaceBetween={50}
+            spaceBetween={500}
             navigation={true}
             thumbs={{ swiper: thumbsSwiper }}
             className="mySwiper2"
@@ -217,46 +215,6 @@ function MainProduct(props) {
               </SwiperSlide>)}
           </Swiper>
         </div>
-      )
-    } else {
-      return (
-        <div>
-          <Swiper
-            spaceBetween={10}
-            navigation={true}
-            thumbs={{ swiper: thumbsSwiper }}
-            className="mySwiper2"
-            zoom={true}
-          >
-            {images.map((image, index) =>
-              <SwiperSlide key={index} tag='li'>
-                <img id='main_image_expanded' key={index} src={image.url} onClick={() => handleMainImageClick()} />
-              </SwiperSlide>
-            )}
-          </Swiper>
-          <Swiper
-            onSwiper={setThumbsSwiper}
-            spaceBetween={5}
-            slidesPerView={7}
-            freeMode={true}
-            watchSlidesVisibility={true}
-            watchSlidesProgress={true}
-            className="mySwiper"
-          >
-            {images.map((image, index) =>
-              <SwiperSlide key={index}>
-                <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => handleImageClick(index)} />
-              </SwiperSlide>)}
-          </Swiper>
-        </div>
-      )
-    }
-  }
-
-  return (
-    <div>
-      <div id='product_wrapper'>
-        {zoomImageRender()}
         <div id='col_style'>
           <h4 style={{ marginTop: 10 }}>Category: {item.category}</h4>
           <h1>{item.name}</h1>
@@ -279,13 +237,13 @@ function MainProduct(props) {
           <div className='social_media'>
             <h4>Share Me!</h4>
             <FacebookShareButton url={''}>
-              <FacebookIcon style={{margin: '5px'}} size={40} round={true}/>
+              <FacebookIcon style={{ margin: '5px' }} size={40} round={true} />
             </FacebookShareButton>
             <TwitterShareButton url={''}>
-              <TwitterIcon style={{margin: '5px'}} size={40} round={true}/>
+              <TwitterIcon style={{ margin: '5px' }} size={40} round={true} />
             </TwitterShareButton>
             <PinterestShareButton url={''}>
-              <PinterestIcon style={{margin: '5px'}} size={40} round={true}/>
+              <PinterestIcon style={{ margin: '5px' }} size={40} round={true} />
             </PinterestShareButton>
           </div>
         </div>
@@ -293,5 +251,3 @@ function MainProduct(props) {
     </div>
   )
 }
-
-export default MainProduct;
