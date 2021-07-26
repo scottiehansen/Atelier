@@ -106,3 +106,5 @@ bundle.js
 config.js
 
 scott_key.pem
+
+package-lock.json
