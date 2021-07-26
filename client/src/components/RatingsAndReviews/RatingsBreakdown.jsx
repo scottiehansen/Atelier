@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import ProgressBar from 'react-bootstrap/progressbar';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 var RatingsBreakdown = (props) => {
 
