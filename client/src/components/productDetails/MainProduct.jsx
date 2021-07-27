@@ -5,10 +5,10 @@ import Styles from './Styles.jsx';
 import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
 import ImageDefaultView from './ImageDefaultView.jsx';
+import SocialMedia from './SocialMedia.jsx';
 import '/client/dist/style.css';
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, PinterestShareButton, PinterestIcon } from 'react-share';
 import Button from 'react-bootstrap/Button';
 const key = require('/server/config/config.js');
 
@@ -182,22 +182,9 @@ export default function MainProduct(props) {
             <p>Style ID: {styleId}</p>
           </div>
           <div className='details'>
-            <h4> Details:</h4>
-            {features.map((feature, index) => <ProductFeatures feature={feature} key={index} />)}
+            <ProductFeatures features={features}/>
           </div>
-
-          <div className='social_media'>
-            <h4>Share Me!</h4>
-            <FacebookShareButton url={''}>
-              <FacebookIcon style={{ margin: '5px' }} size={40} round={true} />
-            </FacebookShareButton>
-            <TwitterShareButton url={''}>
-              <TwitterIcon style={{ margin: '5px' }} size={40} round={true} />
-            </TwitterShareButton>
-            <PinterestShareButton url={''}>
-              <PinterestIcon style={{ margin: '5px' }} size={40} round={true} />
-            </PinterestShareButton>
-          </div>
+          <SocialMedia />
         </div>
       </div>
     </div>
