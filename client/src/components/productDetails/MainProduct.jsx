@@ -4,27 +4,13 @@ import ProductFeatures from './ProductFeatures.jsx';
 import Styles from './Styles.jsx';
 import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Thumbs, Zoom } from 'swiper/core';
-
-import "swiper/swiper-bundle.min.css";
-import "swiper/components/navigation/navigation.min.css"
-import "swiper/components/thumbs/thumbs.min.css";
-import "swiper/components/zoom/zoom.min.css"
-
+import ImageDefaultView from './ImageDefaultView.jsx';
 import '/client/dist/style.css';
-
-SwiperCore.use([Navigation, Thumbs, Zoom]);
-
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, PinterestShareButton, PinterestIcon } from 'react-share';
 import Button from 'react-bootstrap/Button';
-
-
 const key = require('/server/config/config.js');
-
 
 export default function MainProduct(props) {
   const [item, setItem] = useState({});
@@ -42,8 +28,6 @@ export default function MainProduct(props) {
   const [selectedQuantity, setSelectedQuantity] = useState([]);
   const [sizeIndex, setSizeIndex] = useState('');
   const [shoppingCart, setShoppingCart] = useState([]);
-  const [imageModal, setImageModal] = useState(false);
-  const [imageClickStatus, setImageClickStatus] = useState(false);
   const [soldOutStatus, setSoldOutStatus] = useState(false);
   const [activeStyle, setActiveStyle] = useState(0);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -157,10 +141,6 @@ export default function MainProduct(props) {
     }
   }
 
-  const handleMainImageClick = () => {
-    setImageClickStatus(!imageClickStatus)
-  }
-
   const addToCartButtonRender = () => {
     if (soldOutStatus) {
       return (
@@ -186,35 +166,7 @@ export default function MainProduct(props) {
   return (
     <div>
       <div id='product_wrapper'>
-        <div id='col_image'>
-          <Swiper
-            spaceBetween={500}
-            navigation={true}
-            thumbs={{ swiper: thumbsSwiper }}
-            className="mySwiper2"
-          >
-            {images.map((image, index) =>
-              <SwiperSlide key={index} tag='li'>
-                <img id='main_image' key={index} src={image.url} onClick={() => handleMainImageClick()} />
-              </SwiperSlide>
-            )}
-          </Swiper>
-          <Swiper
-            onSwiper={setThumbsSwiper}
-            spaceBetween={5}
-            slidesPerView={5}
-            navigation={true}
-            freeMode={true}
-            watchSlidesVisibility={true}
-            watchSlidesProgress={true}
-            className="mySwiper"
-          >
-            {images.map((image, index) =>
-              <SwiperSlide key={index}>
-                <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => handleImageClick(index)} />
-              </SwiperSlide>)}
-          </Swiper>
-        </div>
+        <ImageDefaultView imageArray={images} handleImageClick={handleImageClick} />
         <div id='col_style'>
           <h4 style={{ marginTop: 10 }}>Category: {item.category}</h4>
           <h1>{item.name}</h1>
