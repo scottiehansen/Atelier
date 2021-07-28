@@ -7,7 +7,6 @@ import Quantity from './Quantity.jsx';
 import ImageDefaultView from './ImageDefaultView.jsx';
 import SocialMedia from './SocialMedia.jsx';
 import '/client/dist/style.css';
-import "core-js/stable";
 import "regenerator-runtime/runtime";
 import Button from 'react-bootstrap/Button';
 const key = require('/server/config/config.js');
@@ -27,7 +26,6 @@ export default function MainProduct(props) {
   const [selectedSize, setSelectedSize] = useState('Selected Size');
   const [selectedQuantity, setSelectedQuantity] = useState([]);
   const [sizeIndex, setSizeIndex] = useState('');
-  const [shoppingCart, setShoppingCart] = useState([]);
   const [soldOutStatus, setSoldOutStatus] = useState(false);
   const [activeStyle, setActiveStyle] = useState(0);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -172,9 +170,10 @@ export default function MainProduct(props) {
           <h1>{item.name}</h1>
           {priceRender()}
           <h5 id='selected_style'>Style > {selectedStyle}</h5>
-          <ul id='style_grid'>
+          {/* <ul id='style_grid'>
             {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} activeStyle={activeStyle} />)}
-          </ul>
+          </ul> */}
+          <Styles activeStyle={activeStyle} styles={availableStyles} onClick={handleStyleChange}/>
           {addToCartButtonRender()}
           <div className='details'>
             <h4>Work the Runway</h4>

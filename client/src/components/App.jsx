@@ -54,6 +54,7 @@ class App extends React.Component {
       <div>
         <Navbar bg='dark' variant='dark' expand='lg'>
           <Container>
+            <Navbar.Brand>Atelier</Navbar.Brand>
             <Nav>
               <Nav.Link>Home</Nav.Link>
               <Nav.Link onClick={e => this.aboutUsClickHandle(e)}>Our Story</Nav.Link>
