@@ -170,9 +170,6 @@ export default function MainProduct(props) {
           <h1>{item.name}</h1>
           {priceRender()}
           <h5 id='selected_style'>Style > {selectedStyle}</h5>
-          {/* <ul id='style_grid'>
-            {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} activeStyle={activeStyle} />)}
-          </ul> */}
           <Styles activeStyle={activeStyle} styles={availableStyles} onClick={handleStyleChange}/>
           {addToCartButtonRender()}
           <div className='details'>

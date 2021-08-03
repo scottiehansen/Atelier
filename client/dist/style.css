@@ -301,13 +301,18 @@ textarea {
   margin-top: 10px;
 }
 
-.active_style {
-  position: relative;
-  width: 135px;
-  height: 135px;
-  border: 5px #8a8d8f;
-  background:#8a8d8f;
+.active_style::before {
+  content: '✔';
+  position: absolute;
+  margin-top: 15px;
+  margin-left: 25px;
+  width: 23px;
+  height: 23px;
+  text-align: center;
+  border: 1px solid black;
+  background: #f8f8f8;
   border-radius: 50%;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.3)
 }
 
 .modal {
