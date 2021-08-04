@@ -18,7 +18,7 @@ export default function ImageDefaultView(props) {
       >
         {props.imageArray.map((image, index) =>
           <SwiperSlide key={index} tag='li'>
-            <img id='main_image' key={index} src={image.url} />
+            <img id='main_image' key={index} src={image.url} onClick={props.handleImageZoom}/>
           </SwiperSlide>
         )}
       </Swiper>
@@ -34,7 +34,7 @@ export default function ImageDefaultView(props) {
       >
         {props.imageArray.map((image, index) =>
           <SwiperSlide key={index}>
-            <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => props.handleImageClick(index)} />
+            <img className='sub_images' index={index} src={image.thumbnail_url} onClick={props.changeMainImage.bind(this, index)}/>
           </SwiperSlide>)}
       </Swiper>
     </div>

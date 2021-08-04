@@ -110,19 +110,29 @@ textarea {
 
 /* End styles for ratings component */
 
-
-#product_container{
-
-}
-
 #product_wrapper {
   margin: 0 auto;
     overflow: auto;
     clear: both;
   width: 80%;
-  height: auto;
-  margin-bottom: 20px;
+  height: 100%;
+  padding-top: 20px;
   padding-bottom: 20px;
+  font-family: sans-serif;
+}
+
+#product-container{
+  /* For center align */
+  margin: 0 auto;
+  /* For grow & shrink as per screen size change values as per your requirements */
+  overflow: auto;
+    clear: both;
+  float: none;
+  width: 80%;
+  height: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: sans-serif;
 }
 
 .styles {
@@ -325,3 +335,4 @@ textarea {
   top: 30%;
   padding: 20px;
 }
+

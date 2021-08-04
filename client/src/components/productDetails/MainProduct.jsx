@@ -6,6 +6,7 @@ import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
 import ImageDefaultView from './ImageDefaultView.jsx';
 import SocialMedia from './SocialMedia.jsx';
+import ImageModal from './modals/ImageModal.jsx';
 import '/client/dist/style.css';
 import "regenerator-runtime/runtime";
 import Button from 'react-bootstrap/Button';
@@ -15,6 +16,7 @@ export default function MainProduct(props) {
   const [item, setItem] = useState({});
   const [features, setFeatures] = useState([]);
   const [images, setImages] = useState([]);
+  const [mainImageIndex, setMainImageIndex] = useState(0);
   const [originalPrice, setOriginalPrice] = useState('');
   const [salePrice, setSalePrice] = useState('');
   const [availableStyles, setAvailableStyles] = useState([]);
@@ -23,15 +25,16 @@ export default function MainProduct(props) {
   const [sizes, setSizes] = useState([]);
   const [quantities, setQuantities] = useState([]);
   const [resultIndex, setResultIndex] = useState(0);
-  const [selectedSize, setSelectedSize] = useState('Selected Size');
+  const [selectedSize, setSelectedSize] = useState('Select A Size');
   const [selectedQuantity, setSelectedQuantity] = useState([]);
-  const [sizeIndex, setSizeIndex] = useState('');
+  const [sizeIndex, setSizeIndex] = useState(0);
   const [soldOutStatus, setSoldOutStatus] = useState(false);
   const [activeStyle, setActiveStyle] = useState(0);
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [showImageModal, setShowImageModal] = useState(false);
+
 
   const getSizesAndQuantities = (object) => {
-    let sizesArray = ['Select Size'];
+    let sizesArray = ['Select A Size'];
     let quantitiesArray = ['-'];
     for (var keys in object) {
       if (object[keys].quantity > 0) {
@@ -46,7 +49,9 @@ export default function MainProduct(props) {
     }
     setSizes(sizesArray);
     setQuantities(quantitiesArray);
-    setSelectedQuantity(quantitiesArray);
+    setSelectedSize('Select A Size');
+    setSelectedQuantity(['-']);
+    setSizeIndex(0);
   }
 
   useEffect(async (index = 0) => {
@@ -81,16 +86,6 @@ export default function MainProduct(props) {
     setSizeIndex(0);
   }, [props.item.id])
 
-  const handleImageClick = (index) => {
-    const config = {
-      headers: { Authorization: key }
-    };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/products/${props.item.id}/styles`, config)
-      .then(response => {
-        setImages(response.data.results[resultIndex].photos);
-      })
-  }
-
 
   const handleStyleChange = (index) => {
     const config = {
@@ -111,10 +106,21 @@ export default function MainProduct(props) {
         }
         getSizesAndQuantities(response.data.results[index].skus);
         setResultIndex(index);
+        setSelectedSize('Select A Size')
       })
   }
 
+  const zoomImage = (e) => {
+    setShowImageModal(!showImageModal)
+  }
+
+  const changeMainImage = (e, index) => {
+    console.log('changeMainImage', e);
+    setMainImageIndex(e);
+  }
+
   const handleSizeChange = (e) => {
+    setSizeIndex(e.target.selectedIndex);
     let quantity = quantities[e.target.selectedIndex];
     let numberArray = ['-'];
     let i = 1;
@@ -162,9 +168,9 @@ export default function MainProduct(props) {
   }
 
   return (
-    <div>
-      <div id='product_wrapper'>
-        <ImageDefaultView imageArray={images} handleImageClick={handleImageClick} />
+    <div id="product-container">
+        <ImageDefaultView imageArray={images} handleImageZoom={zoomImage} changeMainImage={changeMainImage}/>
+        <ImageModal showImageModal={showImageModal} show={zoomImage} images={images} mainImageIndex={mainImageIndex}/>
         <div id='col_style'>
           <h4 style={{ marginTop: 10 }}>Category: {item.category}</h4>
           <h1>{item.name}</h1>
@@ -181,7 +187,6 @@ export default function MainProduct(props) {
             <ProductFeatures features={features}/>
           </div>
           <SocialMedia />
-        </div>
       </div>
     </div>
   )
