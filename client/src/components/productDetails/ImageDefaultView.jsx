@@ -15,6 +15,7 @@ export default function ImageDefaultView(props) {
         thumbs={{ swiper: thumbsSwiper }}
         className="mySwiper2"
         observer
+        onSlideChange={(Swiper) => {props.changeMainImage(Swiper.activeIndex)}}
       >
         {props.imageArray.map((image, index) =>
           <SwiperSlide key={index} tag='li'>
