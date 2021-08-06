@@ -17,7 +17,6 @@ export default function ImageModal (props) {
         imageSrc={props.images[props.mainImageIndex].url}
         magnifierBorderSize={5}
         square={true}
-
       />
     </Modal>
   )
