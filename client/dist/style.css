@@ -110,19 +110,29 @@ textarea {
 
 /* End styles for ratings component */
 
-
-#product_container{
-
-}
-
 #product_wrapper {
   margin: 0 auto;
     overflow: auto;
     clear: both;
   width: 80%;
-  height: auto;
-  margin-bottom: 20px;
+  height: 100%;
+  padding-top: 20px;
   padding-bottom: 20px;
+  font-family: sans-serif;
+}
+
+#product-container{
+  /* For center align */
+  margin: 0 auto;
+  /* For grow & shrink as per screen size change values as per your requirements */
+  overflow: auto;
+    clear: both;
+  float: none;
+  width: 80%;
+  height: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: sans-serif;
 }
 
 .styles {
@@ -151,15 +161,17 @@ textarea {
 }
 
 #col_image {
-  position: relative;
-  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 45%;
   float: left;
-  height: 1000px;
+  height: 1100px;
 }
 
 #main_image {
+  display: flex;
   background-color: #e2e3e4;
-  width: 750px;
+  width: 800px;
   height: 700px;
   object-fit: contain;
   margin-left: auto;
@@ -167,11 +179,13 @@ textarea {
 }
 
 .sub_images {
-  width: 150px;
-  height: 150px;
+  display: flex;
+  width: 25px;
+  height: 25px;
 }
 
 .sub_images_list {
+  display: flex;
   width: 40px;
   height: 40px;
 }
@@ -180,20 +194,43 @@ textarea {
   display: grid;
   list-style-type: none;
   grid-template-columns: repeat(4, 1fr);
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 #col_style {
   position: relative;
   display:grid;
-  width: 45%;
+  width: 40%;
   float: left;
   margin: 10px;
+  margin-left: 30px;
   height: 1000px;
+}
+
+#selected_style {
+  margin-top: 20px;
 }
 
 .swiper-container {
   width: 100%;
   height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 150px;
+}
+
+.price_header{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#col_sideSwiper {
+  position:relative;
+  display: grid;
+  width: 10%;
+  float: left;
+  height: 1100px;
 }
 
 .swiper-slide {
@@ -202,7 +239,6 @@ textarea {
   background: #fff;
   margin-left: auto;
   margin-right: auto;
-
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -217,8 +253,16 @@ textarea {
   align-items: center;
 }
 
+.swiper-button-prev {
+  color: black;
+}
+
+.swiper-button-next {
+  color: black;
+}
+
 .swiper-slide img {
-  display: block;
+  display: flex;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -230,21 +274,52 @@ textarea {
 }
 
 .mySwiper2 {
+  display: flex;
   height: 80%;
   width: 100%;
 }
 
 .mySwiper {
-  height: 25%;
+  position: relative;
+  display: grid;
+  width: 100px;
+  height: 650px;
+  float: left;
   box-sizing: border-box;
-  padding: 10px 0;
+  padding: 5px 0;
+  /* margin-top: 85px; */
 }
 
 .mySwiper .swiper-slide {
-  width: 40%;
-  height: 70%;
+  width: 100px;
+  height: auto;
   opacity: 0.3;
 }
+
+.swiper-button-prev-unique {
+  position: relative;
+  float: left;
+  top: 55%;
+  margin: 0 auto;
+  height: 45px;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid black;
+}
+
+.swiper-button-next-unique {
+  position: relative;
+  float: left;
+  height: 50px;
+  width: 10px;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 15px solid black;
+  bottom: 185%;
+  margin: 0 auto;
+  clear: both;
+}
+
 
 .mySwiper .swiper-slide-thumb-active {
   opacity: 1;
@@ -255,26 +330,6 @@ textarea {
   width: 120px;
   height: 120px;
   object-fit: cover;
-}
-
-.swiper-button-next {
-  position: relative;
-  float: right;
-  width: 0;
-  height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-left: 20px solid lightgray;
-}
-
-.swiper-button-prev {
-  position: relative;
-  float: left;
-  width: 0;
-  height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-right: 20px solid lightgray;
 }
 
 #main_image_expanded {
@@ -292,16 +347,21 @@ textarea {
 .social_media {
   margin-bottom: 15px;
   margin-left: 10px;
-
+  margin-top: 10px;
 }
 
-.active_style {
-  position: relative;
-  width: 135px;
-  height: 135px;
-  border: 5px #8a8d8f;
-  background:#8a8d8f;
+.active_style::before {
+  content: '✔';
+  position: absolute;
+  margin-top: 15px;
+  margin-left: 25px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  border: 1px solid black;
+  background: white;
   border-radius: 50%;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.3)
 }
 
 .modal {

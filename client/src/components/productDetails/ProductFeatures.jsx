@@ -1,10 +1,14 @@
 import React from 'react';
 
-function ProductFeatures (props) {
-
+export default function ProductFeatures (props) {
   return (
-      <p>{props.feature.feature}: {props.feature.value}</p>
+    <React.Fragment>
+      <h4>Details:</h4>
+      {props.features.map((feature, index) => {
+        return (
+          <p key={index}>{feature.feature}: {feature.value}</p>
+        )
+      })}
+    </React.Fragment>
   )
 }
-
-export default ProductFeatures;

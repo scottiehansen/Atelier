@@ -1,37 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ProductFeatures from './ProductFeatures.jsx';
-import ProductImages from './ProductImages.jsx';
 import Styles from './Styles.jsx';
 import Sizes from './Sizes.jsx';
 import Quantity from './Quantity.jsx';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Thumbs, Zoom } from 'swiper/core';
-
-import "swiper/swiper.min.css";
-import "swiper/components/navigation/navigation.min.css"
-import "swiper/components/thumbs/thumbs.min.css";
-import "swiper/components/zoom/zoom.min.css"
-
+import ImageDefaultView from './ImageDefaultView.jsx';
+import SocialMedia from './SocialMedia.jsx';
+import ImageModal from './modals/ImageModal.jsx';
 import '/client/dist/style.css';
-
-SwiperCore.use([Navigation, Thumbs, Zoom]);
-
-import "core-js/stable";
 import "regenerator-runtime/runtime";
-
-import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon, PinterestShareButton, PinterestIcon } from 'react-share';
 import Button from 'react-bootstrap/Button';
-
-
 const key = require('/server/config/config.js');
 
-
-function MainProduct(props) {
+export default function MainProduct(props) {
   const [item, setItem] = useState({});
   const [features, setFeatures] = useState([]);
   const [images, setImages] = useState([]);
+  const [mainImageIndex, setMainImageIndex] = useState(0);
   const [originalPrice, setOriginalPrice] = useState('');
   const [salePrice, setSalePrice] = useState('');
   const [availableStyles, setAvailableStyles] = useState([]);
@@ -40,18 +25,16 @@ function MainProduct(props) {
   const [sizes, setSizes] = useState([]);
   const [quantities, setQuantities] = useState([]);
   const [resultIndex, setResultIndex] = useState(0);
-  const [selectedSize, setSelectedSize] = useState('Selected Size');
+  const [selectedSize, setSelectedSize] = useState('Select A Size');
   const [selectedQuantity, setSelectedQuantity] = useState([]);
-  const [sizeIndex, setSizeIndex] = useState('');
-  const [shoppingCart, setShoppingCart] = useState([]);
-  const [imageModal, setImageModal] = useState(false);
-  const [imageClickStatus, setImageClickStatus] = useState(false);
+  const [sizeIndex, setSizeIndex] = useState(0);
   const [soldOutStatus, setSoldOutStatus] = useState(false);
   const [activeStyle, setActiveStyle] = useState(0);
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [showImageModal, setShowImageModal] = useState(false);
+
 
   const getSizesAndQuantities = (object) => {
-    let sizesArray = ['Select Size'];
+    let sizesArray = ['Select A Size'];
     let quantitiesArray = ['-'];
     for (var keys in object) {
       if (object[keys].quantity > 0) {
@@ -66,7 +49,9 @@ function MainProduct(props) {
     }
     setSizes(sizesArray);
     setQuantities(quantitiesArray);
-    setSelectedQuantity(quantitiesArray);
+    setSelectedSize('Select A Size');
+    setSelectedQuantity(['-']);
+    setSizeIndex(0);
   }
 
   useEffect(async (index = 0) => {
@@ -101,16 +86,6 @@ function MainProduct(props) {
     setSizeIndex(0);
   }, [props.item.id])
 
-  const handleImageClick = (index) => {
-    const config = {
-      headers: { Authorization: key }
-    };
-    axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-lax/products/${props.item.id}/styles`, config)
-      .then(response => {
-        setImages(response.data.results[resultIndex].photos);
-      })
-  }
-
 
   const handleStyleChange = (index) => {
     const config = {
@@ -131,10 +106,21 @@ function MainProduct(props) {
         }
         getSizesAndQuantities(response.data.results[index].skus);
         setResultIndex(index);
+        setSelectedSize('Select A Size')
       })
   }
 
+  const zoomImage = (e) => {
+    setShowImageModal(!showImageModal)
+  }
+
+  const changeMainImage = (e, index) => {
+    console.log('changeMainImage', e);
+    setMainImageIndex(e);
+  }
+
   const handleSizeChange = (e) => {
+    setSizeIndex(e.target.selectedIndex);
     let quantity = quantities[e.target.selectedIndex];
     let numberArray = ['-'];
     let i = 1;
@@ -148,19 +134,15 @@ function MainProduct(props) {
   const priceRender = () => {
     if (salePrice !== '') {
       return (
-        <div>
-          <h3 style={{ textDecorationLine: 'line-through' }}>${originalPrice} </h3> <h3 style={{ color: 'red' }}>SALE ${salePrice}</h3>
+        <div className="price_header">
+          <h4 style={{ textDecorationLine: 'line-through' }}>${originalPrice} </h4> <h4 style={{ color: 'red' }}>SALE ${salePrice}</h4>
         </div>
       )
     } else {
       return (
-        <h3>${originalPrice}</h3>
+        <h4 className="price_header">${originalPrice}</h4>
       )
     }
-  }
-
-  const handleMainImageClick = () => {
-    setImageClickStatus(!imageClickStatus)
   }
 
   const addToCartButtonRender = () => {
@@ -185,115 +167,27 @@ function MainProduct(props) {
     }
   }
 
-  const zoomImageRender = () => {
-    if (imageClickStatus === false) {
-      return (
-        <div id='col_image'>
-          <Swiper
-            spaceBetween={10}
-            navigation={true}
-            thumbs={{ swiper: thumbsSwiper }}
-            className="mySwiper2"
-          >
-            <div className=''>prev</div>
-            {images.map((image, index) =>
-              <SwiperSlide key={index} tag='li'>
-                <img id='main_image' key={index} src={image.url} onClick={() => handleMainImageClick()} />
-              </SwiperSlide>
-            )}
-            <div className=''>next</div>
-          </Swiper>
-          <Swiper
-            onSwiper={setThumbsSwiper}
-            spaceBetween={5}
-            slidesPerView={5}
-            navigation={true}
-            freeMode={true}
-            watchSlidesVisibility={true}
-            watchSlidesProgress={true}
-            className="mySwiper"
-          >
-            {images.map((image, index) =>
-              <SwiperSlide key={index}>
-                <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => handleImageClick(index)} />
-              </SwiperSlide>)}
-          </Swiper>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <Swiper
-            spaceBetween={10}
-            navigation={true}
-            thumbs={{ swiper: thumbsSwiper }}
-            className="mySwiper2"
-            zoom={true}
-          >
-            {images.map((image, index) =>
-              <SwiperSlide key={index} tag='li'>
-                <img id='main_image_expanded' key={index} src={image.url} onClick={() => handleMainImageClick()} />
-              </SwiperSlide>
-            )}
-          </Swiper>
-          <Swiper
-            onSwiper={setThumbsSwiper}
-            spaceBetween={5}
-            slidesPerView={7}
-            freeMode={true}
-            watchSlidesVisibility={true}
-            watchSlidesProgress={true}
-            className="mySwiper"
-          >
-            {images.map((image, index) =>
-              <SwiperSlide key={index}>
-                <img className='sub_images' key={index} src={image.thumbnail_url} onClick={() => handleImageClick(index)} />
-              </SwiperSlide>)}
-          </Swiper>
-        </div>
-      )
-    }
-  }
-
   return (
-    <div>
-      <div id='product_wrapper'>
-        {zoomImageRender()}
+    <div id="product-container">
+        <ImageDefaultView imageArray={images} handleImageZoom={zoomImage} changeMainImage={changeMainImage}/>
+        <ImageModal showImageModal={showImageModal} show={zoomImage} images={images} mainImageIndex={mainImageIndex}/>
         <div id='col_style'>
-          <h5 style={{ marginTop: 10 }}>Category: {item.category}</h5>
+          <h4 style={{ marginTop: 10 }}>Category: {item.category}</h4>
           <h1>{item.name}</h1>
           {priceRender()}
-          <h4>Style > {selectedStyle}</h4>
-          <ul id='style_grid'>
-            {availableStyles.map((style, index) => <Styles style={style} key={index} index={index} onClick={handleStyleChange} activeStyle={activeStyle} />)}
-          </ul>
+          <h5 id='selected_style'>Style > {selectedStyle}</h5>
+          <Styles activeStyle={activeStyle} styles={availableStyles} onClick={handleStyleChange}/>
           {addToCartButtonRender()}
           <div className='details'>
-            <h5>Work the Runway</h5>
+            <h4>Work the Runway</h4>
             <p>{item.description}</p>
             <p>Style ID: {styleId}</p>
           </div>
           <div className='details'>
-            <h5> Details:</h5>
-            {features.map((feature, index) => <ProductFeatures feature={feature} key={index} />)}
+            <ProductFeatures features={features}/>
           </div>
-
-          <div className='social_media'>
-            <h4>Share Me!</h4>
-            <FacebookShareButton url={''}>
-              <FacebookIcon style={{margin: '5px'}} size={40} round={true}/>
-            </FacebookShareButton>
-            <TwitterShareButton url={''}>
-              <TwitterIcon style={{margin: '5px'}} size={40} round={true}/>
-            </TwitterShareButton>
-            <PinterestShareButton url={''}>
-              <PinterestIcon style={{margin: '5px'}} size={40} round={true}/>
-            </PinterestShareButton>
-          </div>
-        </div>
+          <SocialMedia />
       </div>
     </div>
   )
 }
-
-export default MainProduct;
